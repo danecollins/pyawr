@@ -1,4 +1,4 @@
-from typing import Tuple, Iterable, Any
+from typing import List, Iterable, Any, Tuple
 import win32com.client
 import os
 import numpy as np
@@ -6,7 +6,7 @@ import pandas as pd
 from cmap import mwUnitType, mwMeasDataType
 
 
-def connect(version: str=None, clsid: str=None):
+def connect(version: str=None, clsid: str=None) -> Tuple[Any, Any]:
     """ Connects to AWRDE and returns the entry point and definition of the constants
 
         :param version: if this is specified that version will be used
@@ -36,29 +36,29 @@ def open_example(awrde: Any, s: str) -> None:
     awrde.Open(os.path.join(p, s))
 
 
-def vbr(i):
+def vbr(i: int) -> Iterable[int]:
     """ returns a 1 based range for visual basic iterators """
-    return range(1, i+1)
+    return range(1, i + 1)
 
 
-def as_list(object):
+def as_list(object: Any) -> List[Any]:
     """ returns iterator objects as a list """
     return [object(i) for i in vbr(object.Count)]
 
 
-def meas_from_graph(name):
+def meas_from_graph(name: str) -> List[Any]:
     """ Given the name of the graph return a list of measurements """
-    global awrde
+    awrde, awrc = connect()
     g = awrde.Project.Graphs(name)
     return as_list(g.Measurements)
 
 
-def meas_to_df(m):
+def meas_to_df(m: Any) -> Any:
     """ Given a measurement return a dataframe of the data """
     d = []  # start by creating a list of dictionary
     (source, name) = m.Name.split(':')
     for trace in vbr(m.TraceCount):
-        info={}
+        info = {}
         info['source'] = source
         info['name'] = name
         for labels in vbr(m.SweepLabels(trace).Count):
@@ -75,24 +75,18 @@ def meas_to_df(m):
             d.append(tmp)
     return pd.DataFrame(d)
 
-class AwrTrace:
-    def __init__(self, m, index):
-        self.sweep_label = m.SweepLabels(index)
-        self.data = m.TraceValues(index)
 
 class AwrMeas:
-    def __init__(self, m):
+    def __init__(self, m: Any) -> None:
         (source, name) = m.Name.split(':')
-        self.name = name
-        self.source = source
-        self.type =  mwMeasDataType(m.DataType)
-        self.plot_dim = m.PlotDimension
-        self.x_units = mwUnitType(m.UnitType(1))
-        self.y_units = mwUnitType(m.UnitType(2))
+        self.name = name  # type: str
+        self.source = source  # type: str
+        self.type = mwMeasDataType(m.DataType)  # type: str
+        self.plot_dim = m.PlotDimension  # type: int
+        self.x_units = mwUnitType(m.UnitType(1))  # type: str
+        self.y_units = mwUnitType(m.UnitType(2))  # type:str
         self.df = meas_to_df(m)
-        
-    def __str__(self):
+
+    def __str__(self) -> str:
         return "AwrMeas({}:{},type={},dim={},pts={})".format(self.source, self.name,
-                       self.type, self.plot_dim, len(self.df))
-        
-    
+                                                             self.type, self.plot_dim, len(self.df))

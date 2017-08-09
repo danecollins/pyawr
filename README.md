@@ -2,33 +2,40 @@
 
 **Python utilities for Microwave Office from AWR**
 
-It is possible to write scripts for AWRDE in something other than Visual Basic such as Python, Perl, C#, etc.  This article describes the setup for Python
-AWRDE is a COM automation server and any programming language that can perform as a COM client can be used. This includes most current programming languages such as Python. With Python you will need to install the win32com.client library.  The easiest way to do this is to use pip.
+It is possible to write scripts for AWRDE in something other than Visual Basic such as Python, Perl, C#, etc.  This package create tools to make this easier and more pythonic.
 
-	pip install pypiwin32
-	
-While this is the minimum setup, if you plan to do significant work in python you want to create the entire type library you will need to run makepy.py. In a command prompt
+For help getting your python environment setup for COM, see [AWR Scripting in Python](http://kb.awr.com/display/SCRIPTS/AWR+Scripting+in+Python)
 
-	cd [python lib directory]/site-packages/win32com/client
-	python makepy.py
+Requirements for this package are defined in requirements.txt.
 
-If you run this with the -v option it will indicate the name of the generated python file in case you want to look at it.  These definitions will be loaded automatically when you connect to AWRDE.
+### Installation
+
+To install this package use:
+
+    > python setup.py install
 
 ### Testing your installation
 
 Here is a very simple python program that connects to AWRDE and writes out all the models in the software:
 
-	# This is a very simple python script that connects to AWRDE and
-	# dumps out the complete list of models                
-	#
-	import win32com.client
-	awrde=win32com.client.Dispatch("MWOApp.MWOffice")
+	import pyawr
+	awrde, awrc = pyawr.connect()
 	for model in awrde.Models:
 		print model.Name
 		
 ### Connecting to a Specific Instance of AWRDE
 
-Calling Dispatch("MWOApp.MWOffice") will connect to the first instance of AWRDE that was started.  There are times when you want to connect to a specific instance of AWRDE which can be done by passing the class ID to Dispatch.  You can get the class ID of a specific instance of AWRDE from VB Scripting with
+Calling connect will connect to the first instance of AWRDE that was started.  There are times when you want to connect to a specific version, or instance of AWRDE which can be done by passing the version or class ID to connect as follows:
+
+**To start a specific version**
+
+   import pyawr
+   awrde, awrc = pyawr.connect(version='13.0')  # version is a string
+   
+   
+**To connect to a specific instance**
+
+To connect to a specific instance you need to get the instance id from AWRDE.  The best way to get this is with a VB script of the following form:
 
 	Sub Main
 		Debug.Print MWOffice.InstanceCLSID
@@ -40,10 +47,29 @@ The class ID will be in the form
 
 Then, from Python you will use
 
-	obj = win32com.client.Dispatch("{CLSID}")
+	import pyawr
+	awrde, awrc = pyawr.connect(clsid='{class id}')
 	
 For example
 
-	obj2 = win32com.client.Dispatch("{62F49D56-070F-4E6C-8AB9-25845CB94B9A}")
+	awrde, awrc = pyawr.connect(clsid="{62F49D56-070F-4E6C-8AB9-25845CB94B9A}")
 	
 **Note:** the braces are required around the class ID
+
+### Accessing AWRDE Enumerations
+
+The [API Reference](https://awrcorp.com/download/faq/english/docs/ApiReference/api_reference.html) describes many [enumerations](https://awrcorp.com/download/faq/english/docs/ApiReference/ch02s03.html).  For example when looking at a measurement the data type could be mwMDT\_ReflectionData or mwMDT\_AdmittanceData. You can access these value from the object returned as the second argument of the tuple returned by  **connect()** as shown below.
+
+	import pyawr
+	awrde, awrc = pyawr.connect
+	....
+	if meas.DataType == awrc.mwMDT\_ReflectionData:
+		....
+		
+If it often convenient to reverse map these values to strings for output.  To help in this, pyawr provides cmap which defines functions for each of the enumerations.  Using these we could convert the data type to a string.  From the example above (assuming the if test was true:
+
+	from cmap import mwMeasDataType
+	
+	print(mwMeasDataType(meas.DataType))
+	
+	>> 'mwMDT_ReflectionData'
