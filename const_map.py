@@ -1,4 +1,5 @@
-# This is ugly but it's only a one time use script
+# This is ugly but it's only a one time use script.  It parses the definitions created 
+# by makepy.py and defines the reverse mapping functions.
 
 from collections import defaultdict
 import re

@@ -5,6 +5,6 @@ setup(name='pyawr',
       author_email='dane@awr.com',
       description='API helpers for AWRDE',
       url='https://github.com/pyawr/pyawr',
-      py_modules=['pyawr'],
+      py_modules=['pyawr', 'cmap'],
 )
 

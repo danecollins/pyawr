@@ -18,8 +18,8 @@ class TestConstants(unittest.TestCase):
 
 
 class TestUtilityFunctions(unittest.TestCase):
-    def test_vbr(self):
-        self.assertEqual(vbr(5), range(1, 6))
+    def test_vbrange(self):
+        self.assertEqual(vbrange(5), range(1, 6))
 
     def test_open_example(self):
         open_example(awr, 'LPF_lumped.emp')
@@ -35,6 +35,19 @@ class TestUtilityFunctions(unittest.TestCase):
         for m in measurements:
             self.assertTrue(m.Name in expected)
 
+class TestAwrMeas(unittest.TestCase):
+    def test_create(self):
+        open_example(awr, 'LPF_lumped.emp')
+        awr.Project.Simulate()
+        m = awr.Project.Graphs('Passband and Stopband').Measurements('LPF:DB(|S(2,1)|)')
+        am = AwrMeas(m)
+        self.assertEqual(am.source, 'LPF')
+        self.assertEqual(am.name, 'DB(|S(2,1)|)')
+        self.assertEqual(am.plot_dim, 2)
+        self.assertEqual(am.data_type, 'mwMDT_ReflectionData')
+        self.assertEqual(am.x_units, 'mwUT_Frequency')
+        self.assertEqual(am.y_units, 'mwUT_None')
+        self.assertEqual(len(am.df), 95)
 
 
 if __name__ == '__main__':
