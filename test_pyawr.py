@@ -16,12 +16,24 @@ class TestConstants(unittest.TestCase):
         self.assertEqual(mwCellStretcherAttributes(awrc.mwCSA_IsBound), 'mwCSA_IsBound')
         self.assertEqual(mwDataSetFlags(awrc.mwDSF_PortOnly), 'mwDSF_PortOnly')
 
+
 class TestUtilityFunctions(unittest.TestCase):
     def test_vbr(self):
         self.assertEqual(vbr(5), range(1, 6))
 
-    def test_as_list(self):
-        pass
+    def test_open_example(self):
+        open_example(awr, 'LPF_lumped.emp')
+        expected = ['Passband and Stopband', 'Input Match', 'Group Delay', 'Output Match']
+        graphs = [x.Name for x in awr.Project.Graphs]
+        self.assertCountEqual(graphs, expected)
+
+    def test_meas_from_graph(self):
+        open_example(awr, 'LPF_lumped.emp')
+        measurements = meas_from_graph('Passband and Stopband')
+        self.assertEqual(len(measurements), 3)
+        expected = ['LPF:DB(|S(1,1)|)', 'LPF:DB(|S(2,1)|)', 'LPF:DB(|S(2,2)|)']
+        for m in measurements:
+            self.assertTrue(m.Name in expected)
 
 
 
