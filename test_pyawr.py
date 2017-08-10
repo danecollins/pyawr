@@ -1,7 +1,7 @@
 import unittest
 
-from pyawr import *
-from cmap import mwCellStretcherAttributes, mwDataSetFlags
+from pyawr.helpers import *
+from pyawr.enum_map import mwCellStretcherAttributes, mwDataSetFlags
 
 awr, awrc = connect()
 

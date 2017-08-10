@@ -3,7 +3,7 @@ import win32com.client
 import os
 import numpy as np
 import pandas as pd
-from cmap import mwUnitType, mwMeasDataType
+from pyawr.enum_map import mwUnitType, mwMeasDataType
 
 
 def connect(version: str=None, clsid: str=None) -> Tuple[Any, Any]:
@@ -96,4 +96,4 @@ class AwrMeas:
 
     def __str__(self) -> str:
         return "AwrMeas({}:{},type={},dim={},pts={})".format(self.source, self.name,
-                                                             self.type, self.plot_dim, len(self.df))
+                                                             self.data_type, self.plot_dim, len(self.df))

@@ -14,11 +14,16 @@ To install this package use:
 
     > python setup.py install
 
+or,
+
+    > pip install .
+
+
 ### Testing your installation
 
 Here is a very simple python program that connects to AWRDE and writes out all the models in the software:
 
-	import pyawr
+	import pyawr.helpers as pyawr
 	awrde, awrc = pyawr.connect()
 	for model in awrde.Models:
 		print model.Name
@@ -29,7 +34,7 @@ Calling connect will connect to the first instance of AWRDE that was started.  T
 
 **To start a specific version**
 
-   import pyawr
+   import pyawr.helpers as pyawr
    awrde, awrc = pyawr.connect(version='13.0')  # version is a string
    
    
@@ -47,7 +52,7 @@ The class ID will be in the form
 
 Then, from Python you will use
 
-	import pyawr
+	import pyawr.helpers as pyawr
 	awrde, awrc = pyawr.connect(clsid='{class id}')
 	
 For example
@@ -60,7 +65,7 @@ For example
 
 The [API Reference](https://awrcorp.com/download/faq/english/docs/ApiReference/api_reference.html) describes many [enumerations](https://awrcorp.com/download/faq/english/docs/ApiReference/ch02s03.html).  For example when looking at a measurement the data type could be mwMDT\_ReflectionData or mwMDT\_AdmittanceData. You can access these value from the object returned as the second argument of the tuple returned by  **connect()** as shown below.
 
-	import pyawr
+	import pyawr.helpers as pyawr
 	awrde, awrc = pyawr.connect
 	....
 	if meas.DataType == awrc.mwMDT\_ReflectionData:
@@ -68,7 +73,7 @@ The [API Reference](https://awrcorp.com/download/faq/english/docs/ApiReference/a
 		
 If it often convenient to reverse map these values to strings for output.  To help in this, pyawr provides cmap which defines functions for each of the enumerations.  Using these we could convert the data type to a string.  From the example above (assuming the if test was true:
 
-	from cmap import mwMeasDataType
+	from pyawr.enum_map import mwMeasDataType
 	
 	print(mwMeasDataType(meas.DataType))
 	
