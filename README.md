@@ -2,7 +2,7 @@
 
 **Python utilities for Microwave Office from AWR**
 
-It is possible to write scripts for AWRDE in something other than Visual Basic such as Python, Perl, C#, etc.  This package create tools to make this easier and more pythonic.
+It is possible to write scripts for AWRDE in languages other than Visual Basic such as Python.  This package implements tools to make working with Microwave Office more pythonic.  It is recommended that you use Python 3.7 or later with AWRDE but earlier Python 3 versions may work.
 
 For help getting your python environment setup for COM, see [AWR Scripting in Python](http://kb.awr.com/display/SCRIPTS/AWR+Scripting+in+Python)
 
@@ -18,63 +18,27 @@ or,
 
     > pip install .
 
+Next, we will install the packages required by pyawr which include Numpy and Pandas with:
+
+	> pip install -r requirements.txt
+
 
 ### Testing your installation
 
 Here is a very simple python program that connects to AWRDE and writes out all the models in the software:
 
-	import pyawr.helpers as pyawr
-	awrde, awrc = pyawr.connect()
+	import pyawr.mwoffice as mwo
+	awrde = mwo.CMWOffice()
 	for model in awrde.Models:
-		print model.Name
+		print(model.Name)
 		
-### Connecting to a Specific Instance of AWRDE
+### Why pyawr?
 
-Calling connect will connect to the first instance of AWRDE that was started.  There are times when you want to connect to a specific version, or instance of AWRDE which can be done by passing the version or class ID to connect as follows:
+The win32com package contains everything needed to connect to AWRDE from PYthon but since Python is not a strongly typed language, editors do not have sufficient information to provide advanced functionality such as IntelliSense.  Lack of IntelliSense makes it very difficult to work with the AWR COM interface.  To solve this problem, we have created an interface layer on top of win32com which adds type information for the AWR COM interface.  With this interface layer, editor, such as Visual Studio Code, can do a reasonable job of providing hints.
 
-**To start a specific version**
+In addition to the layer over win32com, the pyawr package also provides a set of helper functions to simplify some of the common AWRDE interactions.
 
-   import pyawr.helpers as pyawr
-   awrde, awrc = pyawr.connect(version='13.0')  # version is a string
-   
-   
-**To connect to a specific instance**
+### Using pyawr
 
-To connect to a specific instance you need to get the instance id from AWRDE.  The best way to get this is with a VB script of the following form:
+Usage information and examples are available on the AWR KnowledgeBase, see [AWR Scripting in Python](http://kb.awr.com/display/SCRIPTS/AWR+Scripting+in+Python)
 
-	Sub Main
-		Debug.Print MWOffice.InstanceCLSID
-	End Sub
-	
-The class ID will be in the form 
-
-**62F49D56-070F-4E6C-8AB9-25845CB94B9A**
-
-Then, from Python you will use
-
-	import pyawr.helpers as pyawr
-	awrde, awrc = pyawr.connect(clsid='{class id}')
-	
-For example
-
-	awrde, awrc = pyawr.connect(clsid="{62F49D56-070F-4E6C-8AB9-25845CB94B9A}")
-	
-**Note:** the braces are required around the class ID
-
-### Accessing AWRDE Enumerations
-
-The [API Reference](https://awrcorp.com/download/faq/english/docs/ApiReference/api_reference.html) describes many [enumerations](https://awrcorp.com/download/faq/english/docs/ApiReference/ch02s03.html).  For example when looking at a measurement the data type could be mwMDT\_ReflectionData or mwMDT\_AdmittanceData. You can access these value from the object returned as the second argument of the tuple returned by  **connect()** as shown below.
-
-	import pyawr.helpers as pyawr
-	awrde, awrc = pyawr.connect
-	....
-	if meas.DataType == awrc.mwMDT\_ReflectionData:
-		....
-		
-If it often convenient to reverse map these values to strings for output.  To help in this, pyawr provides cmap which defines functions for each of the enumerations.  Using these we could convert the data type to a string.  From the example above (assuming the if test was true:
-
-	from pyawr.enum_map import mwMeasDataType
-	
-	print(mwMeasDataType(meas.DataType))
-	
-	>> 'mwMDT_ReflectionData'

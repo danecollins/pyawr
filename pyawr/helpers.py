@@ -1,9 +1,9 @@
 from typing import List, Iterable, Any, Tuple
 import win32com.client
+import pyawr.mwoffice as mwo
 import os
 import numpy as np
 import pandas as pd
-from pyawr.enum_map import mwUnitType, mwMeasDataType
 
 
 def connect(version: str=None, clsid: str=None) -> Tuple[Any, Any]:
@@ -27,7 +27,7 @@ def connect(version: str=None, clsid: str=None) -> Tuple[Any, Any]:
         if version:
             appname += '.' + version
         awrde = win32com.client.Dispatch(appname)
-    return awrde, win32com.client.constants
+    return awrde
 
 
 def open_example(awrde: Any, s: str) -> None:
@@ -46,11 +46,10 @@ def as_list(object: Any) -> List[Any]:
     return [object(i) for i in vbrange(object.Count)]
 
 
-def meas_from_graph(name: str) -> List[Any]:
+def meas_from_graph(awrde: Any, name: str) -> List[Any]:
     """ Given the name of the graph return a list of measurements """
-    awrde, awrc = connect()
     g = awrde.Project.Graphs(name)
-    return as_list(g.Measurements)
+    return list(g.Measurements)
 
 
 class AwrMeas:
@@ -62,18 +61,19 @@ class AwrMeas:
     y_units = None  # type:str
     df = None  # type: Any
 
-    def meas_to_df(self, m: Any) -> Any:
+    def meas_to_df(self) -> Any:
         """ Given a measurement return a dataframe of the data """
         d = []  # start by creating a list of dictionary
-        (source, name) = m.Name.split(':')
+        m = self.measurement
         for trace in vbrange(m.TraceCount):
             info = {}
-            info['source'] = source
-            info['name'] = name
+            info['source'] = self.source
+            info['name'] = self.name
             for labels in vbrange(m.SweepLabels(trace).Count):
                 n = m.SweepLabels(trace).Item(labels).Name
                 v = m.SweepLabels(trace).Item(labels).Value
-                ut = mwUnitType(m.SweepLabels(trace).Item(labels).UnitType)
+                ut = mwo.mwUnitType(m.SweepLabels(trace).Item(labels).UnitType)._name_
+                #ut = mwUnitType(m.SweepLabels(trace).Item(labels).UnitType)
                 info[n] = v
                 info[n + '_unit'] = ut
             points = m.TraceValues(trace)
@@ -86,13 +86,15 @@ class AwrMeas:
 
     def __init__(self, m: Any) -> None:
         (source, name) = m.Name.split(':')
+        self.measurement = m
         self.name = name
         self.source = source
-        self.data_type = mwMeasDataType(m.DataType)
+        self.data_type = mwo.mwMeasDataType(m.DataType)._name_
         self.plot_dim = m.PlotDimension
-        self.x_units = mwUnitType(m.UnitType(1))
-        self.y_units = mwUnitType(m.UnitType(2))
-        self.df = self.meas_to_df(m)
+        self.x_units = mwo.mwUnitType(m.UnitType(1))._name_
+        self.y_units = mwo.mwUnitType(m.UnitType(2))._name_
+        self.df = self.meas_to_df()
+
 
     def __str__(self) -> str:
         return "AwrMeas({}:{},type={},dim={},pts={})".format(self.source, self.name,
