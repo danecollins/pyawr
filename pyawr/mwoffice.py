@@ -5,6 +5,7 @@
 # 08/27/20 19:28:57
 
 from __future__ import annotations
+from typing import Union, List
 from enum import IntEnum
 import win32com.client
 awrc = win32com.client.constants
@@ -2793,10 +2794,26 @@ class mwNetSynthVendorLibCompTypes(IntEnum):
 
 # MWOffice
 class CMWOffice:
-	"""The MWOffice application object."""
-	def __init__(self):
-		self.__IMWOffice= win32com.client.Dispatch("MWOApp.MWOffice")
-
+	""" The MWOffice application object.
+		Version refers to the AWRDE software version for example 13.0, 14.0 or 15.0
+			the default if this is not specified is the last version installed
+		clsid is the classid of a specific instance of MWOffice to connect to.
+			see https://kb.awr.com/display/scripts/AWR+Scripting+in+Python for details
+	
+	"""
+	def __init__(self, version: str=None, clsid: str=None):
+		
+		if clsid:
+			if clsid[0] == '{' and clsid[-1] == '}':
+				self.__IMWOffice= win32com.client.Dispatch(clsid)
+			else:
+				raise ValueError('CLSID string but start and end with braces "{}" - got {}'.format(clsid))
+		else:
+			appname = 'AWR.MWOffice'
+			if version:
+				appname += '.' + version
+				# TODO add appname
+			self.__IMWOffice= win32com.client.Dispatch(appname)
 
 	def __get_inner(self):
 		return self.__IMWOffice
@@ -3003,7 +3020,7 @@ class CMWOffice:
 		return CScriptModules(self.__IMWOffice.GlobalScripts)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def HasFeature(self, Feature, Version, CheckOutNow):
 		"""Returns whether the user is licensed to use a specific feature."""
 		return self.__IMWOffice.HasFeature(Feature, Version, CheckOutNow)
@@ -3159,14 +3176,14 @@ class CMWOffice:
 		return self.__IMWOffice.ScriptingAvailable
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Setting(self, Category, ValueName):
 		"""Returns/Sets a persisted setting of the MWOffice application."""
 		return self.__IMWOffice.Setting(Category, ValueName)
 
 
-	@Setting.setter
-	def Setting(self, Category, ValueName, value):
+	# @Setting.setter
+	def SetSetting(self, Category, ValueName, value):
 		"""Returns/Sets a persisted setting of the MWOffice application."""
 		self.__IMWOffice.Setting = value
 
@@ -3237,14 +3254,14 @@ class CMWOffice:
 		return self.__IMWOffice.TypelibVersion
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def UserSetting(self, Category, ValueName):
 		"""Returns/Sets a persisted user setting of the MWOffice application."""
 		return self.__IMWOffice.UserSetting(Category, ValueName)
 
 
-	@UserSetting.setter
-	def UserSetting(self, Category, ValueName, value):
+	# @UserSetting.setter
+	def SetUserSetting(self, Category, ValueName, value):
 		"""Returns/Sets a persisted user setting of the MWOffice application."""
 		self.__IMWOffice.UserSetting = value
 
@@ -3522,7 +3539,7 @@ class CApplication:
 		return CScriptModules(self.__IMWOffice.GlobalScripts)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def HasFeature(self, Feature, Version, CheckOutNow):
 		"""Returns whether the user is licensed to use a specific feature."""
 		return self.__IMWOffice.HasFeature(Feature, Version, CheckOutNow)
@@ -3678,14 +3695,14 @@ class CApplication:
 		return self.__IMWOffice.ScriptingAvailable
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Setting(self, Category, ValueName):
 		"""Returns/Sets a persisted setting of the MWOffice application."""
 		return self.__IMWOffice.Setting(Category, ValueName)
 
 
-	@Setting.setter
-	def Setting(self, Category, ValueName, value):
+	# @Setting.setter
+	def SetSetting(self, Category, ValueName, value):
 		"""Returns/Sets a persisted setting of the MWOffice application."""
 		self.__IMWOffice.Setting = value
 
@@ -3756,14 +3773,14 @@ class CApplication:
 		return self.__IMWOffice.TypelibVersion
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def UserSetting(self, Category, ValueName):
 		"""Returns/Sets a persisted user setting of the MWOffice application."""
 		return self.__IMWOffice.UserSetting(Category, ValueName)
 
 
-	@UserSetting.setter
-	def UserSetting(self, Category, ValueName, value):
+	# @UserSetting.setter
+	def SetUserSetting(self, Category, ValueName, value):
 		"""Returns/Sets a persisted user setting of the MWOffice application."""
 		self.__IMWOffice.UserSetting = value
 
@@ -4049,13 +4066,13 @@ class CProject:
 		return self.__IProject.HasEventScripts
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def ImportProject(self, Filename) -> CImportProject:
 		""""""
 		return CImportProject(self.__IProject.ImportProject(Filename))
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def ImportProjectEx(self, Filename, SuppressWarnings) -> CImportProject:
 		""""""
 		return CImportProject(self.__IProject.ImportProjectEx(Filename, SuppressWarnings))
@@ -4387,13 +4404,13 @@ class CProjectFiles:
 		return self.__IProjectFiles.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IProjectFiles.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CProjectFile:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CProjectFile(self.__IProjectFiles.Item(Index))
@@ -4571,13 +4588,13 @@ class CControlBars:
 		return self.__IControlBars.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IControlBars.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CControlBar:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CControlBar(self.__IControlBars.Item(Index))
@@ -4835,13 +4852,13 @@ class CDataFiles:
 		return self.__IDataFiles.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IDataFiles.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDataFile:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDataFile(self.__IDataFiles.Item(Index))
@@ -4937,7 +4954,7 @@ class CSampleProjectItems:
 		return self.__ISampleProjectItems.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CSampleProjectItem:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CSampleProjectItem(self.__ISampleProjectItems.Item(Index))
@@ -5019,13 +5036,13 @@ class CDataSetProperties:
 		return self.__IDataSetProperties.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IDataSetProperties.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDataSetProperty:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDataSetProperty(self.__IDataSetProperties.Item(Index))
@@ -5120,7 +5137,7 @@ class CDataSet:
 		return self.__IDataSet.Filename
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Flags(self, dataSetFlag: mwDataSetFlags):
 		"""Returns the state of flags associated with the data set."""
 		return self.__IDataSet.Flags(dataSetFlag)
@@ -5221,13 +5238,13 @@ class CDataSets:
 		return self.__IDataSets.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IDataSets.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDataSet:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDataSet(self.__IDataSets.Item(Index))
@@ -5327,13 +5344,13 @@ class CDataSetFolders:
 		return self.__IDataSetFolders.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IDataSetFolders.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDataSetFolder:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDataSetFolder(self.__IDataSetFolders.Item(Index))
@@ -5597,13 +5614,13 @@ class COutputFiles:
 		return self.__IOutputFiles.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IOutputFiles.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> COutputFile:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return COutputFile(self.__IOutputFiles.Item(Index))
@@ -5630,6 +5647,8 @@ class CFrequency:
 	def __init__(self, frequency):
 		self.__IFrequency = frequency
 
+	def __str__(self):
+		return '{}({})'.format(type(self).__name__, self.Value)
 
 	def __get_inner(self):
 		return self.__IFrequency
@@ -5655,10 +5674,26 @@ class CFrequencies:
 	def __init__(self, frequencies):
 		self.__IFrequencies = frequencies
 
+	def __str__(self):
+		return '{}({} items)'.format(type(self).__name__, self.Count)
+		
+	# ADDED DMC
+	def __getitem__(self, key) -> Union[CFrequency, List[CFrequency]]:
+		""" Returns an object or a list if a range is used."""
+		if isinstance(key, int):
+			if key < 0:  # handle negative indexing
+				key += self.Count
+			if key < 0 or key >= self.Count:
+				raise IndexError
+			return CFrequency(self.__IFrequencies.Item(key + 1))  # convert to 1-based
+		elif isinstance(key, slice):
+			return [self[ii] for ii in range(*key.indices(self.Count))]
+		else:
+			raise TypeError
 
+	
 	def __get_inner(self):
 		return self.__IFrequencies
-
 
 	def Add(self, Value) -> CFrequency:
 		"""Adds an object to the collection and returns a reference to the created object."""
@@ -5692,15 +5727,15 @@ class CFrequencies:
 		return self.__IFrequencies.Count
 
 
-	@property
+	# # TODO: fix generator to remove @property
 	def Item(self, Index) -> CFrequency:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CFrequency(self.__IFrequencies.Item(Index))
 
-
 	def __get_Item(self, Index) -> CFrequency:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CFrequency(self.__IFrequencies.Item(Index))
+
 
 
 	def __call__(self, index):
@@ -5747,14 +5782,14 @@ class CElement:
 		self.__IElement.CellName = value
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def DisplayMode(self, mode: mwDisplayModeType):
 		"""Returns/Sets various Element display mode settings."""
 		return self.__IElement.DisplayMode(mode)
 
 
-	@DisplayMode.setter
-	def DisplayMode(self, mode: mwDisplayModeType, value):
+	# @DisplayMode.setter
+	def SetDisplayMode(self, mode: mwDisplayModeType, value):
 		"""Returns/Sets various Element display mode settings."""
 		self.__IElement.DisplayMode = value
 
@@ -6130,13 +6165,13 @@ class CElements:
 		return self.__IElements.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IElements.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CElement:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CElement(self.__IElements.Item(Index))
@@ -6200,13 +6235,13 @@ class CSelectedElements:
 		return self.__ISelectedElements.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ISelectedElements.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CElement:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CElement(self.__ISelectedElements.Item(Index))
@@ -6568,13 +6603,13 @@ class CEquationExpressions:
 		return self.__IEquationExpressions.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IEquationExpressions.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CEquationExpression:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CEquationExpression(self.__IEquationExpressions.Item(Index))
@@ -6857,14 +6892,14 @@ class CEquation:
 		self.__IEquation.StepSize = value
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Subexpression(self, Index):
 		"""Returns/sets the indexed subexpression value in the equation object."""
 		return self.__IEquation.Subexpression(Index)
 
 
-	@Subexpression.setter
-	def Subexpression(self, Index, value):
+	# @Subexpression.setter
+	def SetSubexpression(self, Index, value):
 		"""Returns/sets the indexed subexpression value in the equation object."""
 		self.__IEquation.Subexpression = value
 
@@ -7027,13 +7062,13 @@ class CEquations:
 		return self.__IEquations.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IEquations.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CEquation:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CEquation(self.__IEquations.Item(Index))
@@ -7308,13 +7343,13 @@ class CGlobalDefinitionDocuments:
 		return self.__IGlobalDefinitionDocuments.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IGlobalDefinitionDocuments.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CGlobalDefinitionDocument:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CGlobalDefinitionDocument(self.__IGlobalDefinitionDocuments.Item(Index))
@@ -7500,13 +7535,13 @@ class COutputEquationDocuments:
 		return self.__IOutputEquationDocuments.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IOutputEquationDocuments.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> COutputEquationDocument:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return COutputEquationDocument(self.__IOutputEquationDocuments.Item(Index))
@@ -8152,13 +8187,13 @@ class CGraphs:
 		return self.__IGraphs.Count
 
 
-	@property
+	# DMC # TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IGraphs.Exists(Index)
 
 
-	@property
+	# DMC # TODO: fix generator to remove @property
 	def Item(self, Index) -> CGraph:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CGraph(self.__IGraphs.Item(Index))
@@ -8178,13 +8213,13 @@ class CGraphs:
 			 yield self.__get_Item(index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Options(self, Type: mwGraphType) -> COptions:
 		"""Returns a reference to a collection of Option objects."""
 		return COptions(self.__IGraphs.Options(Type))
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def TraceFormatOptions(self, Type: mwGraphType) -> CTraceFormatOptions:
 		"""Returns a reference to a collection of TraceFormatOption objects."""
 		return CTraceFormatOptions(self.__IGraphs.TraceFormatOptions(Type))
@@ -8550,13 +8585,13 @@ class CAxes:
 		return self.__IAxes.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IAxes.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CAxis:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CAxis(self.__IAxes.Item(Index))
@@ -8656,13 +8691,13 @@ class CTraceFormatOptions:
 		return self.__ITraceFormatOptions.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ITraceFormatOptions.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CTraceFormatOption:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CTraceFormatOption(self.__ITraceFormatOptions.Item(Index))
@@ -8719,7 +8754,7 @@ class CTrace:
 		self.__ITrace.Color = value
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def CompatibleStyle(self, __MIDL__ITrace0000: mwTraceStyle):
 		"""Returns if the given Trace style is compatible with the Graph."""
 		return self.__ITrace.CompatibleStyle(__MIDL__ITrace0000)
@@ -8966,13 +9001,13 @@ class CTraces:
 		return self.__ITraces.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ITraces.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CTrace:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CTrace(self.__ITraces.Item(Index))
@@ -9757,7 +9792,7 @@ class CMarker:
 		return self.__IMarker.DataItemMax
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def DataValue(self, dataDim):
 		"""Returns the data value associated with this Marker object."""
 		return self.__IMarker.DataValue(dataDim)
@@ -9898,13 +9933,13 @@ class CMarkers:
 		return self.__IMarkers.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IMarkers.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CMarker:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CMarker(self.__IMarkers.Item(Index))
@@ -9936,7 +9971,7 @@ class CMarkers:
 		return self.__IMarkers.MeasurementCount
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def MeasurementDataItemCount(self, MeasurementIndex):
 		"""Returns a count of the data items associated with a measurement for adding markers. The data index must be in this range when adding a marker to a measurement."""
 		return self.__IMarkers.MeasurementDataItemCount(MeasurementIndex)
@@ -9979,7 +10014,7 @@ class CLineMarker:
 		self.__ILineMarker.Axis = value
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def DataValue(self, measIndex, TraceIndex):
 		"""Returns the measured value for the specified measurement and trace"""
 		return self.__ILineMarker.DataValue(measIndex, TraceIndex)
@@ -10079,13 +10114,13 @@ class CLineMarkers:
 		return self.__ILineMarkers.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ILineMarkers.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CLineMarker:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CLineMarker(self.__ILineMarkers.Item(Index))
@@ -10155,14 +10190,14 @@ class CMeasurement:
 		self.__IMeasurement.AxisIndex = value
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def AxisPointLabel(self, nIndex):
 		"""Returns/sets a axis point label for this measurement."""
 		return self.__IMeasurement.AxisPointLabel(nIndex)
 
 
-	@AxisPointLabel.setter
-	def AxisPointLabel(self, nIndex, value):
+	# @AxisPointLabel.setter
+	def SetAxisPointLabel(self, nIndex, value):
 		"""Returns/sets a axis point label for this measurement."""
 		self.__IMeasurement.AxisPointLabel = value
 
@@ -10173,14 +10208,14 @@ class CMeasurement:
 		return self.__IMeasurement.AxisPointLabelCount
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def DataPointLabel(self, xIndex):
 		"""Returns/sets the label for a data point of a Measurement object."""
 		return self.__IMeasurement.DataPointLabel(xIndex)
 
 
-	@DataPointLabel.setter
-	def DataPointLabel(self, xIndex, value):
+	# @DataPointLabel.setter
+	def SetDataPointLabel(self, xIndex, value):
 		"""Returns/sets the label for a data point of a Measurement object."""
 		self.__IMeasurement.DataPointLabel = value
 
@@ -10263,7 +10298,7 @@ class CMeasurement:
 		return self.__IMeasurement.SourceName
 
 
-	@property
+	## TODO: fix generator to remove @property
 	def SweepLabels(self, trace_index) -> CSweepLabels:
 		"""Returns a reference to a collection of MeasurementInfo objects."""
 		return CSweepLabels(self.__IMeasurement.SweepLabels(trace_index))
@@ -10287,7 +10322,7 @@ class CMeasurement:
 		return self.__IMeasurement.TraceCount
 
 
-	@property
+	## TODO: fix generator to remove @property
 	def TraceValues(self, trace_index):
 		"""Returns the x/y values associated with a trace"""
 		return self.__IMeasurement.TraceValues(trace_index)
@@ -10305,14 +10340,14 @@ class CMeasurement:
 		self.__IMeasurement.Type = value
 
 
-	@property
+	#dmc - takes an argument so can't be a property - # TODO: fix generator to remove @property
 	def UnitType(self, dim):
 		"""Returns/sets the unit type of a Measurement object."""
 		return self.__IMeasurement.UnitType(dim)
 
 
-	@UnitType.setter
-	def UnitType(self, dim, value: mwUnitType):
+	#dmc - takes an argument so can't be a property - @UnitType.setter
+	def SetUnitType(self, dim, value: mwUnitType):
 		"""Returns/sets the unit type of a Measurement object."""
 		self.__IMeasurement.UnitType = value
 
@@ -10323,14 +10358,14 @@ class CMeasurement:
 		return self.__IMeasurement.XPointCount
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def XValue(self, xIndex):
 		"""Returns/sets the X value of a Measurement object."""
 		return self.__IMeasurement.XValue(xIndex)
 
 
-	@XValue.setter
-	def XValue(self, xIndex, value):
+	# @XValue.setter
+	def SetXValue(self, xIndex, value):
 		"""Returns/sets the X value of a Measurement object."""
 		self.__IMeasurement.XValue = value
 
@@ -10359,26 +10394,26 @@ class CMeasurement:
 		return self.__IMeasurement.YPointCount
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def YValue(self, xIndex, DataDimension):
 		"""Returns/sets the Y value of a Measurement object."""
 		return self.__IMeasurement.YValue(xIndex, DataDimension)
 
 
-	@YValue.setter
-	def YValue(self, xIndex, DataDimension, value):
+	# @YValue.setter
+	def SetYValue(self, xIndex, DataDimension, value):
 		"""Returns/sets the Y value of a Measurement object."""
 		self.__IMeasurement.YValue = value
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def YValues(self, DataDimension):
 		"""Returns/sets the Y values of a Measurement object."""
 		return self.__IMeasurement.YValues(DataDimension)
 
 
-	@YValues.setter
-	def YValues(self, DataDimension, value):
+	# @YValues.setter
+	def SetYValues(self, DataDimension, value):
 		"""Returns/sets the Y values of a Measurement object."""
 		self.__IMeasurement.YValues = value
 
@@ -10389,26 +10424,26 @@ class CMeasurement:
 		return self.__IMeasurement.ZDataDim
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def ZValue(self, xIndex, yIndex, DataDimension):
 		"""Returns/sets the Z value of a Measurement object."""
 		return self.__IMeasurement.ZValue(xIndex, yIndex, DataDimension)
 
 
-	@ZValue.setter
-	def ZValue(self, xIndex, yIndex, DataDimension, value):
+	# @ZValue.setter
+	def SetZValue(self, xIndex, yIndex, DataDimension, value):
 		"""Returns/sets the Z value of a Measurement object."""
 		self.__IMeasurement.ZValue = value
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def ZValues(self, DataDimension):
 		"""Returns/sets the Z values of a Measurement object."""
 		return self.__IMeasurement.ZValues(DataDimension)
 
 
-	@ZValues.setter
-	def ZValues(self, DataDimension, value):
+	# @ZValues.setter
+	def SetZValues(self, DataDimension, value):
 		"""Returns/sets the Z values of a Measurement object."""
 		self.__IMeasurement.ZValues = value
 
@@ -10447,13 +10482,13 @@ class CMeasurements:
 		return self.__IMeasurements.Count
 
 
-	@property
+	# DMC # TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IMeasurements.Exists(Index)
 
 
-	@property
+	# DMC # TODO: fix generator to remove @property
 	def Item(self, Index) -> CMeasurement:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CMeasurement(self.__IMeasurements.Item(Index))
@@ -10663,13 +10698,13 @@ class CNetlists:
 		return self.__INetlists.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__INetlists.Exists(Index)
 
 
-	@property
+	# DMC # TODO: fix generator to remove @property
 	def Item(self, Index) -> CNetlist:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CNetlist(self.__INetlists.Item(Index))
@@ -10720,7 +10755,7 @@ class CNode:
 		self.__INode.DataType = value
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def NodeFlags(self, nodeFlag: mwNodeFlags):
 		"""Returns the flags associated with this node."""
 		return self.__INode.NodeFlags(nodeFlag)
@@ -10781,13 +10816,13 @@ class CNodes:
 		return self.__INodes.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__INodes.Exists(Index)
 
 
-	@property
+	# DMC # TODO: fix generator to remove @property
 	def Item(self, Index) -> CNode:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CNode(self.__INodes.Item(Index))
@@ -10846,13 +10881,13 @@ class COptGoals:
 		return self.__IOptGoals.Count
 
 
-	@property
+	# DMC # TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IOptGoals.Exists(Index)
 
 
-	@property
+	# DMC # TODO: fix generator to remove @property
 	def Item(self, Index) -> CGoal:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CGoal(self.__IOptGoals.Item(Index))
@@ -11023,14 +11058,14 @@ class CParameter:
 		self.__IParameter.StepSize = value
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Style(self, Style: mwParameterStyle):
 		"""Returns/sets a value which specifies the style of a parameter object. Styles should be set to mwParamStyleSetting enum values"""
 		return self.__IParameter.Style(Style)
 
 
-	@Style.setter
-	def Style(self, Style: mwParameterStyle, value: mwParameterStyleSetting):
+	# @Style.setter
+	def SetStyle(self, Style: mwParameterStyle, value: mwParameterStyleSetting):
 		"""Returns/sets a value which specifies the style of a parameter object. Styles should be set to mwParamStyleSetting enum values"""
 		self.__IParameter.Style = value
 
@@ -11174,13 +11209,13 @@ class CParameters:
 		return self.__IParameters.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IParameters.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CParameter:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CParameter(self.__IParameters.Item(Index))
@@ -11225,7 +11260,7 @@ class CParameterDefinition:
 		return self.__IParameterDefinition.DefaultName
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def DefinitionFlag(self, flag: mwParameterDefinitionFlagType):
 		"""Returns a value which indicates if a specific definition flag is set or cleared."""
 		return self.__IParameterDefinition.DefinitionFlag(flag)
@@ -11280,13 +11315,13 @@ class CParameterDefinitions:
 		return self.__IParameterDefinitions.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IParameterDefinitions.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CParameterDefinition:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CParameterDefinition(self.__IParameterDefinitions.Item(Index))
@@ -11324,14 +11359,14 @@ class CParameterFrame:
 
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def DisplayMode(self, mode: mwDisplayModeType):
 		"""Returns/sets various ParameterFrame display mode settings."""
 		return self.__IParameterFrame.DisplayMode(mode)
 
 
-	@DisplayMode.setter
-	def DisplayMode(self, mode: mwDisplayModeType, value):
+	# @DisplayMode.setter
+	def SetDisplayMode(self, mode: mwDisplayModeType, value):
 		"""Returns/sets various ParameterFrame display mode settings."""
 		self.__IParameterFrame.DisplayMode = value
 
@@ -11414,14 +11449,14 @@ class CLayoutParameterFrame:
 
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def DisplayMode(self, mode: mwDisplayModeType):
 		"""Returns/sets various ParameterFrame display mode settings."""
 		return self.__ILayoutParameterFrame.DisplayMode(mode)
 
 
-	@DisplayMode.setter
-	def DisplayMode(self, mode: mwDisplayModeType, value):
+	# @DisplayMode.setter
+	def SetDisplayMode(self, mode: mwDisplayModeType, value):
 		"""Returns/sets various ParameterFrame display mode settings."""
 		self.__ILayoutParameterFrame.DisplayMode = value
 
@@ -11528,14 +11563,14 @@ class CProcessLibrary:
 		return self.__IProcessLibrary.Name
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def OptionFlag(self, Index):
 		"""Returns/sets the value of an option flag."""
 		return self.__IProcessLibrary.OptionFlag(Index)
 
 
-	@OptionFlag.setter
-	def OptionFlag(self, Index, value):
+	# @OptionFlag.setter
+	def SetOptionFlag(self, Index, value):
 		"""Returns/sets the value of an option flag."""
 		self.__IProcessLibrary.OptionFlag = value
 
@@ -11602,13 +11637,13 @@ class CProcessLibraries:
 		return self.__IProcessLibraries.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IProcessLibraries.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CProcessLibrary:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CProcessLibrary(self.__IProcessLibraries.Item(Index))
@@ -11678,13 +11713,13 @@ class CProcessLibraryInfos:
 		return self.__IProcessLibraryInfos.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IProcessLibraryInfos.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CProcessLibraryInfo:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CProcessLibraryInfo(self.__IProcessLibraryInfos.Item(Index))
@@ -11792,7 +11827,7 @@ class CProperties:
 		return self.__IProperties.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CProperty:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CProperty(self.__IProperties.Item(Index))
@@ -11885,13 +11920,13 @@ class CTestPoints:
 		return self.__ITestPoints.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ITestPoints.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CTestPoint:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CTestPoint(self.__ITestPoints.Item(Index))
@@ -12258,7 +12293,7 @@ class CSchematic:
 		return CSweepVariables(self.__ISchematic.SweepVariables)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def TestPoints(self, SimulationVendorName) -> CTestPoints:
 		"""Returns a reference to a collection of TestPoint objects."""
 		return CTestPoints(self.__ISchematic.TestPoints(SimulationVendorName))
@@ -12386,13 +12421,13 @@ class CSchematics:
 		return self.__ISchematics.Count
 
 
-	@property
+	# DMC # TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ISchematics.Exists(Index)
 
 
-	@property
+	# DMC # TODO: fix generator to remove @property
 	def Item(self, Index) -> CSchematic:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CSchematic(self.__ISchematics.Item(Index))
@@ -12447,13 +12482,13 @@ class CSubcircuits:
 		return self.__ISubcircuits.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ISubcircuits.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CElement:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CElement(self.__ISubcircuits.Item(Index))
@@ -12492,13 +12527,13 @@ class CPorts:
 		return self.__IPorts.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IPorts.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CElement:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CElement(self.__IPorts.Item(Index))
@@ -12537,13 +12572,13 @@ class CElectricalNets:
 		return self.__IElectricalNets.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IElectricalNets.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CElement:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CElement(self.__IElectricalNets.Item(Index))
@@ -12582,13 +12617,13 @@ class CNamedConnectors:
 		return self.__INamedConnectors.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__INamedConnectors.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CElement:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CElement(self.__INamedConnectors.Item(Index))
@@ -12671,13 +12706,13 @@ class CSymbolFiles:
 		return self.__ISymbolFiles.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ISymbolFiles.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CSymbolFile:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CSymbolFile(self.__ISymbolFiles.Item(Index))
@@ -12783,13 +12818,13 @@ class CSymbolNodes:
 		return self.__ISymbolNodes.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ISymbolNodes.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CSymbolNode:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CSymbolNode(self.__ISymbolNodes.Item(Index))
@@ -12865,13 +12900,13 @@ class CSymbolShapes:
 		return self.__ISymbolShapes.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ISymbolShapes.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CSymbolShape:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CSymbolShape(self.__ISymbolShapes.Item(Index))
@@ -13229,13 +13264,13 @@ class CSymbols:
 		return self.__ISymbols.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ISymbols.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CSymbol:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CSymbol(self.__ISymbols.Item(Index))
@@ -13317,13 +13352,13 @@ class CDefaultValues:
 		return self.__IDefaultValues.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IDefaultValues.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDefaultValue:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDefaultValue(self.__IDefaultValues.Item(Index))
@@ -13428,13 +13463,13 @@ class CUnits:
 		return self.__IUnits.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IUnits.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index: mwUnitType) -> CUnit:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CUnit(self.__IUnits.Item(Index))
@@ -13510,13 +13545,13 @@ class CSweepValues:
 		return self.__ISweepValues.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ISweepValues.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CSweepValue:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CSweepValue(self.__ISweepValues.Item(Index))
@@ -13586,13 +13621,13 @@ class CSweepVariables:
 		return self.__ISweepVariables.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ISweepVariables.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CSweepVariable:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CSweepVariable(self.__ISweepVariables.Item(Index))
@@ -13786,13 +13821,13 @@ class CWindows:
 		return self.__IWindows.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IWindows.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CWindow:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CWindow(self.__IWindows.Item(Index))
@@ -14022,13 +14057,13 @@ class CWires:
 		return self.__IWires.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IWires.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CWireSegment:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CWireSegment(self.__IWires.Item(Index))
@@ -14092,7 +14127,7 @@ class CSelectedWires:
 		return self.__ISelectedWires.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CWireSegment:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CWireSegment(self.__ISelectedWires.Item(Index))
@@ -14146,13 +14181,13 @@ class CYieldGoals:
 		return self.__IYieldGoals.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IYieldGoals.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CGoal:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CGoal(self.__IYieldGoals.Item(Index))
@@ -14252,13 +14287,13 @@ class COptions:
 		return self.__IOptions.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, __MIDL__IOptions0000):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IOptions.Exists(__MIDL__IOptions0000)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> COption:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return COption(self.__IOptions.Item(Index))
@@ -14334,13 +14369,13 @@ class COptionSubSets:
 		return self.__IOptionSubSets.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, __MIDL__IOptionSubSets0000):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IOptionSubSets.Exists(__MIDL__IOptionSubSets0000)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> COptionSubSet:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return COptionSubSet(self.__IOptionSubSets.Item(Index))
@@ -14422,13 +14457,13 @@ class COptionSets:
 		return self.__IOptionSets.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, __MIDL__IOptionSets0000):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IOptionSets.Exists(__MIDL__IOptionSets0000)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> COptionSet:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return COptionSet(self.__IOptionSets.Item(Index))
@@ -14690,7 +14725,7 @@ class CSystemDiagram:
 		return CFrequencies(self.__ISystemDiagram.RFBFrequencyOffsets)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def ReadOnly(self, pRet):
 		"""Returns a value indicating if the SystemDiagram object is currently read-only."""
 		return self.__ISystemDiagram.ReadOnly(pRet)
@@ -14750,7 +14785,7 @@ class CSystemDiagram:
 		return CSweepVariables(self.__ISystemDiagram.SweepVariables)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def TestPoints(self, SimulationVendorName) -> CTestPoints:
 		"""Returns a reference to a collection of TestPoint objects."""
 		return CTestPoints(self.__ISystemDiagram.TestPoints(SimulationVendorName))
@@ -14865,13 +14900,13 @@ class CSystemDiagrams:
 		return self.__ISystemDiagrams.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ISystemDiagrams.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CSystemDiagram:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CSystemDiagram(self.__ISystemDiagrams.Item(Index))
@@ -15024,13 +15059,13 @@ class CDesignNotes:
 		return self.__IDesignNotes.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IDesignNotes.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDesignNote:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDesignNote(self.__IDesignNotes.Item(Index))
@@ -15183,13 +15218,13 @@ class CAttributes:
 		return self.__IAttributes.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IAttributes.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CAttribute:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CAttribute(self.__IAttributes.Item(Index))
@@ -15346,13 +15381,13 @@ class CConductors:
 		return self.__IConductors.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IConductors.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CConductor:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CConductor(self.__IConductors.Item(Index))
@@ -15581,13 +15616,13 @@ class CLayoutParameters:
 		return self.__ILayoutParameters.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ILayoutParameters.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CLayoutParameter:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CLayoutParameter(self.__ILayoutParameters.Item(Index))
@@ -15657,13 +15692,13 @@ class CObjectNames:
 		return self.__IObjectNames.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IObjectNames.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CObjectName:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CObjectName(self.__IObjectNames.Item(Index))
@@ -15754,13 +15789,13 @@ class CObjectNameMappings:
 		return self.__IObjectNameMappings.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IObjectNameMappings.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CObjectNameMapping:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CObjectNameMapping(self.__IObjectNameMappings.Item(Index))
@@ -15863,13 +15898,13 @@ class CComplexNumbers:
 		return self.__IComplexNumbers.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IComplexNumbers.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CComplexNumber:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CComplexNumber(self.__IComplexNumbers.Item(Index))
@@ -15945,13 +15980,13 @@ class COffsets:
 		return self.__IOffsets.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IOffsets.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> COffset:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return COffset(self.__IOffsets.Item(Index))
@@ -16027,13 +16062,13 @@ class CPoints:
 		return self.__IPoints.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IPoints.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> Cpoint:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return Cpoint(self.__IPoints.Item(Index))
@@ -16109,13 +16144,13 @@ class CSizes:
 		return self.__ISizes.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ISizes.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CSize:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CSize(self.__ISizes.Item(Index))
@@ -16206,13 +16241,13 @@ class CVertices:
 		return self.__IVertices.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IVertices.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CVertex:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CVertex(self.__IVertices.Item(Index))
@@ -16349,13 +16384,13 @@ class CVectors:
 		return self.__IVectors.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IVectors.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CVector:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CVector(self.__IVectors.Item(Index))
@@ -16434,13 +16469,13 @@ class CLineSegments:
 		return self.__ILineSegments.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ILineSegments.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CLineSegment:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CLineSegment(self.__ILineSegments.Item(Index))
@@ -16567,13 +16602,13 @@ class CCellInstances:
 		return self.__ICellInstances.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ICellInstances.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CCellInstance:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CCellInstance(self.__ICellInstances.Item(Index))
@@ -16745,13 +16780,13 @@ class CCells:
 		return self.__ICells.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ICells.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CCell:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CCell(self.__ICells.Item(Index))
@@ -17048,13 +17083,13 @@ class CCellLibraries:
 		return self.__ICellLibraries.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ICellLibraries.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CCellLibrary:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CCellLibrary(self.__ICellLibraries.Item(Index))
@@ -17160,13 +17195,13 @@ class CEMLayerMapEntries:
 		return self.__IEMLayerMapEntries.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IEMLayerMapEntries.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CEMLayerMapEntry:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CEMLayerMapEntry(self.__IEMLayerMapEntries.Item(Index))
@@ -17267,13 +17302,13 @@ class CEMLayerMappings:
 		return self.__IEMLayerMappings.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IEMLayerMappings.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CEMLayerMapping:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CEMLayerMapping(self.__IEMLayerMappings.Item(Index))
@@ -17358,13 +17393,13 @@ class CLayerMapEntries:
 		return self.__ILayerMapEntries.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ILayerMapEntries.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CLayerMapEntry:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CLayerMapEntry(self.__ILayerMapEntries.Item(Index))
@@ -17454,13 +17489,13 @@ class CLayerMappings:
 		return self.__ILayerMappings.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ILayerMappings.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CLayerMapping:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CLayerMapping(self.__ILayerMappings.Item(Index))
@@ -17572,13 +17607,13 @@ class CLayerExportEntries:
 		return self.__ILayerExportEntries.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ILayerExportEntries.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CLayerExportEntry:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CLayerExportEntry(self.__ILayerExportEntries.Item(Index))
@@ -17685,13 +17720,13 @@ class CLayerExportMappings:
 		return self.__ILayerExportMappings.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ILayerExportMappings.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CLayerExportMapping:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CLayerExportMapping(self.__ILayerExportMappings.Item(Index))
@@ -17780,13 +17815,13 @@ class CLayerConfigurations:
 		return self.__ILayerConfigurations.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ILayerConfigurations.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CLayerConfiguration:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CLayerConfiguration(self.__ILayerConfigurations.Item(Index))
@@ -18180,13 +18215,13 @@ class CDrawingLayers:
 		return self.__IDrawingLayers.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IDrawingLayers.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDrawingLayer:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDrawingLayer(self.__IDrawingLayers.Item(Index))
@@ -18360,13 +18395,13 @@ class CDrillTools:
 		return self.__IDrillTools.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IDrillTools.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDrillTool:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDrillTool(self.__IDrillTools.Item(Index))
@@ -18420,13 +18455,13 @@ class CModifierDefDrawingObjects:
 		return self.__IModifierDefDrawingObjects.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IModifierDefDrawingObjects.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDrawingObject:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDrawingObject(self.__IModifierDefDrawingObjects.Item(Index))
@@ -18532,13 +18567,13 @@ class CModifierDefRecords:
 		return self.__IModifierDefRecords.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IModifierDefRecords.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CModifierDefRecord:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CModifierDefRecord(self.__IModifierDefRecords.Item(Index))
@@ -18614,13 +18649,13 @@ class CShapeModifierRecords:
 		return self.__IShapeModifierRecords.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IShapeModifierRecords.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CShapeModifierRecord:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CShapeModifierRecord(self.__IShapeModifierRecords.Item(Index))
@@ -18665,14 +18700,14 @@ class CShapeModifier:
 		return CBoundary(self.__IShapeModifier.Boundary)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def DisplayMode(self, mode: mwDisplayModeType):
 		"""Returns/sets various ShapeModifier display mode settings."""
 		return self.__IShapeModifier.DisplayMode(mode)
 
 
-	@DisplayMode.setter
-	def DisplayMode(self, mode: mwDisplayModeType, value):
+	# @DisplayMode.setter
+	def SetDisplayMode(self, mode: mwDisplayModeType, value):
 		"""Returns/sets various ShapeModifier display mode settings."""
 		self.__IShapeModifier.DisplayMode = value
 
@@ -18836,13 +18871,13 @@ class CShapeModifiers:
 		return self.__IShapeModifiers.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IShapeModifiers.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CShapeModifier:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CShapeModifier(self.__IShapeModifiers.Item(Index))
@@ -18959,13 +18994,13 @@ class CDesignRules:
 		return self.__IDesignRules.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IDesignRules.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDesignRule:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDesignRule(self.__IDesignRules.Item(Index))
@@ -19102,13 +19137,13 @@ class CDesignRuleErrors:
 		return self.__IDesignRuleErrors.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IDesignRuleErrors.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDesignRuleError:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDesignRuleError(self.__IDesignRuleErrors.Item(Index))
@@ -19239,13 +19274,13 @@ class CLVSErrors:
 		return self.__ILVSErrors.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ILVSErrors.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CLVSError:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CLVSError(self.__ILVSErrors.Item(Index))
@@ -19336,13 +19371,13 @@ class CLVSSchemHighlights:
 		return self.__ILVSSchemHighlights.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ILVSSchemHighlights.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CLVSSchemHighlight:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CLVSSchemHighlight(self.__ILVSSchemHighlights.Item(Index))
@@ -19445,13 +19480,13 @@ class CLVSNetHighlights:
 		return self.__ILVSNetHighlights.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ILVSNetHighlights.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CLVSNetHighlight:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CLVSNetHighlight(self.__ILVSNetHighlights.Item(Index))
@@ -19733,13 +19768,13 @@ class CDRCErrorShapes:
 		return self.__IDRCErrorShapes.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IDRCErrorShapes.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDRCErrorShape:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDRCErrorShape(self.__IDRCErrorShapes.Item(Index))
@@ -19869,14 +19904,14 @@ class CDrawingObject:
 		return CCell(self.__IDrawingObject.Cell)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def DisplayMode(self, mode: mwDisplayModeType):
 		"""Returns/sets various DrawingObject display mode settings."""
 		return self.__IDrawingObject.DisplayMode(mode)
 
 
-	@DisplayMode.setter
-	def DisplayMode(self, mode: mwDisplayModeType, value):
+	# @DisplayMode.setter
+	def SetDisplayMode(self, mode: mwDisplayModeType, value):
 		"""Returns/sets various DrawingObject display mode settings."""
 		self.__IDrawingObject.DisplayMode = value
 
@@ -20264,13 +20299,13 @@ class CDrawingObjects:
 		return self.__IDrawingObjects.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IDrawingObjects.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDrawingObject:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDrawingObject(self.__IDrawingObjects.Item(Index))
@@ -20465,13 +20500,13 @@ class CPolygonRecords:
 		return self.__IPolygonRecords.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IPolygonRecords.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CPolygonRecord:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CPolygonRecord(self.__IPolygonRecords.Item(Index))
@@ -20922,7 +20957,7 @@ class CSelectedDrawingObjects:
 		return self.__ISelectedDrawingObjects.FirstSelectedIndex
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDrawingObject:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDrawingObject(self.__ISelectedDrawingObjects.Item(Index))
@@ -20971,13 +21006,13 @@ class CGroupDrawingObjects:
 		return self.__IGroupDrawingObjects.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IGroupDrawingObjects.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDrawingObject:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDrawingObject(self.__IGroupDrawingObjects.Item(Index))
@@ -21016,13 +21051,13 @@ class CResultDrawingObjects:
 		return self.__IResultDrawingObjects.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IResultDrawingObjects.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDrawingObject:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDrawingObject(self.__IResultDrawingObjects.Item(Index))
@@ -21071,13 +21106,13 @@ class CContainerDrawingObjects:
 		return self.__IContainerDrawingObjects.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IContainerDrawingObjects.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDrawingObject:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDrawingObject(self.__IContainerDrawingObjects.Item(Index))
@@ -21601,7 +21636,7 @@ class CEMStructure:
 		self.__IEMStructure.Simulator = value
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def TestPoints(self, SimulationVendorName) -> CTestPoints:
 		"""Returns a reference to a collection of TestPoint objects."""
 		return CTestPoints(self.__IEMStructure.TestPoints(SimulationVendorName))
@@ -21713,13 +21748,13 @@ class CEMStructures:
 		return self.__IEMStructures.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IEMStructures.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CEMStructure:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CEMStructure(self.__IEMStructures.Item(Index))
@@ -22019,13 +22054,13 @@ class CEM3DStructures:
 		return self.__IEM3DStructures.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IEM3DStructures.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CEM3DStructure:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CEM3DStructure(self.__IEM3DStructures.Item(Index))
@@ -22305,13 +22340,13 @@ class CFaces:
 		return self.__IFaces.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IFaces.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CFace:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CFace(self.__IFaces.Item(Index))
@@ -22369,7 +22404,7 @@ class CCoordinateEntry:
 
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def EntryMode(self, modeType: mwCoordEntryMode):
 		"""Method allows checking the coordinate entry mode bits."""
 		return self.__ICoordinateEntry.EntryMode(modeType)
@@ -22994,13 +23029,13 @@ class CCellEditors:
 		return self.__ICellEditors.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ICellEditors.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CCellEditor:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CCellEditor(self.__ICellEditors.Item(Index))
@@ -23172,13 +23207,13 @@ class CMaterials:
 		return self.__IMaterials.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IMaterials.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CMaterial:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CMaterial(self.__IMaterials.Item(Index))
@@ -23342,13 +23377,13 @@ class CMaterialLayers:
 		return self.__IMaterialLayers.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IMaterialLayers.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CMaterialLayer:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CMaterialLayer(self.__IMaterialLayers.Item(Index))
@@ -23436,13 +23471,13 @@ class CShapeSubObjects:
 		return self.__IShapeSubObjects.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IShapeSubObjects.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CShapeSubObject:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CShapeSubObject(self.__IShapeSubObjects.Item(Index))
@@ -23530,13 +23565,13 @@ class CShapeSegments:
 		return self.__IShapeSegments.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IShapeSegments.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CShapeSegment:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CShapeSegment(self.__IShapeSegments.Item(Index))
@@ -23612,13 +23647,13 @@ class CShapeArcSegments:
 		return self.__IShapeArcSegments.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IShapeArcSegments.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CShapeArcSegment:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CShapeArcSegment(self.__IShapeArcSegments.Item(Index))
@@ -23824,13 +23859,13 @@ class CShapes:
 		return self.__IShapes.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IShapes.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CShape:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CShape(self.__IShapes.Item(Index))
@@ -23993,13 +24028,13 @@ class CDrawingSubObjects:
 		return self.__IDrawingSubObjects.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IDrawingSubObjects.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDrawingSubObject:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDrawingSubObject(self.__IDrawingSubObjects.Item(Index))
@@ -24127,13 +24162,13 @@ class CDrawingSegments:
 		return self.__IDrawingSegments.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IDrawingSegments.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDrawingSegment:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDrawingSegment(self.__IDrawingSegments.Item(Index))
@@ -24215,13 +24250,13 @@ class CDrawingArcSegments:
 		return self.__IDrawingArcSegments.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IDrawingArcSegments.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDrawingArcSegment:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDrawingArcSegment(self.__IDrawingArcSegments.Item(Index))
@@ -24260,19 +24295,19 @@ class CSnapshotInfo:
 		return self.__ISnapshotInfo.ShapeCount
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def ShapeOnLayerCount(self, LayerName):
 		"""Returns a count of the shapes on a specific layer in the Snapshot object."""
 		return self.__ISnapshotInfo.ShapeOnLayerCount(LayerName)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def ShapeTypeCount(self, Type: mwShapeType):
 		"""Returns a count of the shapes of a specific type in the Snapshot object."""
 		return self.__ISnapshotInfo.ShapeTypeCount(Type)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def ShapeTypeOnLayerCount(self, __MIDL__ISnapshotInfo0000: mwShapeType, LayerName):
 		"""Returns a count of the shapes of a specific type on a specific layer in the Snapshot object."""
 		return self.__ISnapshotInfo.ShapeTypeOnLayerCount(__MIDL__ISnapshotInfo0000, LayerName)
@@ -24497,13 +24532,13 @@ class CLibraryElements:
 		return self.__ILibraryElements.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ILibraryElements.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CLibraryElement:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CLibraryElement(self.__ILibraryElements.Item(Index))
@@ -24542,13 +24577,13 @@ class CHiddenLibraryElements:
 		return self.__IHiddenLibraryElements.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IHiddenLibraryElements.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CLibraryElement:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CLibraryElement(self.__IHiddenLibraryElements.Item(Index))
@@ -24599,7 +24634,7 @@ class CLibrary:
 		return CHiddenLibraries(self.__ILibrary.HiddenLibraries)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CModel:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CModel(self.__ILibrary.Item(Index))
@@ -24668,13 +24703,13 @@ class CLibraries:
 		return self.__ILibraries.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ILibraries.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CLibrary:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CLibrary(self.__ILibraries.Item(Index))
@@ -24738,13 +24773,13 @@ class CHiddenLibraries:
 		return self.__IHiddenLibraries.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IHiddenLibraries.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CHiddenLibrary:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CHiddenLibrary(self.__IHiddenLibraries.Item(Index))
@@ -24855,13 +24890,13 @@ class CMeasurementInfos:
 		return self.__IMeasurementInfos.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IMeasurementInfos.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CMeasurementInfo:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CMeasurementInfo(self.__IMeasurementInfos.Item(Index))
@@ -24948,13 +24983,13 @@ class CSimulatorInfos:
 		return self.__ISimulatorInfos.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ISimulatorInfos.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CSimulatorInfo:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CSimulatorInfo(self.__ISimulatorInfos.Item(Index))
@@ -24997,7 +25032,7 @@ class CModel:
 
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Category(self, Level):
 		"""Returns the category name of level of a Model object."""
 		return self.__IModel.Category(Level)
@@ -25015,25 +25050,25 @@ class CModel:
 		return self.__IModel.Company
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def DataParameter(self, Parameter, Index):
 		"""Returns/sets the value of a parameter contained in a parameter's data."""
 		return self.__IModel.DataParameter(Parameter, Index)
 
 
-	@DataParameter.setter
-	def DataParameter(self, Parameter, Index, value):
+	# @DataParameter.setter
+	def SetDataParameter(self, Parameter, Index, value):
 		"""Returns/sets the value of a parameter contained in a parameter's data."""
 		self.__IModel.DataParameter = value
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def DataParameterNames(self, Parameter):
 		"""Returns the names of the parameters contained in a parameter's data."""
 		return self.__IModel.DataParameterNames(Parameter)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def DataParameters(self, Parameter):
 		"""Returns the number of parameters contained in a parameter's data."""
 		return self.__IModel.DataParameters(Parameter)
@@ -25081,7 +25116,7 @@ class CModel:
 		return self.__IModel.ModuleFilename
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def NCorMatrix(self, Index, Rows, Columns):
 		"""Returns the N Correction results of the Model object simulate."""
 		return self.__IModel.NCorMatrix(Index, Rows, Columns)
@@ -25099,14 +25134,14 @@ class CModel:
 		return self.__IModel.NodeCount
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Parameter(self, Index):
 		"""Returns/sets the value of a parameters."""
 		return self.__IModel.Parameter(Index)
 
 
-	@Parameter.setter
-	def Parameter(self, Index, value):
+	# @Parameter.setter
+	def SetParameter(self, Index, value):
 		"""Returns/sets the value of a parameters."""
 		self.__IModel.Parameter = value
 
@@ -25159,7 +25194,7 @@ class CModel:
 		return self.__IModel.Version
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def YMatrix(self, Index, Rows, Columns):
 		"""Returns the Y results of the Model object simulate."""
 		return self.__IModel.YMatrix(Index, Rows, Columns)
@@ -25184,13 +25219,13 @@ class CModels:
 		return self.__IModels.Count
 
 
-	@property
+	# DMC # TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IModels.Exists(Index)
 
 
-	@property
+	# DMC # TODO: fix generator to remove @property
 	def Item(self, Index) -> CModel:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CModel(self.__IModels.Item(Index))
@@ -25259,14 +25294,14 @@ class CLayoutCell:
 		return self.__ILayoutCell.NumberNodes
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Parameter(self, Index):
 		"""Returns/sets the value of parameters contained in a parameter's data."""
 		return self.__ILayoutCell.Parameter(Index)
 
 
-	@Parameter.setter
-	def Parameter(self, Index, value):
+	# @Parameter.setter
+	def SetParameter(self, Index, value):
 		"""Returns/sets the value of parameters contained in a parameter's data."""
 		self.__ILayoutCell.Parameter = value
 
@@ -25308,13 +25343,13 @@ class CLayoutCells:
 		return self.__ILayoutCells.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ILayoutCells.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CLayoutCell:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CLayoutCell(self.__ILayoutCells.Item(Index))
@@ -25444,13 +25479,13 @@ class COptVariables:
 		return self.__IOptVariables.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IOptVariables.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> COptVariable:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return COptVariable(self.__IOptVariables.Item(Index))
@@ -25667,7 +25702,7 @@ class COptimizer:
 		return self.__IOptimizer.TypeCount
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def TypeName(self, Index):
 		"""Returns the name of a Optimizer type."""
 		return self.__IOptimizer.TypeName(Index)
@@ -25724,14 +25759,14 @@ class CSynthesizer:
 		return self.__ISynthesizer.Description
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def ElectricalParameter(self, Index):
 		"""Returns/sets the value of the electrical parameters."""
 		return self.__ISynthesizer.ElectricalParameter(Index)
 
 
-	@ElectricalParameter.setter
-	def ElectricalParameter(self, Index, value):
+	# @ElectricalParameter.setter
+	def SetElectricalParameter(self, Index, value):
 		"""Returns/sets the value of the electrical parameters."""
 		self.__ISynthesizer.ElectricalParameter = value
 
@@ -25760,14 +25795,14 @@ class CSynthesizer:
 		self.__ISynthesizer.Model = value
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def PhysicalParameter(self, Index):
 		"""Returns/sets the value of the physical parameters."""
 		return self.__ISynthesizer.PhysicalParameter(Index)
 
 
-	@PhysicalParameter.setter
-	def PhysicalParameter(self, Index, value):
+	# @PhysicalParameter.setter
+	def SetPhysicalParameter(self, Index, value):
 		"""Returns/sets the value of the physical parameters."""
 		self.__ISynthesizer.PhysicalParameter = value
 
@@ -25812,14 +25847,14 @@ class CSweeper:
 
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Value(self, Key):
 		"""Returns/sets the value of an added Equation or Parameter."""
 		return self.__ISweeper.Value(Key)
 
 
-	@Value.setter
-	def Value(self, Key, value):
+	# @Value.setter
+	def SetValue(self, Key, value):
 		"""Returns/sets the value of an added Equation or Parameter."""
 		self.__ISweeper.Value = value
 
@@ -25932,13 +25967,13 @@ class CTuneVariables:
 		return self.__ITuneVariables.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ITuneVariables.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CTuneVariable:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CTuneVariable(self.__ITuneVariables.Item(Index))
@@ -26096,13 +26131,13 @@ class CControlBarItems:
 		return self.__IControlBarItems.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IControlBarItems.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CControlBarItem:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CControlBarItem(self.__IControlBarItems.Item(Index))
@@ -26176,13 +26211,13 @@ class CMenuBars:
 		return self.__IMenuBars.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IMenuBars.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CMenuBar:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CMenuBar(self.__IMenuBars.Item(Index))
@@ -26267,13 +26302,13 @@ class CMenus:
 		return self.__IMenus.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IMenus.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CMenu:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CMenu(self.__IMenus.Item(Index))
@@ -26358,13 +26393,13 @@ class CMenuItems:
 		return self.__IMenuItems.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IMenuItems.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index):
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return self.__IMenuItems.Item(Index)
@@ -26419,13 +26454,13 @@ class CHotkeyTables:
 		return self.__IHotkeyTables.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IHotkeyTables.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CHotkeyTable:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CHotkeyTable(self.__IHotkeyTables.Item(Index))
@@ -26521,13 +26556,13 @@ class CHotkeys:
 		return self.__IHotkeys.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IHotkeys.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CHotkey:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CHotkey(self.__IHotkeys.Item(Index))
@@ -26612,13 +26647,13 @@ class CCommandTables:
 		return self.__ICommandTables.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ICommandTables.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CCommandTable:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CCommandTable(self.__ICommandTables.Item(Index))
@@ -26738,13 +26773,13 @@ class CCommands:
 		return self.__ICommands.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ICommands.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CCommand:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CCommand(self.__ICommands.Item(Index))
@@ -26967,13 +27002,13 @@ class CDrawingShapes:
 		return self.__IDrawingShapes.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IDrawingShapes.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDrawingShape:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDrawingShape(self.__IDrawingShapes.Item(Index))
@@ -27037,7 +27072,7 @@ class CSelectedDrawingShapes:
 		return self.__ISelectedDrawingShapes.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CDrawingShape:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CDrawingShape(self.__ISelectedDrawingShapes.Item(Index))
@@ -27095,13 +27130,13 @@ class CArguments:
 		return self.__IArguments.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IArguments.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CArgument:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CArgument(self.__IArguments.Item(Index))
@@ -27165,13 +27200,13 @@ class CFlightLines:
 		return self.__IFlightLines.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IFlightLines.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CFlightLine:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CFlightLine(self.__IFlightLines.Item(Index))
@@ -27344,13 +27379,13 @@ class CNetShapes:
 		return self.__INetShapes.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__INetShapes.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CNetShape:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CNetShape(self.__INetShapes.Item(Index))
@@ -27518,13 +27553,13 @@ class CPhysicalNets:
 		return self.__IPhysicalNets.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IPhysicalNets.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CPhysicalNet:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CPhysicalNet(self.__IPhysicalNets.Item(Index))
@@ -27859,13 +27894,13 @@ class CRoutes:
 		return self.__IRoutes.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IRoutes.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CRoute:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CRoute(self.__IRoutes.Item(Index))
@@ -27977,13 +28012,13 @@ class CRouteObjects:
 		return self.__IRouteObjects.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IRouteObjects.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CRouteObject:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CRouteObject(self.__IRouteObjects.Item(Index))
@@ -28161,13 +28196,13 @@ class CRouteSegments:
 		return self.__IRouteSegments.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IRouteSegments.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CRouteSegment:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CRouteSegment(self.__IRouteSegments.Item(Index))
@@ -28388,13 +28423,13 @@ class CRouteVias:
 		return self.__IRouteVias.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IRouteVias.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CRouteVia:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CRouteVia(self.__IRouteVias.Item(Index))
@@ -28500,13 +28535,13 @@ class CRouteGuides:
 		return self.__IRouteGuides.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IRouteGuides.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CRouteGuide:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CRouteGuide(self.__IRouteGuides.Item(Index))
@@ -28582,13 +28617,13 @@ class CRouteViaLineConnections:
 		return self.__IRouteViaLineConnections.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IRouteViaLineConnections.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CRouteViaLineConnection:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CRouteViaLineConnection(self.__IRouteViaLineConnections.Item(Index))
@@ -28670,13 +28705,13 @@ class CRouteViaPinConnections:
 		return self.__IRouteViaPinConnections.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IRouteViaPinConnections.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CRouteViaPinConnection:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CRouteViaPinConnection(self.__IRouteViaPinConnections.Item(Index))
@@ -28752,13 +28787,13 @@ class CExtents:
 		return self.__IExtents.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IExtents.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CExtent:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CExtent(self.__IExtents.Item(Index))
@@ -28876,13 +28911,13 @@ class CPins:
 		return self.__IPins.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IPins.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CPin:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CPin(self.__IPins.Item(Index))
@@ -28982,13 +29017,13 @@ class CLayoutModeSets:
 		return self.__ILayoutModeSets.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ILayoutModeSets.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CLayoutModeSet:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CLayoutModeSet(self.__ILayoutModeSets.Item(Index))
@@ -29076,13 +29111,13 @@ class CParameterDefaultValues:
 		return self.__IParameterDefaultValues.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IParameterDefaultValues.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CParameterDefaultValue:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CParameterDefaultValue(self.__IParameterDefaultValues.Item(Index))
@@ -29472,13 +29507,13 @@ class CLayoutProcessDefinitions:
 		return self.__ILayoutProcessDefinitions.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ILayoutProcessDefinitions.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CLayoutProcessDefinition:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CLayoutProcessDefinition(self.__ILayoutProcessDefinitions.Item(Index))
@@ -29604,13 +29639,13 @@ class CProcessLayerInfos:
 		return self.__IProcessLayerInfos.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IProcessLayerInfos.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CProcessLayerInfo:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CProcessLayerInfo(self.__IProcessLayerInfos.Item(Index))
@@ -29706,13 +29741,13 @@ class CProcessTypeInfos:
 		return self.__IProcessTypeInfos.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IProcessTypeInfos.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CProcessTypeInfo:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CProcessTypeInfo(self.__IProcessTypeInfos.Item(Index))
@@ -29802,13 +29837,13 @@ class CProcessPdkLineTypeInfos:
 		return self.__IProcessPdkLineTypeInfos.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IProcessPdkLineTypeInfos.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CProcessPdkLineTypeInfo:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CProcessPdkLineTypeInfo(self.__IProcessPdkLineTypeInfos.Item(Index))
@@ -29910,13 +29945,13 @@ class CProcessBridgeInfos:
 		return self.__IProcessBridgeInfos.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IProcessBridgeInfos.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CProcessBridgeInfo:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CProcessBridgeInfo(self.__IProcessBridgeInfos.Item(Index))
@@ -30016,13 +30051,13 @@ class CFontInfos:
 		return self.__IFontInfos.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IFontInfos.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CFontInfo:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CFontInfo(self.__IFontInfos.Item(Index))
@@ -30106,13 +30141,13 @@ class CProcessProperties:
 		return self.__IProcessProperties.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IProcessProperties.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CProcessProperty:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CProcessProperty(self.__IProcessProperties.Item(Index))
@@ -30163,7 +30198,7 @@ class CProcessViaType:
 		return self.__IProcessViaType.Number
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def ValidBetween(self, LineType1, LineType2):
 		"""Returns a value indicating if the via type is valid between two given line types."""
 		return self.__IProcessViaType.ValidBetween(LineType1, LineType2)
@@ -30226,13 +30261,13 @@ class CProcessViaTypes:
 		return self.__IProcessViaTypes.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IProcessViaTypes.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CProcessViaType:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CProcessViaType(self.__IProcessViaTypes.Item(Index))
@@ -30252,14 +30287,14 @@ class CProcessViaTypes:
 			 yield self.__get_Item(index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def PreferredBetween(self, LineType1, LineType2):
 		"""Returns/sets the name of the via type preferred between two given line types."""
 		return self.__IProcessViaTypes.PreferredBetween(LineType1, LineType2)
 
 
-	@PreferredBetween.setter
-	def PreferredBetween(self, LineType1, LineType2, value):
+	# @PreferredBetween.setter
+	def SetPreferredBetween(self, LineType1, LineType2, value):
 		"""Returns/sets the name of the via type preferred between two given line types."""
 		self.__IProcessViaTypes.PreferredBetween = value
 
@@ -30390,13 +30425,13 @@ class CBusNetNames:
 		return self.__IBusNetNames.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IBusNetNames.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CBusNetName:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CBusNetName(self.__IBusNetNames.Item(Index))
@@ -30466,13 +30501,13 @@ class CBundleBits:
 		return self.__IBundleBits.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IBundleBits.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CBundleBit:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CBundleBit(self.__IBundleBits.Item(Index))
@@ -30530,13 +30565,13 @@ class CBundleBuses:
 		return self.__IBundleBuses.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IBundleBuses.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CBundleBus:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CBundleBus(self.__IBundleBuses.Item(Index))
@@ -30606,13 +30641,13 @@ class CBundleInfos:
 		return self.__IBundleInfos.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IBundleInfos.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CBundleInfo:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CBundleInfo(self.__IBundleInfos.Item(Index))
@@ -30675,13 +30710,13 @@ class CEditHandles:
 		return self.__IEditHandles.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IEditHandles.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CEditHandle:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CEditHandle(self.__IEditHandles.Item(Index))
@@ -30751,13 +30786,13 @@ class CSelectFilterItems:
 		return self.__ISelectFilterItems.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ISelectFilterItems.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CSelectFilterItem:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CSelectFilterItem(self.__ISelectFilterItems.Item(Index))
@@ -30821,13 +30856,13 @@ class CCSelectFilters:
 		return self.__ISelectFilters.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ISelectFilters.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CSelectFilter:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CSelectFilter(self.__ISelectFilters.Item(Index))
@@ -31529,13 +31564,13 @@ class CZipArchiveItems:
 		return self.__IZipArchiveItems.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IZipArchiveItems.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CZipArchiveItem:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CZipArchiveItem(self.__IZipArchiveItems.Item(Index))
@@ -31850,13 +31885,13 @@ class CFileFilterEntries:
 		return self.__IFileFilterEntries.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IFileFilterEntries.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CFileFilterEntry:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CFileFilterEntry(self.__IFileFilterEntries.Item(Index))
@@ -31953,13 +31988,13 @@ class CFilePathEntries:
 		return self.__IFilePathEntries.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IFilePathEntries.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CFilePathEntry:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CFilePathEntry(self.__IFilePathEntries.Item(Index))
@@ -32364,13 +32399,13 @@ class CFileAttributes:
 		return self.__IFileAttributes.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IFileAttributes.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CFileAttribute:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CFileAttribute(self.__IFileAttributes.Item(Index))
@@ -32450,13 +32485,13 @@ class CScriptRoutines:
 		return self.__IScriptRoutines.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IScriptRoutines.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CScriptRoutine:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CScriptRoutine(self.__IScriptRoutines.Item(Index))
@@ -32552,7 +32587,7 @@ class CScriptModules:
 		return self.__IScriptModules.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IScriptModules.Exists(Index)
@@ -32564,7 +32599,7 @@ class CScriptModules:
 		return self.__IScriptModules.IsScriptRunning
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CScriptModule:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CScriptModule(self.__IScriptModules.Item(Index))
@@ -32644,13 +32679,13 @@ class CSimulationResults:
 		return self.__ISimulationResults.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ISimulationResults.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CSimulationResult:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CSimulationResult(self.__ISimulationResults.Item(Index))
@@ -32874,13 +32909,13 @@ class CSimulationFilters:
 		return self.__ISimulationFilters.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ISimulationFilters.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CSimulationFilter:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CSimulationFilter(self.__ISimulationFilters.Item(Index))
@@ -32976,13 +33011,13 @@ class CSwitchLists:
 		return self.__ISwitchLists.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ISwitchLists.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CSwitchList:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CSwitchList(self.__ISwitchLists.Item(Index))
@@ -33078,7 +33113,7 @@ class CConnectionRules:
 		return self.__IConnectionRules.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CConnectionRule:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CConnectionRule(self.__IConnectionRules.Item(Index))
@@ -33187,13 +33222,13 @@ class CCrossoverRuleEntries:
 		return self.__ICrossoverRuleEntries.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ICrossoverRuleEntries.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CCrossoverRuleEntry:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CCrossoverRuleEntry(self.__ICrossoverRuleEntries.Item(Index))
@@ -33294,13 +33329,13 @@ class CCrossoverRules:
 		return self.__ICrossoverRules.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ICrossoverRules.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CCrossoverRule:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CCrossoverRule(self.__ICrossoverRules.Item(Index))
@@ -33499,13 +33534,13 @@ class CProcessViaFillEntries:
 		return self.__IProcessViaFillEntries.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IProcessViaFillEntries.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CProcessViaFillEntry:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CProcessViaFillEntry(self.__IProcessViaFillEntries.Item(Index))
@@ -33709,13 +33744,13 @@ class CProcessViaFenceEntries:
 		return self.__IProcessViaFenceEntries.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IProcessViaFenceEntries.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CProcessViaFenceEntry:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CProcessViaFenceEntry(self.__IProcessViaFenceEntries.Item(Index))
@@ -33825,13 +33860,13 @@ class CProcessViaLineTypePairs:
 		return self.__IProcessViaLineTypePairs.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IProcessViaLineTypePairs.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CProcessViaLineTypePair:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CProcessViaLineTypePair(self.__IProcessViaLineTypePairs.Item(Index))
@@ -33851,7 +33886,7 @@ class CProcessViaLineTypePairs:
 			 yield self.__get_Item(index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def PairExists(self, First, Second):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IProcessViaLineTypePairs.PairExists(First, Second)
@@ -33901,13 +33936,13 @@ class CCellMappings:
 		return self.__ICellMappings.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ICellMappings.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CCellMapping:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CCellMapping(self.__ICellMappings.Item(Index))
@@ -34001,13 +34036,13 @@ class CEMPortTerminations:
 		return self.__IEMPortTerminations.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IEMPortTerminations.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CEMPortTermination:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CEMPortTermination(self.__IEMPortTerminations.Item(Index))
@@ -34276,13 +34311,13 @@ class CEMPorts:
 		return self.__IEMPorts.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IEMPorts.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CEMPort:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CEMPort(self.__IEMPorts.Item(Index))
@@ -34389,13 +34424,13 @@ class CSweepLabels:
 		return self.__ISweepLabels.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ISweepLabels.Exists(Index)
 
 
-	@property
+	## TODO: fix generator to remove @property
 	def Item(self, Index) -> CSweepLabel:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CSweepLabel(self.__ISweepLabels.Item(Index))
@@ -34464,19 +34499,19 @@ class CLayoutInfo:
 		return self.__ILayoutInfo.ShapeCount
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def ShapeOnLayerCount(self, LayerName):
 		"""Returns a count of the shapes on a specific layer in the Layout object."""
 		return self.__ILayoutInfo.ShapeOnLayerCount(LayerName)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def ShapeTypeCount(self, Type: mwShapeType):
 		"""Returns a count of the shapes of a specific type in the Layout object."""
 		return self.__ILayoutInfo.ShapeTypeCount(Type)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def ShapeTypeOnLayerCount(self, Type: mwShapeType, LayerName):
 		"""Returns a count of the shapes of a specific type on a Layout layer in the Layout object."""
 		return self.__ILayoutInfo.ShapeTypeOnLayerCount(Type, LayerName)
@@ -34548,13 +34583,13 @@ class CComponentTests:
 		return self.__IComponentTests.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IComponentTests.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CComponentTest:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CComponentTest(self.__IComponentTests.Item(Index))
@@ -34663,13 +34698,13 @@ class CStatusItems:
 		return self.__IStatusItems.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IStatusItems.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CStatusItem:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CStatusItem(self.__IStatusItems.Item(Index))
@@ -34759,13 +34794,13 @@ class CStatusGroups:
 		return self.__IStatusGroups.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IStatusGroups.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CStatusGroup:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CStatusGroup(self.__IStatusGroups.Item(Index))
@@ -34978,13 +35013,13 @@ class CViews:
 		return self.__IViews.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IViews.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CView:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CView(self.__IViews.Item(Index))
@@ -35285,13 +35320,13 @@ class CThreeDViews:
 		return self.__IThreeDViews.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IThreeDViews.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CThreeDView:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CThreeDView(self.__IThreeDViews.Item(Index))
@@ -35430,13 +35465,13 @@ class CEmbeddedDesigns:
 		return self.__IEmbeddedDesigns.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IEmbeddedDesigns.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CEmbeddedDesign:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CEmbeddedDesign(self.__IEmbeddedDesigns.Item(Index))
@@ -35636,13 +35671,13 @@ class CFileInfos:
 		return self.__IFileInfos.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IFileInfos.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CFileInfo:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CFileInfo(self.__IFileInfos.Item(Index))
@@ -35730,13 +35765,13 @@ class CFolderInfos:
 		return self.__IFolderInfos.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IFolderInfos.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CFolderInfo:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CFolderInfo(self.__IFolderInfos.Item(Index))
@@ -35971,13 +36006,13 @@ class CTreeNodes:
 		return self.__ITreeNodes.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ITreeNodes.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CTreeNode:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CTreeNode(self.__ITreeNodes.Item(Index))
@@ -36062,13 +36097,13 @@ class CProjectItems:
 		return self.__IProjectItems.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IProjectItems.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CProjectItem:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CProjectItem(self.__IProjectItems.Item(Index))
@@ -36175,13 +36210,13 @@ class CUserFolders:
 		return self.__IUserFolders.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IUserFolders.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CUserFolder:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CUserFolder(self.__IUserFolders.Item(Index))
@@ -36277,13 +36312,13 @@ class CWizardDocs:
 		return self.__IWizardDocs.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IWizardDocs.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CWizardDoc:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CWizardDoc(self.__IWizardDocs.Item(Index))
@@ -36362,13 +36397,13 @@ class CWizards:
 		return self.__IWizards.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IWizards.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CWizard:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CWizard(self.__IWizards.Item(Index))
@@ -36443,7 +36478,7 @@ class CVersionHistory:
 		return self.__IVersionHistory.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CVersionedItem:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CVersionedItem(self.__IVersionHistory.Item(Index))
@@ -36646,13 +36681,13 @@ class CVersionedItems:
 		return self.__IVersionedItems.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IVersionedItems.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CVersionedItem:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CVersionedItem(self.__IVersionedItems.Item(Index))
@@ -36785,13 +36820,13 @@ class CVersionControls:
 		return self.__IVersionControls.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IVersionControls.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CVersionControl:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CVersionControl(self.__IVersionControls.Item(Index))
@@ -36910,13 +36945,13 @@ class CAnnotations:
 		return self.__IAnnotations.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IAnnotations.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CAnnotation:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CAnnotation(self.__IAnnotations.Item(Index))
@@ -37134,25 +37169,25 @@ class CJobEntries:
 		return self.__IJobEntries.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def EntryById(self, JobId) -> CJobEntry:
 		"""Returns a JobEntry object for the given JobId."""
 		return CJobEntry(self.__IJobEntries.EntryById(JobId))
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IJobEntries.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def ExistsById(self, JobId):
 		"""Returns a value which determines if a JobEntry object for the given JobId exists."""
 		return self.__IJobEntries.ExistsById(JobId)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CJobEntry:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CJobEntry(self.__IJobEntries.Item(Index))
@@ -37264,13 +37299,13 @@ class CJobQueues:
 		return self.__IJobQueues.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IJobQueues.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CJobQueue:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CJobQueue(self.__IJobQueues.Item(Index))
@@ -37681,13 +37716,13 @@ class CSystemFolders:
 		return self.__ISystemFolders.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__ISystemFolders.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CSystemFolder:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CSystemFolder(self.__ISystemFolders.Item(Index))
@@ -37751,13 +37786,13 @@ class CEnvironmentVariables:
 		return self.__IEnvironmentVariables.Count
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Exists(self, Index):
 		"""Returns whether an item matching the specified criteria exists in the collection."""
 		return self.__IEnvironmentVariables.Exists(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Item(self, Index) -> CEnvironmentVariable:
 		"""Returns a specific item of a Collection object either by position or by key."""
 		return CEnvironmentVariable(self.__IEnvironmentVariables.Item(Index))
@@ -38169,7 +38204,7 @@ class COAWiz:
 		return self.__IOAWiz.OaLibCellCount
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def OaLibCellName(self, Index):
 		"""Get name of cell with specified view by index from OpenAccess library."""
 		return self.__IOAWiz.OaLibCellName(Index)
@@ -38187,7 +38222,7 @@ class COAWiz:
 		return self.__IOAWiz.OaLibCount
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def OaLibName(self, Index):
 		"""Get name of library from OpenAccess lib defs file by index."""
 		return self.__IOAWiz.OaLibName(Index)
@@ -38259,19 +38294,19 @@ class CNetSynthWiz:
 		self.__INetSynthWiz.ComponentList = value
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def FrequencyList(self, Coarse):
 		"""Get list of frequencies"""
 		return self.__INetSynthWiz.FrequencyList(Coarse)
 
 
-	@FrequencyList.setter
-	def FrequencyList(self, Coarse, value):
+	# @FrequencyList.setter
+	def SetFrequencyList(self, Coarse, value):
 		"""Get list of frequencies"""
 		self.__INetSynthWiz.FrequencyList = value
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def Goal(self, Index):
 		"""Get synthesis goal"""
 		return self.__INetSynthWiz.Goal(Index)
@@ -38289,13 +38324,13 @@ class CNetSynthWiz:
 		return self.__INetSynthWiz.IterationCount
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def NetworkComponentCount(self, Index):
 		"""Get count of components in synthesized network"""
 		return self.__INetSynthWiz.NetworkComponentCount(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def NetworkCost(self, Index):
 		"""Get cost for synthesized network"""
 		return self.__INetSynthWiz.NetworkCost(Index)
@@ -38307,50 +38342,50 @@ class CNetSynthWiz:
 		return self.__INetSynthWiz.NetworkCount
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def NetworkSens(self, Index):
 		"""Get sensitivity for synthesized network"""
 		return self.__INetSynthWiz.NetworkSens(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def NetworkTopology(self, Index):
 		"""Get description of synthesized network topology"""
 		return self.__INetSynthWiz.NetworkTopology(Index)
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def ParamDiscreteValueList(self, bstrListName):
 		"""Get parameter discrete value list"""
 		return self.__INetSynthWiz.ParamDiscreteValueList(bstrListName)
 
 
-	@ParamDiscreteValueList.setter
-	def ParamDiscreteValueList(self, bstrListName, value):
+	# @ParamDiscreteValueList.setter
+	def SetParamDiscreteValueList(self, bstrListName, value):
 		"""Get parameter discrete value list"""
 		self.__INetSynthWiz.ParamDiscreteValueList = value
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def ParameterConstraints(self, CompType: mwNetSynthCompTypes, bstrParamName) -> CNetSynthWiz_ParamConstraint:
 		"""Get specification for component parameter constraints"""
 		return CNetSynthWiz_ParamConstraint(self.__INetSynthWiz.ParameterConstraints(CompType, bstrParamName))
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def ParameterConstraintsEx(self, CompType: mwNetSynthCompTypes, FirstLastComp, bstrParamName) -> CNetSynthWiz_ParamConstraint:
 		"""Get specification for component parameter constraints"""
 		return CNetSynthWiz_ParamConstraint(self.__INetSynthWiz.ParameterConstraintsEx(CompType, FirstLastComp, bstrParamName))
 
 
-	@property
+	# TODO: fix generator to remove @property
 	def VendorLibComponents(self, LibCompType: mwNetSynthVendorLibCompTypes):
 		"""Get list of selected vendor library components"""
 		return self.__INetSynthWiz.VendorLibComponents(LibCompType)
 
 
-	@VendorLibComponents.setter
-	def VendorLibComponents(self, LibCompType: mwNetSynthVendorLibCompTypes, value):
+	# @VendorLibComponents.setter
+	def SetVendorLibComponents(self, LibCompType: mwNetSynthVendorLibCompTypes, value):
 		"""Get list of selected vendor library components"""
 		self.__INetSynthWiz.VendorLibComponents = value
 

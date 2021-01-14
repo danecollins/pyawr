@@ -1,48 +1,131 @@
+""" This file tests the API wrappers for the AWRDE COM API
 
-from pyawr.helpers import *
+    Due to the volume of calls in the API it is not practical to exhaustively test the API
+    so these are just spot checks of the API functionality.
+"""
+import os
+import pytest
+import pyawr.mwoffice as mwo
+import pdb
 
-awr = connect()
-
-
-def test_vbrange():
-    assert vbrange(5) == range(1, 6)
-
-def test_open_example():
-    open_example(awr, 'LPF_lumped.emp')
-    expected = ['Passband and Stopband', 'Input Match', 'Group Delay', 'Output Match', 'Windowed Max to Min Response']
-    graphs = [x.Name for x in awr.Project.Graphs]
-    assert graphs == expected
-
-
-def test_meas_from_graph():
-    open_example(awr, 'LPF_lumped.emp')
-    measurements = meas_from_graph(awr, 'Passband and Stopband')
-    assert len(measurements) == 3
-    expected = ['LPF:DB(|S(1,1)|)', 'LPF:DB(|S(2,1)|)', 'LPF:DB(|S(2,2)|)']
-    actual = [m.Name for m in measurements]
-    assert actual == expected
+@pytest.fixture
+def awrde() -> mwo.CMWOffice:
+    global awrde  # type: mwo.CMWOffice
+    awrde = mwo.CMWOffice()
+    awrde.TestMode = 1
+    try:
+        awrde.Project.Name
+    except:
+        test_project = os.path.join(os.path.dirname(__file__), '..', 'testdata', 'lpf_lumped.emp')
+        awrde.Open(test_project)
+    return awrde
 
 
-def test_create():
-    open_example(awr, 'LPF_lumped.emp')
-    awr.Project.Simulate()
-    m = awr.Project.Graphs('Passband and Stopband').Measurements('LPF:DB(|S(2,1)|)')
-    am = AwrMeas(m)
-    assert am.source == 'LPF'
-    assert am.name == 'DB(|S(2,1)|)'
-    assert am.plot_dim == 2
-    assert am.data_type == 'mwMDT_ReflectionData'
-    assert am.x_units == 'mwUT_Frequency'
-    assert am.y_units == 'mwUT_None'
-    assert len(am.df) == 95
+def test_project_graphs(awrde: mwo.CMWOffice):
+    # get as a list
+    graphs = awrde.Project.Graphs
+    l = list(graphs)
+    assert len(l) > 0
+
+    first_graph = l[0]
+    assert isinstance(first_graph.Name, str)  # get the name of the graph
+    graph = awrde.Project.Graphs('Group Delay')  # get graph by name
+    assert graph.Name == 'Group Delay'
+    assert len(list(graph.Measurements)) == 1
+    orig_num_graphs = len(l)
+    graphs.Add('Test Graph 1', mwo.mwGraphType.mwGT_Tabular)
+    assert graphs.Count == orig_num_graphs + 1  # test count also
+    graphs.Remove('Test Graph 1')
+    assert graphs.Count == orig_num_graphs
+
+    # test item accessor
+    g1 =  graphs.Item(1)
+    assert g1.Name == first_graph.Name
+
+    # test exists
+    assert graphs.Exists('Group Delay') == True
+    assert graphs.Exists('Dummy') == False
 
 
-def test_meas_to_df():
-    open_example(awr, 'LPF_lumped.emp')
-    awr.Project.Simulate()
-    m = awr.Project.Graphs('Passband and Stopband').Measurements('LPF:DB(|S(2,1)|)')
-    am = AwrMeas(m)
-    df = am.meas_to_df()
-    assert min(df.x) == 1e8
-    assert max(df.x) == 1e9
+
+
+def test_project_schematics(awrde: mwo.CMWOffice):
+    schematics = awrde.Project.Schematics
+    l = list(schematics)
+    assert len(l) > 0
+    first_schematic = l[0]
+    assert isinstance(first_schematic.Name, str)  # get the name of the schematic
+    sch = awrde.Project.Schematics('LPF')  # get schematic by name
+    assert sch.Name == 'LPF'
+    assert len(list(sch.Elements)) > 0  # make sure there are elements
+    orig_num_sch = len(l)
+    schematics.Add('Test Schematic 1')
+    assert schematics.Count == orig_num_sch + 1  # test count also
+    schematics.Remove('Test Schematic 1')
+    assert schematics.Count == orig_num_sch
+
+    # test item accessor
+    assert schematics.Item(1).Name == first_schematic.Name
+
+    # test exists
+    assert schematics.Exists('LPF') == True
+    assert schematics.Exists('Dummy') == False
     
+
+def test_project_datafiles(awrde: mwo.CMWOffice):
+    datafiles = awrde.Project.DataFiles
+    l = list(datafiles)
+    assert len(l) > 0
+    df = l[0]
+    assert df.Type == 0
+    assert mwo.mwDataFileType(df.Type)._name_ == 'mwDFT_SNP'
+
+
+def test_models(awrde: mwo.CMWOffice):
+    model = awrde.Models.Item(1000)
+    assert isinstance(model.Name, str)
+    assert model.NodeCount > 0
+    parameters = list(model.ParameterDefinitions)
+    p = parameters[0]
+    assert isinstance(p.Name, str)
+    assert isinstance(p.Description, str)
+
+    model = awrde.Models('MLIN')
+    assert model.NodeCount == 2
+    p = model.ParameterDefinitions(3)
+    assert p.Name == 'L'
+    assert p.Description == 'Conductor Length'
+    assert mwo.mwUnitType(p.UnitType)._name_ == 'mwUT_Length'
+
+
+def test_measurement_sweeplabels(awrde: mwo.CMWOffice):
+    awrde.Project.Simulate()  # required to access measurement data
+    meas = awrde.Project.Graphs('Group Delay').Measurements(1)
+    # Sweep Labels are not consistent
+    # graph.Measurements returns a Measurements object
+    # but meas.SweepLabels returns a function rather than a SweepLabels object
+    assert callable(meas.SweepLabels)
+    sl = meas.SweepLabels(1)
+
+
+def test_designnotes(awrde: mwo.CMWOffice):
+    dn = awrde.Project.DesignNotes(1)
+    assert "lumped element filter" in dn.PlainText
+
+    # test generator
+    dn = list(awrde.Project.DesignNotes)[0]
+    assert "lumped element filter" in dn.PlainText
+
+
+def test_directories(awrde: mwo.CMWOffice):
+    dirs = {x.Name: x.Value for x in list(awrde.Directories)}
+    assert 'AppDir' in dirs
+    assert 'Examples' in dirs
+    assert os.path.exists(dirs['AppDataCommon'])
+
+
+def test_options(awrde: mwo.CMWOffice):
+    opts = {x.Name: x.Value for x in list(awrde.Options)}
+    assert isinstance(opts['SchemEquationFontSize'], int)
+    assert isinstance(opts['LayoutPrintScaleFactor'], float)
+
