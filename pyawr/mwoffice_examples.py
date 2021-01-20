@@ -4,7 +4,7 @@
 # 3) Create a graph and add measurements 
 # 4) Simulate
 
-import pyawr.mwoffice as mwoffice
+import mwoffice
 
 office = mwoffice.CMWOffice()
 office.New("MyProject")
@@ -85,3 +85,16 @@ poly = [0, 0, 0, 100e-6, 100e-6, 100e-6, 100e-6, 0]
 drawingObj = lay.DrawingObjects.AddPolygon(poly, "Thick Metal")
 print("Base Position = ( x = {}, y = {} )".format(drawingObj.BasePosition.x * 1e6, drawingObj.BasePosition.y * 1e6))
 
+schem = proj.Schematics[0]
+print("Indexed by name: {}".format(schem.Name))
+
+print("Print class directly")
+print(schem)
+print(schems)
+
+schem = proj.Schematics[-1]
+print("Indexed by negative: {}".format(schem.Name))
+
+
+for sch in schems[0:1]:
+    print("indexed by range: {}".format(schem.Name))

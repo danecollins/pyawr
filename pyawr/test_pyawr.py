@@ -5,7 +5,7 @@
 """
 import os
 import pytest
-import pyawr.mwoffice as mwo
+import mwoffice as mwo
 import pdb
 
 @pytest.fixture
@@ -13,10 +13,15 @@ def awrde() -> mwo.CMWOffice:
     global awrde  # type: mwo.CMWOffice
     awrde = mwo.CMWOffice()
     awrde.TestMode = 1
+    test_project = os.path.join(os.path.dirname(__file__), '..', 'testdata', 'lpf_lumped.emp')
     try:
         awrde.Project.Name
     except:
-        test_project = os.path.join(os.path.dirname(__file__), '..', 'testdata', 'lpf_lumped.emp')
+        print('Opening lpf_lumped.emp')
+        awrde.Open(test_project)
+
+    if awrde.Project.Name != 'lpf_lumped.emp':
+        awrde.Project.Close(False)
         awrde.Open(test_project)
     return awrde
 
@@ -129,3 +134,18 @@ def test_options(awrde: mwo.CMWOffice):
     assert isinstance(opts['SchemEquationFontSize'], int)
     assert isinstance(opts['LayoutPrintScaleFactor'], float)
 
+
+def test_slices(awrde: mwo.CMWOffice):
+    awrde = mwo.CMWOffice()
+
+    frequency_objects = awrde.Project.Frequencies
+    assert frequency_objects[0].Value == 0.1e9
+    assert frequency_objects[-1].Value == 1.0e9
+    frequency_list = [f.Value for f in frequency_objects[:5]]
+    assert len(frequency_list) == 5
+
+
+def test_str(awrde: mwo.CMWOffice):
+    assert str(awrde.Project) == 'CProject(lpf_lumped.emp)'  # object is in form class(value of Name property)
+    assert str(awrde.Project.Schematics) == 'CSchematics(1)'  # collection is of the form class(number of objects)
+    assert str(awrde.Project.Schematics[0]) == 'CSchematic(LPF)'
