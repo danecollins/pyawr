@@ -74,3 +74,114 @@ class AwrMeas:
     def __str__(self) -> str:
         return "AwrMeas({}:{},type={},dim={},pts={})".format(self.source, self.name,
                                                              self.data_type, self.plot_dim, len(self.df))
+
+
+class AwrMeasurement():
+    def __init__(self, measurement: mwo.CMeasurement):
+        (source, name, simulator) = self.parse_meas_string(measurement.Name)
+
+        self.name = name
+        self.source = source  # schematic name for example
+        self.simulator = simulator
+        self.data_type = mwo.mwMeasDataType(measurement.DataType)._name_
+        self.plot_dim = measurement.PlotDimension
+        self.x_units = mwo.mwUnitType(measurement.UnitType(1))._name_
+        self.y_units = mwo.mwUnitType(measurement.UnitType(2))._name_
+
+    @classmethod
+    def parse_meas_string(cls, s: str) -> Tuple[str, str, str]:
+        (source, name) = s.split(':')
+        if '.' in source:
+            (source, simulator) = source.split('.')
+        else:
+            simulator = ''
+        return (source, name, simulator)
+
+class Netlister:
+    def __init__(self, awrde: mwo.CMWOffice, schematic: mwo.CSchematic):
+        self.awrde = awrde
+        self.schematic = schematic
+        self.subcircuits = set()
+        self.datafiles = set()
+
+    def output_nodes(self, element):
+        for i, n in enumerate(element.Nodes, 1):
+            pn = n.PortNumber
+            nn = n.NodeNumber
+            print(f'pin({i})=node({nn}) ', end='')
+
+    def output_parameters(self, element):
+        for p in element.Parameters:
+            print(f'{p.Name}={p.ValueAsString} ', end='')
+
+    def output_element(self, elem: mwo.CElement):
+        awrde = self.awrde
+        if 'SUBCKT' in elem.Name:
+            # get the name of the subcircuit, will be double quoted so remove them
+            subckt_name = elem.Parameters('NET').ValueAsString.replace('"', '')
+            # need to determine the type
+            if awrde.Project.Schematics.Exists(subckt_name):
+                self.output_sch_subcircuit(elem, subckt_name)
+            elif awrde.Project.EMStructures.Exists(subckt_name):
+                self.output_em_structure(elem, subckt_name)
+            elif awrde.Project.EM3DStructures.Exists(subckt_name):
+                self.output_em3d_structure(elem, subckt_name)
+            elif awrde.Project.DataFiles.Exists(subckt_name):
+                self.output_datafile(elem, subckt_name)
+            else:
+                pdb.set_trace()
+                raise ValueError(f'Cannot find subcircuit named "{subckt_name}"')
+        else:
+            try:
+                (name, _) = elem.Name.split('.')
+            except:
+                # elements like GND don't have ID's
+                name = elem.Name
+            print(f'{name} ', end='')
+            self.output_nodes(elem)
+            self.output_parameters(elem)
+            print()
+
+
+    def output_em_structure(self, elem: mwo.CElement, name: str):
+        print(f'EM_Structure ', end='')
+        self.output_nodes(elem)
+        self.output_parameters(elem)
+        print()
+
+
+    def output_em3d_structure(self, elem: mwo.CElement, name: str):
+        print(f'3DEM_Structure ', end='')
+        self.output_nodes(elem)
+        self.output_parameters(elem)
+        print()
+
+    def output_sch_subcircuit(self, elem: mwo.CElement, name: str):
+        print(f'Subcircuit ', end='')
+        self.output_nodes(elem)
+        self.output_parameters(elem)
+        self.subcircuits.add(name)
+
+    def output_datafile(self, elem: mwo.CElement, name: str):
+        print(f'Datafile ', end='')
+        self.output_nodes(elem)
+        self.output_parameters(elem)
+        self.datafiles.add(name)
+
+    def generate(self):
+        for element in self.schematic.Elements:
+            self.output_element(element)
+        
+        # now we have to netlist all the referenced schematics
+        while self.subcircuits:
+            schematic_name = self.subcircuits.pop()
+            # get the schematic by name
+            schematic = self.awrde.Project.Schematics(schematic_name)
+            print(f'\nDEFINE_SCHEMATIC {schematic_name}')
+            for element in schematic.Elements:
+                self.output_element(element)
+            print(f'END_SCHEMATIC {schematic_name}')
+            print()
+        while self.datafiles:
+            datafile = self.datafiles.pop()
+            print(f'INCLUDE "{datafile}"')
