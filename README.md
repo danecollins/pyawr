@@ -42,3 +42,47 @@ In addition to the layer over win32com, the pyawr package also provides a set of
 
 Usage information and examples are available on the AWR KnowledgeBase, see [AWR Scripting in Python](http://kb.awr.com/display/SCRIPTS/AWR+Scripting+in+Python)
 
+### Some Important Things to Note
+
+##### Ranges
+
+In many cases we have tried to be more pythonic in our interface so we have implemented capabilities such as ranges on collections with zero-based indeces which is standard in python rather than the one-based index in the COM API.  This means that both of these would get the same schematic:
+
+		awrde.Project.Schematics.Item(1)
+		awrde.Project.Schematics[0]
+
+You can also get a list of objects using standard range syntax such as:
+
+		awrde.Project.Schematics[1:-1]
+		awrde.Project.Schematics[1:5:2]
+
+Note that since the range operator can return an object or a list, it will often confuse Intellisense requiring you to add type information if you want to get proper Intellisense on the returned object.  For example this will not provide Intellisense on the schematic:
+
+		schematic = awrde.Project.Schematic[0]
+
+But both of these will:
+
+		schematic = awrde.Project.Schematics[0]  # type: mwoffice.CSchematic
+		schematic = awrde.Project.Schematics.Item(1)  # always returns a CSchematic
+
+##### __str__
+
+String representations of the objects will be of the form "<classname>(object name)" for objects or "<classname>(number of objects in collection)" for collections.
+
+##### Enumerations
+
+The AWR API uses a large number of enumerations.  Let's look at this example:
+		
+		>>> datafile = awrde.Project.DataFiles[0]  (1)
+		>>> df_type = mwo.mwDataFileType(datafile.Type)  (2)
+		>>> type(df_type)  (3)
+		<enum 'mwDataFileType'>  (4)
+		>>> df_type._name_  (5)
+		'mwDFT_GMDIFD'  (6)
+
+Here we get a datafile object and examine its type.  The type is numeric but we can use the corresponding function (mwo.mwDataFileType) to map that to the enumeration object (line 2).  Using that object we can get a string form of the name (line 5)
+
+To set an attribute we would do the inverse
+
+		>>> attrib = mwo.mwDataFileType.mwDFT_GMDIFD._value_
+
