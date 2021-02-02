@@ -2,10 +2,9 @@
 # Id String = {5AE2215C-270C-470B-A2B6-609A964E53A2}#16.0#0#Win64
 # Guid      = {5AE2215C-270C-470B-A2B6-609A964E53A2}
 # Lib File  = C:\AWR\MWO_Dev\Debug\MWOffice.exe
-# 01/19/21 10:38:12
+# 01/28/21 21:01:49
 
 from __future__ import annotations
-from typing import List, Union
 from enum import IntEnum
 import win32com.client
 awrc = win32com.client.constants
@@ -2279,6 +2278,43 @@ class mwUnitMultType(IntEnum):
 	mwUMT_dbm = 20
 	mwUMT_dbw = 21
 
+class mwVoidFlagType(IntEnum):
+	"""Constants that define the different flags that can be set for the voiding options."""
+	mwVDF_None = 0
+	mwVDF_IsDynShape = 1
+	mwVDF_NonDefault = 2
+	mwVDF_PinVoidInline = 4
+	mwVDF_Round = 8
+	mwVDF_FullRound = 16
+	mwVDF_AnyRound = 24
+	mwVDF_ShowTopDynOnly = 32
+
+class mwConstraintSetType(IntEnum):
+	"""Constants that define the different types of constraint set types."""
+	mwCST_Spacing = 0
+	mwCST_SameNetSpacing = 1
+	mwCST_NetOnly = 2
+
+class mwConstraintInfoType(IntEnum):
+	"""Constants that define the different types of constraint info types."""
+	mwCIT_AllTypes = -1
+	mwCIT_Line = 0
+	mwCIT_ThruPin = 1
+	mwCIT_SMDPin = 2
+	mwCIT_TestPin = 3
+	mwCIT_ThroughVia = 4
+	mwCIT_BBVia = 5
+	mwCIT_MicroVia = 6
+	mwCIT_TestVia = 7
+	mwCIT_Shape = 8
+	mwCIT_BondFinger = 9
+	mwCIT_Hole = 10
+	mwCIT_END = 11
+	mwCIT_PIN = 12
+	mwCIT_VIA = 13
+	mwCIT_MIN_BVIA_GAP = 14
+	mwCIT_END_ALL = 15
+
 class mwNetlistType(IntEnum):
 	"""Constants that define different types of netlists."""
 	mwNLT_AWR = 0
@@ -2819,11 +2855,6 @@ class CMWOffice:
 	def __get_inner(self):
 		return self.__IMWOffice
 
-	def Test(self) -> None:
-		"""method Test"""
-		self.__IMWOffice.Test()
-
-
 	def New(self, Name: str) -> bool:
 		"""Creates a new Project."""
 		return self.__IMWOffice.New(Name)
@@ -2839,19 +2870,9 @@ class CMWOffice:
 		self.__IMWOffice.Dispose()
 
 
-	def Import(self, SourceFile: str, MapFile: str = "") -> bool:
-		"""Adds an object to the collection from a file and returns a reference to the created object."""
-		return self.__IMWOffice.Import(SourceFile, MapFile)
-
-
 	def Activate(self) -> None:
 		"""Activates the Window associated with the object."""
 		self.__IMWOffice.Activate()
-
-
-	def Customize(self, MethodId: int, Value, pValue) -> None:
-		"""Returns a reference to a collection of Attribute objects."""
-		self.__IMWOffice.Customize(MethodId, Value, pValue)
 
 
 	def NewWithProcessLibrary(self, ProcessLibrary: str) -> None:
@@ -2874,16 +2895,6 @@ class CMWOffice:
 		return self.__IMWOffice.SendEMail(ppEmail.__get_inner())
 
 
-	def LicenseHeartbeat(self) -> bool:
-		"""Triggers a license heartbeat call."""
-		return self.__IMWOffice.LicenseHeartbeat()
-
-
-	def EmxHeaderInfo(self, file_name: str) -> String:
-		"""Returns x-model header info for a *.emx file"""
-		return self.__IMWOffice.EmxHeaderInfo(file_name)
-
-
 	def InvokeCommand(self, CommandName: str, Arguments, pRet) -> None:
 		"""Invoke a application level menu command by name. Any required input will need to be supplied in the arguments."""
 		self.__IMWOffice.InvokeCommand(CommandName, Arguments, pRet)
@@ -2894,11 +2905,6 @@ class CMWOffice:
 		self.__IMWOffice.StartCommand(CommandName, pRet)
 
 
-	def LoadDlls(self, Directory: str) -> None:
-		"""Loads all dlls in directory, internal use only"""
-		self.__IMWOffice.LoadDlls(Directory)
-
-
 
 	@property
 	def Active(self) -> bool:
@@ -2907,7 +2913,7 @@ class CMWOffice:
 
 
 	@property
-	def AppName(self) -> String:
+	def AppName(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IMWOffice.AppName
 
@@ -2955,7 +2961,7 @@ class CMWOffice:
 
 
 	@property
-	def Caption(self) -> String:
+	def Caption(self) -> str:
 		"""Returns/Sets the caption of an object."""
 		return self.__IMWOffice.Caption
 
@@ -2985,7 +2991,7 @@ class CMWOffice:
 
 
 	@property
-	def ExeName(self) -> String:
+	def ExeName(self) -> str:
 		"""Returns the name of the MWOffice application executable file."""
 		return self.__IMWOffice.ExeName
 
@@ -3020,11 +3026,6 @@ class CMWOffice:
 		return CScriptModules(self.__IMWOffice.GlobalScripts)
 
 
-	def HasFeature(self, Feature: str, Version: float, CheckOutNow: bool) -> bool:
-		"""Returns whether the user is licensed to use a specific feature."""
-		return self.__IMWOffice.HasFeature(Feature, Version, CheckOutNow)
-
-
 	@property
 	def Height(self) -> int:
 		"""Returns/sets the height of a Window object."""
@@ -3044,7 +3045,7 @@ class CMWOffice:
 
 
 	@property
-	def InstanceCLSID(self) -> String:
+	def InstanceCLSID(self) -> str:
 		"""Returns the CLSID of the current MWOffice Application instance"""
 		return self.__IMWOffice.InstanceCLSID
 
@@ -3098,12 +3099,6 @@ class CMWOffice:
 
 
 	@property
-	def MenuBars(self) -> CMenuBars:
-		"""Returns a reference to a collection of MenuBar objects."""
-		return CMenuBars(self.__IMWOffice.MenuBars)
-
-
-	@property
 	def Models(self) -> CModels:
 		"""Returns a reference to a collection of Model objects representing the available circuit elements."""
 		return CModels(self.__IMWOffice.Models)
@@ -3128,7 +3123,7 @@ class CMWOffice:
 
 
 	@property
-	def Path(self) -> String:
+	def Path(self) -> str:
 		"""Returns the path of the MWOffice application."""
 		return self.__IMWOffice.Path
 
@@ -3149,12 +3144,6 @@ class CMWOffice:
 	def RecentProjects(self) -> CProjectFiles:
 		"""Returns a reference to a MWOffice ProjectFiles collection."""
 		return CProjectFiles(self.__IMWOffice.RecentProjects)
-
-
-	@property
-	def RegressionCaptureMode(self) -> bool:
-		"""Returns if the application object is running in regression capture mode."""
-		return self.__IMWOffice.RegressionCaptureMode
 
 
 	@property
@@ -3216,24 +3205,6 @@ class CMWOffice:
 
 
 	@property
-	def TestMode(self) -> bool:
-		"""Returns/sets if the application object is running in test mode."""
-		return self.__IMWOffice.TestMode
-
-
-	@TestMode.setter
-	def TestMode(self, value: bool):
-		"""Returns/sets if the application object is running in test mode."""
-		self.__IMWOffice.TestMode = value
-
-
-	@property
-	def Tester(self) -> CRegressionTester:
-		"""Returns a reference to a MWOffice RegressionTester object."""
-		return CRegressionTester(self.__IMWOffice.Tester)
-
-
-	@property
 	def Top(self) -> int:
 		"""Returns/sets the top edge of a Window object."""
 		return self.__IMWOffice.Top
@@ -3243,12 +3214,6 @@ class CMWOffice:
 	def Top(self, value: int):
 		"""Returns/sets the top edge of a Window object."""
 		self.__IMWOffice.Top = value
-
-
-	@property
-	def TypelibVersion(self) -> float:
-		"""Returns the version of the MWOffice type library."""
-		return self.__IMWOffice.TypelibVersion
 
 
 	def UserSetting(self, Category: str, ValueName: str):
@@ -3268,7 +3233,7 @@ class CMWOffice:
 
 
 	@property
-	def VersionString(self) -> String:
+	def VersionString(self) -> str:
 		"""Returns the version string for the MWOffice Application."""
 		return self.__IMWOffice.VersionString
 
@@ -3333,11 +3298,6 @@ class CApplication:
 
 
 
-	def Test(self) -> None:
-		"""method Test"""
-		self.__IMWOffice.Test()
-
-
 	def New(self, Name: str) -> bool:
 		"""Creates a new Project."""
 		return self.__IMWOffice.New(Name)
@@ -3353,19 +3313,9 @@ class CApplication:
 		self.__IMWOffice.Dispose()
 
 
-	def Import(self, SourceFile: str, MapFile: str = "") -> bool:
-		"""Adds an object to the collection from a file and returns a reference to the created object."""
-		return self.__IMWOffice.Import(SourceFile, MapFile)
-
-
 	def Activate(self) -> None:
 		"""Activates the Window associated with the object."""
 		self.__IMWOffice.Activate()
-
-
-	def Customize(self, MethodId: int, Value, pValue) -> None:
-		"""Returns a reference to a collection of Attribute objects."""
-		self.__IMWOffice.Customize(MethodId, Value, pValue)
 
 
 	def NewWithProcessLibrary(self, ProcessLibrary: str) -> None:
@@ -3388,16 +3338,6 @@ class CApplication:
 		return self.__IMWOffice.SendEMail(ppEmail.__get_inner())
 
 
-	def LicenseHeartbeat(self) -> bool:
-		"""Triggers a license heartbeat call."""
-		return self.__IMWOffice.LicenseHeartbeat()
-
-
-	def EmxHeaderInfo(self, file_name: str) -> String:
-		"""Returns x-model header info for a *.emx file"""
-		return self.__IMWOffice.EmxHeaderInfo(file_name)
-
-
 	def InvokeCommand(self, CommandName: str, Arguments, pRet) -> None:
 		"""Invoke a application level menu command by name. Any required input will need to be supplied in the arguments."""
 		self.__IMWOffice.InvokeCommand(CommandName, Arguments, pRet)
@@ -3408,11 +3348,6 @@ class CApplication:
 		self.__IMWOffice.StartCommand(CommandName, pRet)
 
 
-	def LoadDlls(self, Directory: str) -> None:
-		"""Loads all dlls in directory, internal use only"""
-		self.__IMWOffice.LoadDlls(Directory)
-
-
 
 	@property
 	def Active(self) -> bool:
@@ -3421,7 +3356,7 @@ class CApplication:
 
 
 	@property
-	def AppName(self) -> String:
+	def AppName(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IMWOffice.AppName
 
@@ -3469,7 +3404,7 @@ class CApplication:
 
 
 	@property
-	def Caption(self) -> String:
+	def Caption(self) -> str:
 		"""Returns/Sets the caption of an object."""
 		return self.__IMWOffice.Caption
 
@@ -3499,7 +3434,7 @@ class CApplication:
 
 
 	@property
-	def ExeName(self) -> String:
+	def ExeName(self) -> str:
 		"""Returns the name of the MWOffice application executable file."""
 		return self.__IMWOffice.ExeName
 
@@ -3534,11 +3469,6 @@ class CApplication:
 		return CScriptModules(self.__IMWOffice.GlobalScripts)
 
 
-	def HasFeature(self, Feature: str, Version: float, CheckOutNow: bool) -> bool:
-		"""Returns whether the user is licensed to use a specific feature."""
-		return self.__IMWOffice.HasFeature(Feature, Version, CheckOutNow)
-
-
 	@property
 	def Height(self) -> int:
 		"""Returns/sets the height of a Window object."""
@@ -3558,7 +3488,7 @@ class CApplication:
 
 
 	@property
-	def InstanceCLSID(self) -> String:
+	def InstanceCLSID(self) -> str:
 		"""Returns the CLSID of the current MWOffice Application instance"""
 		return self.__IMWOffice.InstanceCLSID
 
@@ -3612,12 +3542,6 @@ class CApplication:
 
 
 	@property
-	def MenuBars(self) -> CMenuBars:
-		"""Returns a reference to a collection of MenuBar objects."""
-		return CMenuBars(self.__IMWOffice.MenuBars)
-
-
-	@property
 	def Models(self) -> CModels:
 		"""Returns a reference to a collection of Model objects representing the available circuit elements."""
 		return CModels(self.__IMWOffice.Models)
@@ -3642,7 +3566,7 @@ class CApplication:
 
 
 	@property
-	def Path(self) -> String:
+	def Path(self) -> str:
 		"""Returns the path of the MWOffice application."""
 		return self.__IMWOffice.Path
 
@@ -3663,12 +3587,6 @@ class CApplication:
 	def RecentProjects(self) -> CProjectFiles:
 		"""Returns a reference to a MWOffice ProjectFiles collection."""
 		return CProjectFiles(self.__IMWOffice.RecentProjects)
-
-
-	@property
-	def RegressionCaptureMode(self) -> bool:
-		"""Returns if the application object is running in regression capture mode."""
-		return self.__IMWOffice.RegressionCaptureMode
 
 
 	@property
@@ -3730,24 +3648,6 @@ class CApplication:
 
 
 	@property
-	def TestMode(self) -> bool:
-		"""Returns/sets if the application object is running in test mode."""
-		return self.__IMWOffice.TestMode
-
-
-	@TestMode.setter
-	def TestMode(self, value: bool):
-		"""Returns/sets if the application object is running in test mode."""
-		self.__IMWOffice.TestMode = value
-
-
-	@property
-	def Tester(self) -> CRegressionTester:
-		"""Returns a reference to a MWOffice RegressionTester object."""
-		return CRegressionTester(self.__IMWOffice.Tester)
-
-
-	@property
 	def Top(self) -> int:
 		"""Returns/sets the top edge of a Window object."""
 		return self.__IMWOffice.Top
@@ -3757,12 +3657,6 @@ class CApplication:
 	def Top(self, value: int):
 		"""Returns/sets the top edge of a Window object."""
 		self.__IMWOffice.Top = value
-
-
-	@property
-	def TypelibVersion(self) -> float:
-		"""Returns the version of the MWOffice type library."""
-		return self.__IMWOffice.TypelibVersion
 
 
 	def UserSetting(self, Category: str, ValueName: str):
@@ -3782,7 +3676,7 @@ class CApplication:
 
 
 	@property
-	def VersionString(self) -> String:
+	def VersionString(self) -> str:
 		"""Returns the version string for the MWOffice Application."""
 		return self.__IMWOffice.VersionString
 
@@ -3855,16 +3749,6 @@ class CProject:
 		return self.__IProject.Save()
 
 
-	def Simulate(self) -> None:
-		"""Performs a simulation of the Project."""
-		self.__IProject.Simulate()
-
-
-	def SetError(self, Type: mwErrorType, Message: str) -> None:
-		"""Adds an error message to the error window."""
-		self.__IProject.SetError(Type, Message)
-
-
 	def Close(self, SaveChanges: bool, Filename: str) -> None:
 		"""Closes the project and all windows associated with the project."""
 		self.__IProject.Close(SaveChanges, Filename)
@@ -3883,16 +3767,6 @@ class CProject:
 	def NewOutputEquationsWindow(self) -> CWindow:
 		"""Displays the object in new window."""
 		return CWindow(self.__IProject.NewOutputEquationsWindow())
-
-
-	def RegressionCompareResults(self, ReferenceFilename: str, LogFilename: str) -> bool:
-		"""Compare all current results to reference results file. Write results of comparison to log file. Return pass/fail. Must simulate first."""
-		return self.__IProject.RegressionCompareResults(ReferenceFilename, LogFilename)
-
-
-	def RegressionWriteResults(self, OutputFileName: str, LogFilename: str) -> None:
-		"""Write all current results to a file. Must simulate without error first."""
-		self.__IProject.RegressionWriteResults(OutputFileName, LogFilename)
 
 
 	def SaveAsVersion(self, Filename: str, Type: mwProjectVersionType, VersionNumber: float = 0) -> None:
@@ -3952,12 +3826,6 @@ class CProject:
 
 
 	@property
-	def Conductors(self) -> CConductors:
-		"""Returns a reference to a collection of Conductor objects."""
-		return CConductors(self.__IProject.Conductors)
-
-
-	@property
 	def DataFiles(self) -> CDataFiles:
 		"""Returns a reference to a collection of Datafile objects."""
 		return CDataFiles(self.__IProject.DataFiles)
@@ -3973,18 +3841,6 @@ class CProject:
 	def DesignNotes(self) -> CDesignNotes:
 		"""Returns a reference to a DesignNotes collection."""
 		return CDesignNotes(self.__IProject.DesignNotes)
-
-
-	@property
-	def DrawingLayers(self) -> CDrawingLayers:
-		"""Returns a reference to a collection of Drawing Layer objects."""
-		return CDrawingLayers(self.__IProject.DrawingLayers)
-
-
-	@property
-	def DrillTools(self) -> CDrillTools:
-		"""Returns a reference to a collection of DrillTool objects."""
-		return CDrillTools(self.__IProject.DrillTools)
 
 
 	@property
@@ -4006,7 +3862,7 @@ class CProject:
 
 
 	@property
-	def Filename(self) -> String:
+	def Filename(self) -> str:
 		"""Returns the name of the current project file including the filename extension, or 'Untitled Project' if the project has not been saved"""
 		return self.__IProject.Filename
 
@@ -4018,27 +3874,15 @@ class CProject:
 
 
 	@property
-	def FullName(self) -> String:
+	def FullName(self) -> str:
 		"""Returns the file specification of the project, including the path."""
 		return self.__IProject.FullName
-
-
-	@property
-	def GlobalDataElements(self) -> CElements:
-		"""Returns a reference to a collection of Element objects."""
-		return CElements(self.__IProject.GlobalDataElements)
 
 
 	@property
 	def GlobalDefinitionDocuments(self) -> CGlobalDefinitionDocuments:
 		"""Returns a reference to a collection of GlobalDefinitionDocument objects."""
 		return CGlobalDefinitionDocuments(self.__IProject.GlobalDefinitionDocuments)
-
-
-	@property
-	def GlobalEquations(self) -> CEquations:
-		"""Returns a reference to a collection of Equation objects."""
-		return CEquations(self.__IProject.GlobalEquations)
 
 
 	@property
@@ -4059,22 +3903,6 @@ class CProject:
 		return self.__IProject.HasEventScripts
 
 
-	def ImportProject(self, Filename: str) -> CImportProject:
-		""""""
-		return CImportProject(self.__IProject.ImportProject(Filename))
-
-
-	def ImportProjectEx(self, Filename: str, SuppressWarnings: bool) -> CImportProject:
-		""""""
-		return CImportProject(self.__IProject.ImportProjectEx(Filename, SuppressWarnings))
-
-
-	@property
-	def LayerSetup(self) -> CLayerSetup:
-		"""Returns a reference to a MWOffice LayerSetup object."""
-		return CLayerSetup(self.__IProject.LayerSetup)
-
-
 	@property
 	def LockUpdates(self) -> bool:
 		"""Returns/sets a value that indicates if updates should be locked or disabled."""
@@ -4088,7 +3916,7 @@ class CProject:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the file name of the project, not including the file's path specification."""
 		return self.__IProject.Name
 
@@ -4130,12 +3958,6 @@ class CProject:
 
 
 	@property
-	def OutputEquations(self) -> CEquations:
-		"""Returns a reference to a collection of Equation objects."""
-		return CEquations(self.__IProject.OutputEquations)
-
-
-	@property
 	def OutputEquationsWindows(self) -> CWindows:
 		"""Returns a reference to a collection of Window objects."""
 		return CWindows(self.__IProject.OutputEquationsWindows)
@@ -4154,7 +3976,7 @@ class CProject:
 
 
 	@property
-	def Path(self) -> String:
+	def Path(self) -> str:
 		"""Returns the path specification for the project, not including the file name or file name extension."""
 		return self.__IProject.Path
 
@@ -4172,7 +3994,7 @@ class CProject:
 
 
 	@property
-	def ProjectId(self) -> String:
+	def ProjectId(self) -> str:
 		"""Returns a string of characters representing a unique project identifier."""
 		return self.__IProject.ProjectId
 
@@ -4205,12 +4027,6 @@ class CProject:
 	def RoutePropertyInfo(self) -> CRoutePropertyInfo:
 		"""Returns a reference to a RoutePropertyInfo object."""
 		return CRoutePropertyInfo(self.__IProject.RoutePropertyInfo)
-
-
-	@property
-	def SampleProjectItems(self) -> CSampleProjectItems:
-		"""Returns a reference to a collection of SampleProjectItem objects."""
-		return CSampleProjectItems(self.__IProject.SampleProjectItems)
 
 
 	@property
@@ -4362,19 +4178,19 @@ class CProjectFile:
 
 
 	@property
-	def AccessDate(self) -> String:
+	def AccessDate(self) -> str:
 		"""Returns the date of the last access for this ProjectFile."""
 		return self.__IProjectFile.AccessDate
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name of the ProjectFile."""
 		return self.__IProjectFile.Name
 
 
 	@property
-	def Path(self) -> String:
+	def Path(self) -> str:
 		"""Returns the full path to the ProjectFile."""
 		return self.__IProjectFile.Path
 
@@ -4497,7 +4313,7 @@ class CControlBar:
 
 
 	@property
-	def Caption(self) -> String:
+	def Caption(self) -> str:
 		"""Returns/Sets the caption of an object."""
 		return self.__IControlBar.Caption
 
@@ -4563,7 +4379,7 @@ class CControlBar:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__IControlBar.Name
 
@@ -4595,26 +4411,11 @@ class CControlBars:
 
 
 
-	def Add(self, Name: str) -> CControlBar:
-		"""Adds an object to the collection and returns a reference to the created object."""
-		return CControlBar(self.__IControlBars.Add(Name))
-
-
-	def Remove(self, Name: str) -> None:
-		"""Removes a specific member from a collection."""
-		self.__IControlBars.Remove(Name)
-
-
 
 	@property
 	def Count(self) -> int:
 		"""Returns the number of objects in the collection."""
 		return self.__IControlBars.Count
-
-
-	def Exists(self, Index) -> bool:
-		"""Returns whether an item matching the specified criteria exists in the collection."""
-		return self.__IControlBars.Exists(Index)
 
 
 	def Item(self, Index) -> CControlBar:
@@ -4715,7 +4516,7 @@ class CDataFile:
 
 
 	@property
-	def DataAsText(self) -> String:
+	def DataAsText(self) -> str:
 		"""Returns/sets the text value of a Datafile object."""
 		return self.__IDataFile.DataAsText
 
@@ -4733,15 +4534,9 @@ class CDataFile:
 
 
 	@property
-	def FilePath(self) -> String:
+	def FilePath(self) -> str:
 		"""Returns the Datafile, file path."""
 		return self.__IDataFile.FilePath
-
-
-	@property
-	def Filename(self) -> String:
-		"""Returns the filename of a Datafile object."""
-		return self.__IDataFile.Filename
 
 
 	@property
@@ -4757,7 +4552,7 @@ class CDataFile:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IDataFile.Name
 
@@ -4885,7 +4680,7 @@ class CDataFiles:
 		return CDataFile(self.__IDataFiles.Copy(Index, NewName))
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IDataFiles.GetUniqueName(baseName)
 
@@ -4961,7 +4756,7 @@ class CSampleProjectItem:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ISampleProjectItem.Name
 
@@ -5008,7 +4803,7 @@ class CSampleProjectItems:
 		return self.__ISampleProjectItems.RemoveAll()
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__ISampleProjectItems.GetUniqueName(baseName)
 
@@ -5073,13 +4868,13 @@ class CDataSetProperty:
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns a description of this DataSetProperty object."""
 		return self.__IDataSetProperty.Description
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__IDataSetProperty.Name
 
@@ -5097,7 +4892,7 @@ class CDataSetProperty:
 
 
 	@property
-	def ValueAsString(self) -> String:
+	def ValueAsString(self) -> str:
 		"""Returns the value of this DataSetProperty object converted to a string."""
 		return self.__IDataSetProperty.ValueAsString
 
@@ -5190,16 +4985,6 @@ class CDataSet:
 		self.__IDataSet.UpdateClock()
 
 
-	def Pin(self) -> None:
-		"""Pins the data set."""
-		self.__IDataSet.Pin()
-
-
-	def Unpin(self) -> None:
-		"""Unpins the data set."""
-		self.__IDataSet.Unpin()
-
-
 
 	@property
 	def AutoDelete(self) -> bool:
@@ -5220,25 +5005,13 @@ class CDataSet:
 
 
 	@property
-	def DataClock(self) -> int:
-		"""Returns the time stamp of the data set object."""
-		return self.__IDataSet.DataClock
-
-
-	@property
-	def DocumentClock(self) -> int:
-		"""Returns the time stamp of the document associated with the data set object."""
-		return self.__IDataSet.DocumentClock
-
-
-	@property
-	def DocumentName(self) -> String:
+	def DocumentName(self) -> str:
 		"""Returns the name of the document associated with the data set object."""
 		return self.__IDataSet.DocumentName
 
 
 	@property
-	def Filename(self) -> String:
+	def Filename(self) -> str:
 		"""Returns the file name of the data set object."""
 		return self.__IDataSet.Filename
 
@@ -5249,13 +5022,13 @@ class CDataSet:
 
 
 	@property
-	def LogInfo(self) -> String:
+	def LogInfo(self) -> str:
 		"""Returns a string that contains details of the simulate lot for the data set."""
 		return self.__IDataSet.LogInfo
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IDataSet.Name
 
@@ -5285,13 +5058,13 @@ class CDataSet:
 
 
 	@property
-	def SimInfo(self) -> String:
+	def SimInfo(self) -> str:
 		"""Returns a string that contains details of the simulation info for the data set."""
 		return self.__IDataSet.SimInfo
 
 
 	@property
-	def SimulatorName(self) -> String:
+	def SimulatorName(self) -> str:
 		"""Returns the simulator used by the data set object."""
 		return self.__IDataSet.SimulatorName
 
@@ -5309,7 +5082,7 @@ class CDataSet:
 
 
 	@property
-	def UserName(self) -> String:
+	def UserName(self) -> str:
 		"""Returns the user assigned name of the data set object."""
 		return self.__IDataSet.UserName
 
@@ -5410,7 +5183,7 @@ class CDataSetFolder:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IDataSetFolder.Name
 
@@ -5456,14 +5229,9 @@ class CDataSetFolders:
 		return CDataSet(self.__IDataSetFolders.Import(Filename))
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IDataSetFolders.GetUniqueName(baseName)
-
-
-	def UpdateProjectTree(self) -> None:
-		"""Update project tree to match current dataset state."""
-		self.__IDataSetFolders.UpdateProjectTree()
 
 
 
@@ -5561,55 +5329,7 @@ class COutputFile:
 
 
 	@property
-	def Filename(self) -> String:
-		"""Returns the filename and path of the OutputFile object."""
-		return self.__IOutputFile.Filename
-
-
-	@Filename.setter
-	def Filename(self, value: str):
-		"""Returns the filename and path of the OutputFile object."""
-		self.__IOutputFile.Filename = value
-
-
-	@property
-	def FrequencyUnits(self):
-		"""Returns/sets the frequency units for the MWOffice OutputFile object."""
-		return self.__IOutputFile.FrequencyUnits
-
-
-	@FrequencyUnits.setter
-	def FrequencyUnits(self, value: mwOutputFilePortParameterFreqUnits):
-		"""Returns/sets the frequency units for the MWOffice OutputFile object."""
-		self.__IOutputFile.FrequencyUnits = value
-
-
-	@property
-	def IncludeNoise(self) -> bool:
-		"""Returns/sets if noise data should be included in the MWOffice OutputFile object."""
-		return self.__IOutputFile.IncludeNoise
-
-
-	@IncludeNoise.setter
-	def IncludeNoise(self, value: bool):
-		"""Returns/sets if noise data should be included in the MWOffice OutputFile object."""
-		self.__IOutputFile.IncludeNoise = value
-
-
-	@property
-	def Measurement(self) -> String:
-		"""Returns/sets the measurement name of the MWOffice OutputFile object."""
-		return self.__IOutputFile.Measurement
-
-
-	@Measurement.setter
-	def Measurement(self, value: str):
-		"""Returns/sets the measurement name of the MWOffice OutputFile object."""
-		self.__IOutputFile.Measurement = value
-
-
-	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IOutputFile.Name
 
@@ -5618,78 +5338,6 @@ class COutputFile:
 	def Name(self, value: str):
 		"""Returns/Sets the name used in code to identify an object."""
 		self.__IOutputFile.Name = value
-
-
-	@property
-	def ParameterFormat(self):
-		"""Returns/sets the parameter format for the MWOffice OutputFile object."""
-		return self.__IOutputFile.ParameterFormat
-
-
-	@ParameterFormat.setter
-	def ParameterFormat(self, value: mwOutputFilePortParameterFormat):
-		"""Returns/sets the parameter format for the MWOffice OutputFile object."""
-		self.__IOutputFile.ParameterFormat = value
-
-
-	@property
-	def ParameterType(self):
-		"""Returns/sets the parameter type for the MWOffice OutputFile object."""
-		return self.__IOutputFile.ParameterType
-
-
-	@ParameterType.setter
-	def ParameterType(self, value: mwOutputFilePortParameterType):
-		"""Returns/sets the parameter type for the MWOffice OutputFile object."""
-		self.__IOutputFile.ParameterType = value
-
-
-	@property
-	def Precision(self) -> int:
-		"""Returns/sets the number of places in the output precision for the MWOffice OutputFile object."""
-		return self.__IOutputFile.Precision
-
-
-	@Precision.setter
-	def Precision(self, value: int):
-		"""Returns/sets the number of places in the output precision for the MWOffice OutputFile object."""
-		self.__IOutputFile.Precision = value
-
-
-	@property
-	def ReferenceImpedence(self) -> float:
-		"""Returns/sets the value of the reference impedence for the MWOffice OutputFile object."""
-		return self.__IOutputFile.ReferenceImpedence
-
-
-	@ReferenceImpedence.setter
-	def ReferenceImpedence(self, value: float):
-		"""Returns/sets the value of the reference impedence for the MWOffice OutputFile object."""
-		self.__IOutputFile.ReferenceImpedence = value
-
-
-	@property
-	def Source(self) -> String:
-		"""Returns/sets the source name of the MWOffice OutputFile object."""
-		return self.__IOutputFile.Source
-
-
-	@Source.setter
-	def Source(self, value: str):
-		"""Returns/sets the source name of the MWOffice OutputFile object."""
-		self.__IOutputFile.Source = value
-
-
-	@property
-	def fileFormat(self):
-		"""Returns/sets the file format for lines in the MWOffice OutputFile object."""
-		return self.__IOutputFile.fileFormat
-
-
-	@fileFormat.setter
-	def fileFormat(self, value: mwOutputFileLineEndFormat):
-		"""Returns/sets the file format for lines in the MWOffice OutputFile object."""
-		self.__IOutputFile.fileFormat = value
 
 
 	def __str__(self):
@@ -5707,36 +5355,6 @@ class COutputFiles:
 
 
 
-	def AddPortParameterFile(self, Filename: str, dataSource: str, ParameterType: mwOutputFilePortParameterType = 0, ParameterFormat: mwOutputFilePortParameterFormat = 1, FrequencyUnits: mwOutputFilePortParameterFreqUnits = 3, IncludeNoiseParams: bool = 0, ReferenceImpedance: float = 50, Precision: int = 5, fileFormat: mwOutputFileLineEndFormat = 0) -> COutputFile:
-		"""Adds a port parameter output file to the MWOffice OutputFiles collection."""
-		return COutputFile(self.__IOutputFiles.AddPortParameterFile(Filename, dataSource, ParameterType, ParameterFormat, FrequencyUnits, IncludeNoiseParams, ReferenceImpedance, Precision, fileFormat))
-
-
-	def AddSpiceExtractionFile(self, Filename: str, dataSource: str, MaxSParamError: float = 9.99999974737875E-05) -> COutputFile:
-		"""Adds a spice extraction output file to the MWOffice OutputFiles collection."""
-		return COutputFile(self.__IOutputFiles.AddSpiceExtractionFile(Filename, dataSource, MaxSParamError))
-
-
-	def AddAmToAmFile(self, Filename: str, dataSource: str, FrequencyIndex: int = 1) -> COutputFile:
-		"""Adds a AM to AM output file to the MWOffice OutputFiles collection."""
-		return COutputFile(self.__IOutputFiles.AddAmToAmFile(Filename, dataSource, FrequencyIndex))
-
-
-	def AddAmToPmFile(self, Filename: str, dataSource: str, FrequencyIndex: int = 1) -> COutputFile:
-		"""Adds a AM to PM output file to the MWOffice OutputFiles collection."""
-		return COutputFile(self.__IOutputFiles.AddAmToPmFile(Filename, dataSource, FrequencyIndex))
-
-
-	def AddAmToAmPmFile(self, Filename: str, dataSource: str, FrequencyIndex: int = 1) -> COutputFile:
-		"""Adds a AM to AM/PM output file to the MWOffice OutputFiles collection."""
-		return COutputFile(self.__IOutputFiles.AddAmToAmPmFile(Filename, dataSource, FrequencyIndex))
-
-
-	def AddSpectrumDataFile(self, Filename: str, dataSource: str, SweptFrequencyIndex: int = 1, SweptPowerIndex: int = 1, PortIndex: int = 1) -> COutputFile:
-		"""Adds a spectrum data output file to the MWOffice OutputFiles collection."""
-		return COutputFile(self.__IOutputFiles.AddSpectrumDataFile(Filename, dataSource, SweptFrequencyIndex, SweptPowerIndex, PortIndex))
-
-
 	def Remove(self, Index) -> bool:
 		"""Removes a specific member from a collection."""
 		return self.__IOutputFiles.Remove(Index)
@@ -5752,7 +5370,7 @@ class COutputFiles:
 		return COutputFile(self.__IOutputFiles.Add(SourceDoc, Measurement))
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IOutputFiles.GetUniqueName(baseName)
 
@@ -5863,11 +5481,6 @@ class CFrequencies:
 		return self.__IFrequencies.Clear()
 
 
-	def SetFrequencies(self, Count: int, Frequencies) -> bool:
-		"""Adds multiple Frequency objects to the collection."""
-		return self.__IFrequencies.SetFrequencies(Count, Frequencies)
-
-
 	def AddMultiple(self, Values) -> None:
 		"""Adds multiple Frequency objects to the collection."""
 		self.__IFrequencies.AddMultiple(Values)
@@ -5948,7 +5561,7 @@ class CElement:
 
 
 	@property
-	def CellName(self) -> String:
+	def CellName(self) -> str:
 		"""Returns/sets the layout cell name associated with an element."""
 		return self.__IElement.CellName
 
@@ -5967,12 +5580,6 @@ class CElement:
 	def SetDisplayMode(self, mode: mwDisplayModeType, value: bool):
 		"""Returns/Sets various Element display mode settings."""
 		self.__IElement.DisplayMode = value
-
-
-	@property
-	def DrawingObject(self) -> CDrawingObject:
-		"""Returns a reference to a DrawingObject."""
-		return CDrawingObject(self.__IElement.DrawingObject)
 
 
 	@property
@@ -6054,7 +5661,7 @@ class CElement:
 
 
 	@property
-	def MultiplicityFactorParameterName(self) -> String:
+	def MultiplicityFactorParameterName(self) -> str:
 		"""Returns/sets the name of the element parameter to be used for the multiplicity factor."""
 		return self.__IElement.MultiplicityFactorParameterName
 
@@ -6066,7 +5673,7 @@ class CElement:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IElement.Name
 
@@ -6114,7 +5721,7 @@ class CElement:
 
 
 	@property
-	def PartHelpPath(self) -> String:
+	def PartHelpPath(self) -> str:
 		"""Returns/sets the part help path property of the Element object."""
 		return self.__IElement.PartHelpPath
 
@@ -6126,7 +5733,7 @@ class CElement:
 
 
 	@property
-	def PartNumber(self) -> String:
+	def PartNumber(self) -> str:
 		"""Returns/sets the part number of an Element object."""
 		return self.__IElement.PartNumber
 
@@ -6168,7 +5775,7 @@ class CElement:
 
 
 	@property
-	def Symbol(self) -> String:
+	def Symbol(self) -> str:
 		"""Returns the symbol name of an Element object."""
 		return self.__IElement.Symbol
 
@@ -6240,7 +5847,7 @@ class CElement:
 
 
 	@property
-	def VectorInstanceName(self) -> String:
+	def VectorInstanceName(self) -> str:
 		"""Returns/sets the vector instance property name for an element."""
 		return self.__IElement.VectorInstanceName
 
@@ -6258,13 +5865,13 @@ class CElement:
 
 
 	@property
-	def XmlBrowserPath(self) -> String:
+	def XmlBrowserPath(self) -> str:
 		"""Returns the XML broswer path of an Element object. Empty if not placed from XML."""
 		return self.__IElement.XmlBrowserPath
 
 
 	@property
-	def XmlComponentPath(self) -> String:
+	def XmlComponentPath(self) -> str:
 		"""Returns the XML component path of an Element object. Empty if not placed from XML."""
 		return self.__IElement.XmlComponentPath
 
@@ -6537,7 +6144,7 @@ class CEquationExpression:
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns/sets a string for the description field of the EquationExpression object."""
 		return self.__IEquationExpression.Description
 
@@ -6549,7 +6156,7 @@ class CEquationExpression:
 
 
 	@property
-	def DisplayText(self) -> String:
+	def DisplayText(self) -> str:
 		"""Returns the display text of the EquationExpression object."""
 		return self.__IEquationExpression.DisplayText
 
@@ -6585,7 +6192,7 @@ class CEquationExpression:
 
 
 	@property
-	def Expression(self) -> String:
+	def Expression(self) -> str:
 		"""Returns/sets the expression of an Equation object."""
 		return self.__IEquationExpression.Expression
 
@@ -6693,7 +6300,7 @@ class CEquationExpression:
 
 
 	@property
-	def Tag(self) -> String:
+	def Tag(self) -> str:
 		"""Returns/sets the tag value of the object."""
 		return self.__IEquationExpression.Tag
 
@@ -6783,13 +6390,13 @@ class CEquationExpression:
 
 
 	@property
-	def ValueAsEvaluatedString(self) -> String:
+	def ValueAsEvaluatedString(self) -> str:
 		"""Returns the evaluated value interpreted as a string value."""
 		return self.__IEquationExpression.ValueAsEvaluatedString
 
 
 	@property
-	def ValueAsString(self) -> String:
+	def ValueAsString(self) -> str:
 		"""Returns the value interpreted as a string value."""
 		return self.__IEquationExpression.ValueAsString
 
@@ -6954,7 +6561,7 @@ class CEquation:
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns/sets a string for the description field of the equation object."""
 		return self.__IEquation.Description
 
@@ -6966,7 +6573,7 @@ class CEquation:
 
 
 	@property
-	def DisplayText(self) -> String:
+	def DisplayText(self) -> str:
 		"""Returns the display text for the object."""
 		return self.__IEquation.DisplayText
 
@@ -6996,7 +6603,7 @@ class CEquation:
 
 
 	@property
-	def Expression(self) -> String:
+	def Expression(self) -> str:
 		"""Returns/sets the expression of an Equation object."""
 		return self.__IEquation.Expression
 
@@ -7139,7 +6746,7 @@ class CEquation:
 		self.__IEquation.StepSize = value
 
 
-	def Subexpression(self, Index: int) -> String:
+	def Subexpression(self, Index: int) -> str:
 		"""Returns/sets the indexed subexpression value in the equation object."""
 		return self.__IEquation.Subexpression(Index)
 
@@ -7150,7 +6757,7 @@ class CEquation:
 
 
 	@property
-	def Tag(self) -> String:
+	def Tag(self) -> str:
 		"""Returns/sets the tag value of the object."""
 		return self.__IEquation.Tag
 
@@ -7162,7 +6769,7 @@ class CEquation:
 
 
 	@property
-	def Title(self) -> String:
+	def Title(self) -> str:
 		"""Returns/sets the title for the object."""
 		return self.__IEquation.Title
 
@@ -7352,7 +6959,7 @@ class CEquations:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IEquations.Name
 
@@ -7481,7 +7088,7 @@ class CGlobalDefinitionDocument:
 
 
 	@property
-	def FilePath(self) -> String:
+	def FilePath(self) -> str:
 		"""Returns the Global Definitions document file path."""
 		return self.__IGlobalDefinitionDocument.FilePath
 
@@ -7517,7 +7124,7 @@ class CGlobalDefinitionDocument:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IGlobalDefinitionDocument.Name
 
@@ -7541,13 +7148,13 @@ class CGlobalDefinitionDocument:
 
 
 	@property
-	def ParentName(self) -> String:
+	def ParentName(self) -> str:
 		"""Returns the name of the parent of this GlobalDefinitionDocument if one exists. Otherwise an empty string"""
 		return self.__IGlobalDefinitionDocument.ParentName
 
 
 	@property
-	def ProcessDefinition(self) -> String:
+	def ProcessDefinition(self) -> str:
 		"""Returns/sets the process definition name for this GlobalDefinitionDocument object."""
 		return self.__IGlobalDefinitionDocument.ProcessDefinition
 
@@ -7601,7 +7208,7 @@ class CGlobalDefinitionDocuments:
 		return self.__IGlobalDefinitionDocuments.Remove(Index)
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IGlobalDefinitionDocuments.GetUniqueName(baseName)
 
@@ -7785,7 +7392,7 @@ class COutputEquationDocument:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IOutputEquationDocument.Name
 
@@ -7845,7 +7452,7 @@ class COutputEquationDocuments:
 		return self.__IOutputEquationDocuments.Remove(Index)
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IOutputEquationDocuments.GetUniqueName(baseName)
 
@@ -7920,7 +7527,7 @@ class CGoal:
 
 
 	@property
-	def CircuitName(self) -> String:
+	def CircuitName(self) -> str:
 		"""Returns the circuit name of a Goal object."""
 		return self.__IGoal.CircuitName
 
@@ -7950,18 +7557,6 @@ class CGoal:
 
 
 	@property
-	def L(self) -> int:
-		"""Returns/sets the L property of a Goal object."""
-		return self.__IGoal.L
-
-
-	@L.setter
-	def L(self, value: int):
-		"""Returns/sets the L property of a Goal object."""
-		self.__IGoal.L = value
-
-
-	@property
 	def LVal(self) -> float:
 		"""Returns/sets the L property of a Goal object."""
 		return self.__IGoal.LVal
@@ -7974,19 +7569,13 @@ class CGoal:
 
 
 	@property
-	def MeasName(self) -> String:
-		"""Returns the measurement name of a Goal object."""
-		return self.__IGoal.MeasName
-
-
-	@property
 	def Measurement(self) -> CMeasurement:
 		"""Returns a reference to MWOffice Measurement object."""
 		return CMeasurement(self.__IGoal.Measurement)
 
 
 	@property
-	def MeasurementName(self) -> String:
+	def MeasurementName(self) -> str:
 		"""Returns the measurement name of a Goal object."""
 		return self.__IGoal.MeasurementName
 
@@ -7998,13 +7587,13 @@ class CGoal:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__IGoal.Name
 
 
 	@property
-	def Tag(self) -> String:
+	def Tag(self) -> str:
 		"""Returns/sets the tag value of the object."""
 		return self.__IGoal.Tag
 
@@ -8362,7 +7951,7 @@ class CGraph:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IGraph.Name
 
@@ -8398,7 +7987,7 @@ class CGraph:
 
 
 	@property
-	def Title(self) -> String:
+	def Title(self) -> str:
 		"""Returns/sets the text used for the graph title."""
 		return self.__IGraph.Title
 
@@ -8476,7 +8065,7 @@ class CGraph:
 
 
 	@property
-	def UnitsProcessName(self) -> String:
+	def UnitsProcessName(self) -> str:
 		"""Returns/sets the name of the process definition units used for formatting the values in this graph."""
 		return self.__IGraph.UnitsProcessName
 
@@ -8535,12 +8124,7 @@ class CGraphs:
 		return CGraph(self.__IGraphs.Copy(Index, NewName))
 
 
-	def ImportPrt(self, Filename: str) -> None:
-		"""Import results from prt file to all graphs"""
-		self.__IGraphs.ImportPrt(Filename)
-
-
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IGraphs.GetUniqueName(baseName)
 
@@ -8716,7 +8300,7 @@ class CAxis:
 
 
 	@property
-	def LabelText(self) -> String:
+	def LabelText(self) -> str:
 		"""Returns/sets the text of the axis label."""
 		return self.__IAxis.LabelText
 
@@ -8920,7 +8504,7 @@ class CAxis:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name of the axis object."""
 		return self.__IAxis.Name
 
@@ -9213,7 +8797,7 @@ class CTrace:
 
 
 	@property
-	def LegendText(self) -> String:
+	def LegendText(self) -> str:
 		"""Returns/sets the legend text displayed for the measurement name."""
 		return self.__ITrace.LegendText
 
@@ -9225,7 +8809,7 @@ class CTrace:
 
 
 	@property
-	def LegendText2(self) -> String:
+	def LegendText2(self) -> str:
 		"""Returns/sets the legend text displayed for the data source name."""
 		return self.__ITrace.LegendText2
 
@@ -9237,13 +8821,13 @@ class CTrace:
 
 
 	@property
-	def MeasurementName(self) -> String:
+	def MeasurementName(self) -> str:
 		"""Returns the name of the measurement associated with this Trace object."""
 		return self.__ITrace.MeasurementName
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name of a trace object."""
 		return self.__ITrace.Name
 
@@ -9306,18 +8890,6 @@ class CTrace:
 	def SymbolInterval(self, value: int):
 		"""Returns/sets the spacing of the symbols displayed on the trace."""
 		self.__ITrace.SymbolInterval = value
-
-
-	@property
-	def SymbolIntervalAuto(self) -> bool:
-		"""Returns/Sets if the current symbol interval is automatically calculated."""
-		return self.__ITrace.SymbolIntervalAuto
-
-
-	@SymbolIntervalAuto.setter
-	def SymbolIntervalAuto(self, value: bool):
-		"""Returns/Sets if the current symbol interval is automatically calculated."""
-		self.__ITrace.SymbolIntervalAuto = value
 
 
 	@property
@@ -9930,7 +9502,7 @@ class CMarkerDisplay:
 
 
 	@property
-	def DisplayText(self) -> String:
+	def DisplayText(self) -> str:
 		"""Returns the text associated with the MWOffice MarkerDisplay object."""
 		return self.__IMarkerDisplay.DisplayText
 
@@ -10000,7 +9572,7 @@ class CMarkerLegend:
 
 
 	@property
-	def DisplayText(self) -> String:
+	def DisplayText(self) -> str:
 		"""Returns the text associated with the MWOffice MarkerDisplay object."""
 		return self.__IMarkerDisplay.DisplayText
 
@@ -10158,7 +9730,7 @@ class COffsetMarker:
 
 
 	@property
-	def ReferenceMarker(self) -> String:
+	def ReferenceMarker(self) -> str:
 		"""Returns/sets the name of the marker referenced by an OffsetMarker object."""
 		return self.__IOffsetMarker.ReferenceMarker
 
@@ -10259,7 +9831,7 @@ class CMarker:
 
 
 	@property
-	def DataValueText(self) -> String:
+	def DataValueText(self) -> str:
 		"""Returns a text string with the numeric values from the marker label."""
 		return self.__IMarker.DataValueText
 
@@ -10271,13 +9843,13 @@ class CMarker:
 
 
 	@property
-	def Measurement(self) -> String:
+	def Measurement(self) -> str:
 		"""Returns the measurement name associated with this Marker object."""
 		return self.__IMarker.Measurement
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IMarker.Name
 
@@ -10316,12 +9888,6 @@ class CMarker:
 	def SweepValue(self, value: float):
 		"""Returns/Sets the sweep value associated with this Marker object."""
 		self.__IMarker.SweepValue = value
-
-
-	@property
-	def Trace(self) -> String:
-		"""Returns the trace name associated with this Marker object."""
-		return self.__IMarker.Trace
 
 
 	@property
@@ -10500,7 +10066,7 @@ class CLineMarker:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ILineMarker.Name
 
@@ -10690,7 +10256,7 @@ class CMeasurement:
 		self.__IMeasurement.AxisIndex = value
 
 
-	def AxisPointLabel(self, nIndex: int) -> String:
+	def AxisPointLabel(self, nIndex: int) -> str:
 		"""Returns/sets a axis point label for this measurement."""
 		return self.__IMeasurement.AxisPointLabel(nIndex)
 
@@ -10706,7 +10272,7 @@ class CMeasurement:
 		return self.__IMeasurement.AxisPointLabelCount
 
 
-	def DataPointLabel(self, xIndex: int) -> String:
+	def DataPointLabel(self, xIndex: int) -> str:
 		"""Returns/sets the label for a data point of a Measurement object."""
 		return self.__IMeasurement.DataPointLabel(xIndex)
 
@@ -10741,13 +10307,7 @@ class CMeasurement:
 
 
 	@property
-	def MeasName(self) -> String:
-		"""Returns the name of a Measurement object."""
-		return self.__IMeasurement.MeasName
-
-
-	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IMeasurement.Name
 
@@ -10777,7 +10337,7 @@ class CMeasurement:
 
 
 	@property
-	def Source(self) -> String:
+	def Source(self) -> str:
 		"""Returns the source of a Measurement object."""
 		return self.__IMeasurement.Source
 
@@ -10788,19 +10348,13 @@ class CMeasurement:
 		self.__IMeasurement.Source = value
 
 
-	@property
-	def SourceName(self) -> String:
-		"""Returns the source of a Measurement object."""
-		return self.__IMeasurement.SourceName
-
-
 	def SweepLabels(self, trace_index: int) -> CSweepLabels:
 		"""Returns a reference to a collection of MeasurementInfo objects."""
 		return CSweepLabels(self.__IMeasurement.SweepLabels(trace_index))
 
 
 	@property
-	def Tag(self) -> String:
+	def Tag(self) -> str:
 		"""Returns/sets the tag value of the object."""
 		return self.__IMeasurement.Tag
 
@@ -10823,7 +10377,7 @@ class CMeasurement:
 
 
 	@property
-	def Type(self) -> String:
+	def Type(self) -> str:
 		"""Returns the parameter of a Measurement object."""
 		return self.__IMeasurement.Type
 
@@ -11075,31 +10629,19 @@ class CNetlist:
 
 
 	@property
-	def DataAsText(self) -> String:
-		"""Returns/sets the text value of a Netlist object."""
-		return self.__INetlist.DataAsText
-
-
-	@DataAsText.setter
-	def DataAsText(self, value: str):
-		"""Returns/sets the text value of a Netlist object."""
-		self.__INetlist.DataAsText = value
-
-
-	@property
 	def Embedded(self) -> bool:
 		"""Returns a value which specifies if the Netlist object is embedded."""
 		return self.__INetlist.Embedded
 
 
 	@property
-	def Filename(self) -> String:
+	def Filename(self) -> str:
 		"""Returns the file name of a linked Netlist object."""
 		return self.__INetlist.Filename
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__INetlist.Name
 
@@ -11129,7 +10671,7 @@ class CNetlist:
 
 
 	@property
-	def Text(self) -> String:
+	def Text(self) -> str:
 		"""Returns/sets the text value of a Netlist object."""
 		return self.__INetlist.Text
 
@@ -11192,7 +10734,7 @@ class CNetlists:
 		return CNetlist(self.__INetlists.LinkTo(Name, Filename, Type))
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__INetlists.GetUniqueName(baseName)
 
@@ -11285,7 +10827,7 @@ class CNode:
 
 
 	@property
-	def NodeLabel(self) -> String:
+	def NodeLabel(self) -> str:
 		"""Returns the label associated with this node."""
 		return self.__INode.NodeLabel
 
@@ -11398,11 +10940,6 @@ class COptGoals:
 
 
 
-	def Add(self, CircuitName: str, MeasName: str, GoalType: mwOptGoalType, Weight: float, L: int, xStart: float, xStop: float, xUnit: mwUnitType, yStart: float, yStop: float, yUnit: mwUnitType) -> CGoal:
-		"""Adds an object to the collection and returns a reference to the created object."""
-		return CGoal(self.__IOptGoals.Add(CircuitName, MeasName, GoalType, Weight, L, xStart, xStop, xUnit, yStart, yStop, yUnit))
-
-
 	def Remove(self, Index) -> bool:
 		"""Removes a specific member from a collection."""
 		return self.__IOptGoals.Remove(Index)
@@ -11501,7 +11038,7 @@ class CParameter:
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns the description of the object."""
 		return self.__IParameter.Description
 
@@ -11543,7 +11080,7 @@ class CParameter:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__IParameter.Name
 
@@ -11631,7 +11168,7 @@ class CParameter:
 
 
 	@property
-	def Tag(self) -> String:
+	def Tag(self) -> str:
 		"""Returns/sets the tag value of the object."""
 		return self.__IParameter.Tag
 
@@ -11667,7 +11204,7 @@ class CParameter:
 
 
 	@property
-	def UnitString(self) -> String:
+	def UnitString(self) -> str:
 		"""Returns a value which specifies the unit string associated with the parameter."""
 		return self.__IParameter.UnitString
 
@@ -11733,13 +11270,13 @@ class CParameter:
 
 
 	@property
-	def ValueAsEvaluatedString(self) -> String:
+	def ValueAsEvaluatedString(self) -> str:
 		"""Returns the evaluated value interpreted as a string value."""
 		return self.__IParameter.ValueAsEvaluatedString
 
 
 	@property
-	def ValueAsString(self) -> String:
+	def ValueAsString(self) -> str:
 		"""Returns/sets the text value of a Parameter object."""
 		return self.__IParameter.ValueAsString
 
@@ -11847,7 +11384,7 @@ class CParameterDefinition:
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns the description of the object."""
 		return self.__IParameterDefinition.Description
 
@@ -11859,15 +11396,9 @@ class CParameterDefinition:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__IParameterDefinition.Name
-
-
-	@property
-	def ParameterDefinitions(self) -> CParameterDefinitions:
-		"""Returns a reference to a collection of ParameterDefinition objects."""
-		return CParameterDefinitions(self.__IParameterDefinition.ParameterDefinitions)
 
 
 	@property
@@ -12155,13 +11686,13 @@ class CProcessLibrary:
 
 
 	@property
-	def IniFilePath(self) -> String:
+	def IniFilePath(self) -> str:
 		"""Returns the file path to the initialization file for this ProcessLibrary object."""
 		return self.__IProcessLibrary.IniFilePath
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IProcessLibrary.Name
 
@@ -12195,7 +11726,7 @@ class CProcessLibrary:
 
 
 	@property
-	def Version(self) -> String:
+	def Version(self) -> str:
 		"""Returns a string containing the version information for the MWOffice ProcessLibrary object."""
 		return self.__IProcessLibrary.Version
 
@@ -12215,16 +11746,6 @@ class CProcessLibraries:
 
 
 
-	def Add(self, Name: str, IniFilePath: str = "") -> bool:
-		"""Adds a ProcessLibrary entry to the MOWOffice ProcessLibraries collection."""
-		return self.__IProcessLibraries.Add(Name, IniFilePath)
-
-
-	def Remove(self, Index) -> bool:
-		"""Removes a ProcessLibrary entry from the MWOffice ProcessLibraries collection."""
-		return self.__IProcessLibraries.Remove(Index)
-
-
 	def AddLibrary(self, Name: str, IniFilePath: str) -> bool:
 		"""Adds a ProcessLibrary entry to the MOWOffice ProcessLibraries collection."""
 		return self.__IProcessLibraries.AddLibrary(Name, IniFilePath)
@@ -12235,7 +11756,7 @@ class CProcessLibraries:
 		return self.__IProcessLibraries.RemoveLibrary(Index)
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IProcessLibraries.GetUniqueName(baseName)
 
@@ -12305,19 +11826,19 @@ class CProcessLibraryInfo:
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns a description of the MWOffice ProcessLibraryInfo object."""
 		return self.__IProcessLibraryInfo.Description
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IProcessLibraryInfo.Name
 
 
 	@property
-	def Version(self) -> String:
+	def Version(self) -> str:
 		"""Returns the version of the MWOffice ProcessLibraryInfo object."""
 		return self.__IProcessLibraryInfo.Version
 
@@ -12414,7 +11935,7 @@ class CProperty:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__IProperty.Name
 
@@ -12467,7 +11988,7 @@ class CProperties:
 		return self.__IProperties.Exists(Name)
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IProperties.GetUniqueName(baseName)
 
@@ -12537,7 +12058,7 @@ class CTestPoint:
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns the description associated with the TestPoint object."""
 		return self.__ITestPoint.Description
 
@@ -12549,19 +12070,19 @@ class CTestPoint:
 
 
 	@property
-	def Label(self) -> String:
+	def Label(self) -> str:
 		"""Returns the label associated with the TestPoint object."""
 		return self.__ITestPoint.Label
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ITestPoint.Name
 
 
 	@property
-	def RefName(self) -> String:
+	def RefName(self) -> str:
 		"""Returns the reference name associated with the TestPoint object."""
 		return self.__ITestPoint.RefName
 
@@ -12823,7 +12344,7 @@ class CSchematic:
 
 
 	@property
-	def FilePath(self) -> String:
+	def FilePath(self) -> str:
 		"""Returns the Schematic document file path."""
 		return self.__ISchematic.FilePath
 
@@ -12871,7 +12392,7 @@ class CSchematic:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ISchematic.Name
 
@@ -12919,7 +12440,7 @@ class CSchematic:
 
 
 	@property
-	def ProcessDefinition(self) -> String:
+	def ProcessDefinition(self) -> str:
 		"""Returns/sets the name of the layout process definition associated with this schematic."""
 		return self.__ISchematic.ProcessDefinition
 
@@ -13095,7 +12616,7 @@ class CSchematics:
 		return CSchematic(self.__ISchematics.Copy(Index, NewName))
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__ISchematics.GetUniqueName(baseName)
 
@@ -13452,20 +12973,15 @@ class CSymbolFile:
 		self.__ISymbolFile.AddSymbol(Name)
 
 
-	def Embed(self) -> None:
-		"""Embeds the circuit symbols defined in the symbol file into the project."""
-		self.__ISymbolFile.Embed()
-
-
 
 	@property
-	def FilePath(self) -> String:
+	def FilePath(self) -> str:
 		"""Returns the circuit symbol linked file path."""
 		return self.__ISymbolFile.FilePath
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Return name of symbol file."""
 		return self.__ISymbolFile.Name
 
@@ -13566,7 +13082,7 @@ class CSymbolNode:
 
 
 	@property
-	def LabelText(self) -> String:
+	def LabelText(self) -> str:
 		"""Returns/sets  the label text associated with the SymbolNode."""
 		return self.__ISymbolNode.LabelText
 
@@ -13937,13 +13453,13 @@ class CSymbol:
 
 
 	@property
-	def FilePath(self) -> String:
+	def FilePath(self) -> str:
 		"""Returns the circuit symbol linked file path."""
 		return self.__ISymbol.FilePath
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ISymbol.Name
 
@@ -14029,41 +13545,6 @@ class CSymbols:
 
 
 
-	def AddArc(self, Left: int, Top: int, Right: int, Bottom: int, xStart: int, yStart: int, xEnd: int, yEnd: int) -> None:
-		"""Adds an Arc shape to the symbol started by calling CreateSymbolBegin."""
-		self.__ISymbols.AddArc(Left, Top, Right, Bottom, xStart, yStart, xEnd, yEnd)
-
-
-	def AddEllipse(self, Left: int, Top: int, Right: int, Bottom: int) -> None:
-		"""Adds an Ellipse shape to the symbol started by calling CreateSymbolBegin."""
-		self.__ISymbols.AddEllipse(Left, Top, Right, Bottom)
-
-
-	def AddNode(self, NodeNumber: int, x: int, y: int, TextDx: int, TextDy: int, TextVisible: int) -> None:
-		"""Adds a Node point to the symbol started by calling CreateSymbolBegin."""
-		self.__ISymbols.AddNode(NodeNumber, x, y, TextDx, TextDy, TextVisible)
-
-
-	def AddPoly(self, XYPoints) -> None:
-		"""Adds a Polygon shape to the symbol started by calling CreateSymbolBegin."""
-		self.__ISymbols.AddPoly(XYPoints)
-
-
-	def AddText(self, Left: int, Top: int, Right: int, Bottom: int, Text: str) -> None:
-		"""Adds a Text shape to the symbol started by calling CreateSymbolBegin."""
-		self.__ISymbols.AddText(Left, Top, Right, Bottom, Text)
-
-
-	def CreateSymbolBegin(self, Name: str) -> None:
-		"""Starts the definition of a new symbol object."""
-		self.__ISymbols.CreateSymbolBegin(Name)
-
-
-	def CreateSymbolEnd(self) -> None:
-		"""Ends the definition of a new symbol object, creates the new symbol and adds it to the Symbols collection."""
-		self.__ISymbols.CreateSymbolEnd()
-
-
 	def SaveToFile(self, Filename: str) -> None:
 		"""Saves the project symbols to a symbol file."""
 		self.__ISymbols.SaveToFile(Filename)
@@ -14104,7 +13585,7 @@ class CSymbols:
 		return self.__ISymbols.Remove(Index)
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__ISymbols.GetUniqueName(baseName)
 
@@ -14184,7 +13665,7 @@ class CDefaultValue:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IDefaultValue.Name
 
@@ -14277,7 +13758,7 @@ class CDefaultValues:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IDefaultValues.Name
 
@@ -14299,13 +13780,13 @@ class CUnit:
 
 
 	@property
-	def BaseUnitString(self) -> String:
+	def BaseUnitString(self) -> str:
 		"""Returns the units string for the base of this unit type."""
 		return self.__IUnit.BaseUnitString
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns the full description for a unit type."""
 		return self.__IUnit.Description
 
@@ -14335,7 +13816,7 @@ class CUnit:
 
 
 	@property
-	def UnitString(self) -> String:
+	def UnitString(self) -> str:
 		"""Returns the units string identifier."""
 		return self.__IUnit.UnitString
 
@@ -14415,7 +13896,7 @@ class CUnits:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IUnits.Name
 
@@ -14443,7 +13924,7 @@ class CSweepValue:
 
 
 	@property
-	def ValueAsString(self) -> String:
+	def ValueAsString(self) -> str:
 		"""Returns a string value for the MWOffice SweepValue object."""
 		return self.__ISweepValue.ValueAsString
 
@@ -14528,7 +14009,7 @@ class CSweepVariable:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ISweepVariable.Name
 
@@ -14651,7 +14132,7 @@ class CWindow:
 
 
 	@property
-	def Caption(self) -> String:
+	def Caption(self) -> str:
 		"""Returns/Sets the caption of an object."""
 		return self.__IWindow.Caption
 
@@ -14851,7 +14332,7 @@ class CWireNet:
 
 
 	@property
-	def ElectNetName(self) -> String:
+	def ElectNetName(self) -> str:
 		"""Returns a reference to an Element object."""
 		return self.__IWireNet.ElectNetName
 
@@ -15285,7 +14766,7 @@ class COption:
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns a description of the Option object."""
 		return self.__IOption.Description
 
@@ -15297,7 +14778,7 @@ class COption:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IOption.Name
 
@@ -15400,7 +14881,7 @@ class COptionSubSet:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IOptionSubSet.Name
 
@@ -15503,7 +14984,7 @@ class COptionSet:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IOptionSet.Name
 
@@ -15762,7 +15243,7 @@ class CSystemDiagram:
 
 
 	@property
-	def FilePath(self) -> String:
+	def FilePath(self) -> str:
 		"""Returns the file path for this SystemDiagram object."""
 		return self.__ISystemDiagram.FilePath
 
@@ -15798,7 +15279,7 @@ class CSystemDiagram:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ISystemDiagram.Name
 
@@ -16009,7 +15490,7 @@ class CSystemDiagrams:
 		return CSystemDiagram(self.__ISystemDiagrams.Copy(Index, NewName))
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__ISystemDiagrams.GetUniqueName(baseName)
 
@@ -16138,7 +15619,7 @@ class CDesignNote:
 
 
 	@property
-	def Content(self) -> String:
+	def Content(self) -> str:
 		"""Returns the content of a DesignNote in Rich Text format."""
 		return self.__IDesignNote.Content
 
@@ -16156,13 +15637,13 @@ class CDesignNote:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the file name of the project, not including the file's path specification."""
 		return self.__IDesignNote.Name
 
 
 	@property
-	def PlainText(self) -> String:
+	def PlainText(self) -> str:
 		"""Returns/Sets the content of a DesignNote in plain text."""
 		return self.__IDesignNote.PlainText
 
@@ -16333,7 +15814,7 @@ class CAttribute:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__IAttribute.Name
 
@@ -16363,7 +15844,7 @@ class CAttribute:
 
 
 	@property
-	def ValueAsString(self) -> String:
+	def ValueAsString(self) -> str:
 		"""Returns the attribute value as a string."""
 		return self.__IAttribute.ValueAsString
 
@@ -16447,98 +15928,8 @@ class CConductor:
 
 
 
-	@property
-	def Color(self) -> int:
-		"""Returns/sets the value of a color for the Conductor object."""
-		return self.__IConductor.Color
-
-
-	@Color.setter
-	def Color(self, value: int):
-		"""Returns/sets the value of a color for the Conductor object."""
-		self.__IConductor.Color = value
-
-
-	@property
-	def Conductivity(self) -> float:
-		"""Returns/sets the conductivity value of a Conductor object."""
-		return self.__IConductor.Conductivity
-
-
-	@Conductivity.setter
-	def Conductivity(self, value: float):
-		"""Returns/sets the conductivity value of a Conductor object."""
-		self.__IConductor.Conductivity = value
-
-
-	@property
-	def ExcessSurfaceReactance(self) -> float:
-		"""Returns/sets the excess surface reactance of a Conductor object."""
-		return self.__IConductor.ExcessSurfaceReactance
-
-
-	@ExcessSurfaceReactance.setter
-	def ExcessSurfaceReactance(self, value: float):
-		"""Returns/sets the excess surface reactance of a Conductor object."""
-		self.__IConductor.ExcessSurfaceReactance = value
-
-
-	@property
-	def HighFrequencyLoss(self) -> float:
-		"""Returns/sets the high frequency loss of a Conductor object."""
-		return self.__IConductor.HighFrequencyLoss
-
-
-	@HighFrequencyLoss.setter
-	def HighFrequencyLoss(self, value: float):
-		"""Returns/sets the high frequency loss of a Conductor object."""
-		self.__IConductor.HighFrequencyLoss = value
-
-
-	@property
-	def LowFrequencyLoss(self) -> float:
-		"""Returns/sets the low frequency loss of a Conductor object."""
-		return self.__IConductor.LowFrequencyLoss
-
-
-	@LowFrequencyLoss.setter
-	def LowFrequencyLoss(self, value: float):
-		"""Returns/sets the low frequency loss of a Conductor object."""
-		self.__IConductor.LowFrequencyLoss = value
-
-
-	@property
-	def Name(self) -> String:
-		"""Returns/Sets the name used in code to identify an object."""
-		return self.__IConductor.Name
-
-
-	@Name.setter
-	def Name(self, value: str):
-		"""Returns/Sets the name used in code to identify an object."""
-		self.__IConductor.Name = value
-
-
-	@property
-	def ReadOnly(self) -> bool:
-		"""Returns a value which specifies if the Conductor attributes are read only."""
-		return self.__IConductor.ReadOnly
-
-
-	@property
-	def Thickness(self) -> float:
-		"""Returns/sets the thickness value of a Conductor object."""
-		return self.__IConductor.Thickness
-
-
-	@Thickness.setter
-	def Thickness(self, value: float):
-		"""Returns/sets the thickness value of a Conductor object."""
-		self.__IConductor.Thickness = value
-
-
 	def __str__(self):
-		return '{}({})'.format(type(self).__name__, self.Name)
+		return '{}'.format(type(self).__name__)
 
 
 # Conductors
@@ -16552,71 +15943,14 @@ class CConductors:
 
 
 
-	def Add(self, Name: str) -> CConductor:
-		"""Adds an object to the collection and returns a reference to the created object."""
-		return CConductor(self.__IConductors.Add(Name))
-
-
-	def Remove(self, Index) -> bool:
-		"""Removes a specific member from a collection."""
-		return self.__IConductors.Remove(Index)
-
-
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IConductors.GetUniqueName(baseName)
 
 
 
-	@property
-	def Count(self) -> int:
-		"""Returns the number of objects in the collection."""
-		return self.__IConductors.Count
-
-
-	def Exists(self, Index) -> bool:
-		"""Returns whether an item matching the specified criteria exists in the collection."""
-		return self.__IConductors.Exists(Index)
-
-
-	def Item(self, Index) -> CConductor:
-		"""Returns a specific item of a Collection object either by position or by key."""
-		return CConductor(self.__IConductors.Item(Index))
-
-
-	def __get_Item(self, Index) -> CConductor:
-		"""Returns a specific item of a Collection object either by position or by key."""
-		return CConductor(self.__IConductors.Item(Index))
-
-
-	def __call__(self, index) -> CConductor:
-		return self.__get_Item(index)
-
-
-	def __iter__(self) -> CConductor:
-		for index in range(1, self.Count + 1):
-			 yield self.__get_Item(index)
-
-
-	def __len__(self) -> int:
-		return self.__IConductors.Count
-
-
-	def __getitem__(self, index) -> Union[CConductor, List[CConductor]]:
-		if isinstance(index, int):
-			if index < 0:
-				index += self.Count
-			if index < 0 or index >= self.Count:
-				raise IndexError
-			return self.__get_Item(index + 1)
-		elif isinstance(index, slice):
-			return [self[ii] for ii in range (*index.indices(self.Count))]
-		else:
-			raise TypeError
-
-
 	def __str__(self):
-		return '{}({})'.format(type(self).__name__, self.Count)
+		return '{}'.format(type(self).__name__)
 
 
 # BoundaryModel
@@ -16629,18 +15963,6 @@ class CBoundaryModel:
 		return self.__IBoundaryModel
 
 
-
-
-	@property
-	def Material(self) -> CConductor:
-		"""Returns a reference to a Conductor object."""
-		return CConductor(self.__IBoundaryModel.Material)
-
-
-	@Material.setter
-	def Material(self, value: CConductor):
-		"""Returns a reference to a Conductor object."""
-		self.__IBoundaryModel.Material = value
 
 
 	@property
@@ -16712,7 +16034,7 @@ class CLayoutParameter:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__ILayoutParameter.Name
 
@@ -16778,7 +16100,7 @@ class CLayoutParameter:
 
 
 	@property
-	def ValueAsString(self) -> String:
+	def ValueAsString(self) -> str:
 		"""Returns/sets the value of a LayoutParameter object as a string."""
 		return self.__ILayoutParameter.ValueAsString
 
@@ -16824,7 +16146,7 @@ class CLayoutParameters:
 		return self.__ILayoutParameters.Remove(Index)
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__ILayoutParameters.GetUniqueName(baseName)
 
@@ -16900,7 +16222,7 @@ class CObjectName:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IObjectName.Name
 
@@ -16991,7 +16313,7 @@ class CObjectNameMapping:
 
 
 	@property
-	def FromName(self) -> String:
+	def FromName(self) -> str:
 		"""Returns/sets the value of the From object name for the mapping."""
 		return self.__IObjectNameMapping.FromName
 
@@ -17003,7 +16325,7 @@ class CObjectNameMapping:
 
 
 	@property
-	def ToName(self) -> String:
+	def ToName(self) -> str:
 		"""Returns/sets the value of the To object name for the mapping."""
 		return self.__IObjectNameMapping.ToName
 
@@ -17974,19 +17296,19 @@ class CCellInstance:
 
 
 	@property
-	def MasterCell(self) -> String:
+	def MasterCell(self) -> str:
 		"""Returns the name of the master cell associated with the CellInstance object."""
 		return self.__ICellInstance.MasterCell
 
 
 	@property
-	def MasterLibrary(self) -> String:
+	def MasterLibrary(self) -> str:
 		"""Returns the name of the master cell library associated with the CellInstance object."""
 		return self.__ICellInstance.MasterLibrary
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ICellInstance.Name
 
@@ -18157,7 +17479,7 @@ class CCell:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ICell.Name
 
@@ -18363,7 +17685,7 @@ class CCellLibrary:
 
 
 	@property
-	def Filename(self) -> String:
+	def Filename(self) -> str:
 		"""Returns the filename of a Cell Library object."""
 		return self.__ICellLibrary.Filename
 
@@ -18399,7 +17721,7 @@ class CCellLibrary:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ICellLibrary.Name
 
@@ -18435,7 +17757,7 @@ class CCellLibrary:
 
 
 	@property
-	def ProcessDefinition(self) -> String:
+	def ProcessDefinition(self) -> str:
 		"""Returns/sets the name of the process definition to be used with this cell library."""
 		return self.__ICellLibrary.ProcessDefinition
 
@@ -18546,7 +17868,7 @@ class CCellLibraries:
 		return CCellLibrary(self.__ICellLibraries.LinkTo(Name, Filename, Type))
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__ICellLibraries.GetUniqueName(baseName)
 
@@ -18616,7 +17938,7 @@ class CEMLayerMapEntry:
 
 
 	@property
-	def DrawingLayer(self) -> String:
+	def DrawingLayer(self) -> str:
 		"""Returns the drawing layer for the EMLayerMapping object."""
 		return self.__IEMLayerMapEntry.DrawingLayer
 
@@ -18646,7 +17968,7 @@ class CEMLayerMapEntry:
 
 
 	@property
-	def Material(self) -> String:
+	def Material(self) -> str:
 		"""Returns/Sets the material for the layer for the EMLayerMapping object."""
 		return self.__IEMLayerMapEntry.Material
 
@@ -18761,7 +18083,7 @@ class CEMLayerMapping:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IEMLayerMapping.Name
 
@@ -18807,7 +18129,7 @@ class CEMLayerMappings:
 		return CEMLayerMapping(self.__IEMLayerMappings.Copy(Index, NewName))
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IEMLayerMappings.GetUniqueName(baseName)
 
@@ -18877,7 +18199,7 @@ class CLayerMapEntry:
 
 
 	@property
-	def DrawingLayer(self) -> String:
+	def DrawingLayer(self) -> str:
 		"""Returns the drawing layer name for the entry object."""
 		return self.__ILayerMapEntry.DrawingLayer
 
@@ -18889,7 +18211,7 @@ class CLayerMapEntry:
 
 
 	@property
-	def ModelLayer(self) -> String:
+	def ModelLayer(self) -> str:
 		"""Returns the model layer name for the entry object."""
 		return self.__ILayerMapEntry.ModelLayer
 
@@ -18919,7 +18241,7 @@ class CLayerMapEntries:
 		return self.__ILayerMapEntries.Remove(Index)
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__ILayerMapEntries.GetUniqueName(baseName)
 
@@ -18995,7 +18317,7 @@ class CLayerMapping:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ILayerMapping.Name
 
@@ -19036,7 +18358,7 @@ class CLayerMappings:
 		return self.__ILayerMappings.Clear()
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__ILayerMappings.GetUniqueName(baseName)
 
@@ -19106,7 +18428,7 @@ class CLayerExportEntry:
 
 
 	@property
-	def DrawingLayer(self) -> String:
+	def DrawingLayer(self) -> str:
 		"""Returns/Sets the drawing layer for the LayerExportEntry object."""
 		return self.__ILayerExportEntry.DrawingLayer
 
@@ -19130,7 +18452,7 @@ class CLayerExportEntry:
 
 
 	@property
-	def ExportLayer(self) -> String:
+	def ExportLayer(self) -> str:
 		"""Returns/Sets the export layer for the LayerExportEntry object."""
 		return self.__ILayerExportEntry.ExportLayer
 
@@ -19251,7 +18573,7 @@ class CLayerExportMapping:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ILayerExportMapping.Name
 
@@ -19309,7 +18631,7 @@ class CLayerExportMappings:
 		return CLayerExportMapping(self.__ILayerExportMappings.Copy(Index, NewName))
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__ILayerExportMappings.GetUniqueName(baseName)
 
@@ -19379,7 +18701,7 @@ class CLayerConfiguration:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ILayerConfiguration.Name
 
@@ -19420,7 +18742,7 @@ class CLayerConfigurations:
 		return self.__ILayerConfigurations.Clear()
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__ILayerConfigurations.GetUniqueName(baseName)
 
@@ -19536,7 +18858,7 @@ class CDrawingLayer:
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns/sets a value associated with the layer intended to provide an extended description of the layer purpose"""
 		return self.__IDrawingLayer.Description
 
@@ -19602,7 +18924,7 @@ class CDrawingLayer:
 
 
 	@property
-	def HatchName(self) -> String:
+	def HatchName(self) -> str:
 		"""Returns/sets a value associated with the layer to provide a name for the hatch style."""
 		return self.__IDrawingLayer.HatchName
 
@@ -19638,7 +18960,7 @@ class CDrawingLayer:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IDrawingLayer.Name
 
@@ -19692,7 +19014,7 @@ class CDrawingLayer:
 
 
 	@property
-	def TextureFile(self) -> String:
+	def TextureFile(self) -> str:
 		"""Returns/sets the name of the file for the texture of a DrawingLayer object."""
 		return self.__IDrawingLayer.TextureFile
 
@@ -19766,11 +19088,6 @@ class CDrawingLayers:
 
 
 
-	def Add(self, Name: str, LineColor: int = 255, LineStyle: mwLineStyle = 0, Filled: bool = -1, FillColor: int = 255, FillStyle: mwFillStyle = 1, Thickness: float = 0, ZPosition: float = 0, Opaque: bool = -1, Blend: float = 0) -> CDrawingLayer:
-		"""Adds an object to the collection and returns a reference to the created object."""
-		return CDrawingLayer(self.__IDrawingLayers.Add(Name, LineColor, LineStyle, Filled, FillColor, FillStyle, Thickness, ZPosition, Opaque, Blend))
-
-
 	def Remove(self, Name: str) -> bool:
 		"""Removes a specific member from a collection."""
 		return self.__IDrawingLayers.Remove(Name)
@@ -19781,7 +19098,7 @@ class CDrawingLayers:
 		return self.__IDrawingLayers.RemoveAll()
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IDrawingLayers.GetUniqueName(baseName)
 
@@ -19805,7 +19122,7 @@ class CDrawingLayers:
 
 
 	@property
-	def ActiveLayerName(self) -> String:
+	def ActiveLayerName(self) -> str:
 		"""Returns/sets the active drawing layer name."""
 		return self.__IDrawingLayers.ActiveLayerName
 
@@ -19915,6 +19232,141 @@ class CDrawingLayers:
 		return '{}({})'.format(type(self).__name__, self.Count)
 
 
+# FillPattern
+class CFillPattern:
+	"""An MWOffice FillPattern object."""
+	def __init__(self, fillpattern):
+		self.__IFillPattern = fillpattern
+
+	def __get_inner(self):
+		return self.__IFillPattern
+
+
+
+	def SetPattern(self, Width: int, Height: int, bitString: str) -> bool:
+		"""Allows the pattern to set to new values for width, height and pattern bits. System patterns cannot be changed."""
+		return self.__IFillPattern.SetPattern(Width, Height, bitString)
+
+
+
+	@property
+	def Height(self) -> int:
+		"""Returns a value indicating the height of the FillPattern object."""
+		return self.__IFillPattern.Height
+
+
+	@property
+	def IsSystem(self) -> bool:
+		"""Returns if the fill pattern is a system pattern."""
+		return self.__IFillPattern.IsSystem
+
+
+	@property
+	def Name(self) -> str:
+		"""Returns/Sets the name used in code to identify an object."""
+		return self.__IFillPattern.Name
+
+
+	@Name.setter
+	def Name(self, value: str):
+		"""Returns/Sets the name used in code to identify an object."""
+		self.__IFillPattern.Name = value
+
+
+	@property
+	def Pattern(self) -> str:
+		"""Returns a string with the bits of the fill pattern object."""
+		return self.__IFillPattern.Pattern
+
+
+	@property
+	def Width(self) -> int:
+		"""Returns a value indicating the width of the FillPattern object."""
+		return self.__IFillPattern.Width
+
+
+	def __str__(self):
+		return '{}({})'.format(type(self).__name__, self.Name)
+
+
+# FillPatterns
+class CFillPatterns:
+	"""A collection of MWOffice FillPattern objects."""
+	def __init__(self, fillpatterns):
+		self.__IFillPatterns = fillpatterns
+
+	def __get_inner(self):
+		return self.__IFillPatterns
+
+
+
+	def Add(self, Name: str, Width: int, Height: int, bitString: str) -> CFillPattern:
+		"""Adds an object to the collection and returns a reference to the created object."""
+		return CFillPattern(self.__IFillPatterns.Add(Name, Width, Height, bitString))
+
+
+	def Remove(self, Index) -> bool:
+		"""Removes a specific member from a collection."""
+		return self.__IFillPatterns.Remove(Index)
+
+
+	def Clear(self) -> bool:
+		"""Removes all objects in a collection."""
+		return self.__IFillPatterns.Clear()
+
+
+
+	@property
+	def Count(self) -> int:
+		"""Returns the number of objects in the collection."""
+		return self.__IFillPatterns.Count
+
+
+	def Exists(self, Index) -> bool:
+		"""Returns whether an item matching the specified criteria exists in the collection."""
+		return self.__IFillPatterns.Exists(Index)
+
+
+	def Item(self, Index) -> CFillPattern:
+		"""Returns a specific item of a Collection object either by position or by key."""
+		return CFillPattern(self.__IFillPatterns.Item(Index))
+
+
+	def __get_Item(self, Index) -> CFillPattern:
+		"""Returns a specific item of a Collection object either by position or by key."""
+		return CFillPattern(self.__IFillPatterns.Item(Index))
+
+
+	def __call__(self, index) -> CFillPattern:
+		return self.__get_Item(index)
+
+
+	def __iter__(self) -> CFillPattern:
+		for index in range(1, self.Count + 1):
+			 yield self.__get_Item(index)
+
+
+	def __len__(self) -> int:
+		return self.__IFillPatterns.Count
+
+
+	def __getitem__(self, index) -> Union[CFillPattern, List[CFillPattern]]:
+		if isinstance(index, int):
+			if index < 0:
+				index += self.Count
+			if index < 0 or index >= self.Count:
+				raise IndexError
+			return self.__get_Item(index + 1)
+		elif isinstance(index, slice):
+			return [self[ii] for ii in range (*index.indices(self.Count))]
+		else:
+			raise TypeError
+
+
+	def __str__(self):
+		return '{}({})'.format(type(self).__name__, self.Count)
+
+
 # LayerSetup
 class CLayerSetup:
 	"""An MWOffice LayerSetup object."""
@@ -19924,16 +19376,6 @@ class CLayerSetup:
 	def __get_inner(self):
 		return self.__ILayerSetup
 
-
-
-	def ImportLPF(self, FilePath: str) -> bool:
-		"""Imports a LFP file into the current layer setup"""
-		return self.__ILayerSetup.ImportLPF(FilePath)
-
-
-	def ExportLPF(self, FilePath: str) -> bool:
-		"""Exports the current layer setup to an LPF file"""
-		return self.__ILayerSetup.ExportLPF(FilePath)
 
 
 
@@ -19953,6 +19395,12 @@ class CLayerSetup:
 	def EMLayerMappings(self) -> CEMLayerMappings:
 		"""Returns a reference to a EMLayerMappings collection."""
 		return CEMLayerMappings(self.__ILayerSetup.EMLayerMappings)
+
+
+	@property
+	def FillPatterns(self) -> CFillPatterns:
+		"""Returns a reference to a MWOffice FillPatterns collection."""
+		return CFillPatterns(self.__ILayerSetup.FillPatterns)
 
 
 	@property
@@ -19990,7 +19438,7 @@ class CDrillTool:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IDrillTool.Name
 
@@ -20050,7 +19498,7 @@ class CDrillTools:
 		return self.__IDrillTools.Remove(Index)
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IDrillTools.GetUniqueName(baseName)
 
@@ -20210,7 +19658,7 @@ class CModifierDefRecord:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IModifierDefRecord.Name
 
@@ -20331,13 +19779,13 @@ class CShapeModifierRecord:
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns a description of the ShapeModifier created by this ShapeModifierRecord object."""
 		return self.__IShapeModifierRecord.Description
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IShapeModifierRecord.Name
 
@@ -20498,7 +19946,7 @@ class CShapeModifier:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IShapeModifier.Name
 
@@ -20699,7 +20147,7 @@ class CDesignRule:
 
 
 	@property
-	def Rule(self) -> String:
+	def Rule(self) -> str:
 		"""Returns the design rule string."""
 		return self.__IDesignRule.Rule
 
@@ -20843,7 +20291,7 @@ class CDesignRuleError:
 
 
 	@property
-	def Message(self) -> String:
+	def Message(self) -> str:
 		"""Returns the message string associated with the DesignRuleError object."""
 		return self.__IDesignRuleError.Message
 
@@ -20870,12 +20318,6 @@ class CDesignRuleError:
 	def Type(self):
 		"""Returns a value that specifies the type of the DesignRuleErorr object."""
 		return self.__IDesignRuleError.Type
-
-
-	@property
-	def Vertices(self) -> CVertices:
-		"""Returns a reference to a collection of Vertex objects."""
-		return CVertices(self.__IDesignRuleError.Vertices)
 
 
 	def __str__(self):
@@ -21001,7 +20443,7 @@ class CLVSError:
 
 
 	@property
-	def Message(self) -> String:
+	def Message(self) -> str:
 		"""Returns the message string associated with the LVSError object."""
 		return self.__ILVSError.Message
 
@@ -21153,7 +20595,7 @@ class CLVSSchemHighlight:
 
 
 	@property
-	def ItemID(self) -> String:
+	def ItemID(self) -> str:
 		"""Returns/Sets the ItemID string associated with the MWOffice SchematicHighlight object."""
 		return self.__ILVSSchemHighlight.ItemID
 
@@ -21259,7 +20701,7 @@ class CLVSNetHighlight:
 
 
 	@property
-	def HighlightString(self) -> String:
+	def HighlightString(self) -> str:
 		"""Returns/Sets a string to highlight for an MWOffice NetlistHighlight object."""
 		return self.__ILVSNetHighlight.HighlightString
 
@@ -21271,7 +20713,7 @@ class CLVSNetHighlight:
 
 
 	@property
-	def NetlistDisplayName(self) -> String:
+	def NetlistDisplayName(self) -> str:
 		"""Returns/Sets a display name for the netlist associated with the MWOffice NetlistHighlight object."""
 		return self.__ILVSNetHighlight.NetlistDisplayName
 
@@ -21283,7 +20725,7 @@ class CLVSNetHighlight:
 
 
 	@property
-	def NetlistPath(self) -> String:
+	def NetlistPath(self) -> str:
 		"""Returns/Sets the full file path string associated with the MWOffice NetlistHighlight object."""
 		return self.__ILVSNetHighlight.NetlistPath
 
@@ -21409,7 +20851,7 @@ class CDesignRuleChecker:
 
 
 	@property
-	def DesignName(self) -> String:
+	def DesignName(self) -> str:
 		"""Returns/sets a string containing the name of the layout checked in the last DRC run."""
 		return self.__IDesignRuleChecker.DesignName
 
@@ -21433,7 +20875,7 @@ class CDesignRuleChecker:
 
 
 	@property
-	def LastRunDateTime(self) -> String:
+	def LastRunDateTime(self) -> str:
 		"""Returns/sets a string containing the date and time of the last DRC run."""
 		return self.__IDesignRuleChecker.LastRunDateTime
 
@@ -21445,7 +20887,7 @@ class CDesignRuleChecker:
 
 
 	@property
-	def RuleDeckName(self) -> String:
+	def RuleDeckName(self) -> str:
 		"""Returns/sets a string containing the name of the rule deck used for the last DRC run."""
 		return self.__IDesignRuleChecker.RuleDeckName
 
@@ -21478,7 +20920,7 @@ class CLayoutVsSchematicChecker:
 
 
 	@property
-	def DesignName(self) -> String:
+	def DesignName(self) -> str:
 		"""Returns/sets a string containing the name of the layout/schematic checked in the last LVS run."""
 		return self.__ILayoutVsSchematicChecker.DesignName
 
@@ -21502,7 +20944,7 @@ class CLayoutVsSchematicChecker:
 
 
 	@property
-	def LastRunDateTime(self) -> String:
+	def LastRunDateTime(self) -> str:
 		"""Returns/sets a string containing the date and time of the last LVS run."""
 		return self.__ILayoutVsSchematicChecker.LastRunDateTime
 
@@ -21514,7 +20956,7 @@ class CLayoutVsSchematicChecker:
 
 
 	@property
-	def RuleDeckName(self) -> String:
+	def RuleDeckName(self) -> str:
 		"""Returns/sets a string containing the name of the rule deck used for the last LVS run."""
 		return self.__ILayoutVsSchematicChecker.RuleDeckName
 
@@ -21526,7 +20968,7 @@ class CLayoutVsSchematicChecker:
 
 
 	@property
-	def SimConfigName(self) -> String:
+	def SimConfigName(self) -> str:
 		"""Returns/sets a string containing the name of the simulation configuration used for the last LVS run."""
 		return self.__ILayoutVsSchematicChecker.SimConfigName
 
@@ -21774,11 +21216,6 @@ class CDrawingObject:
 		return CShapes(self.__IDrawingObject.Flatten(FlattenLevel, mergePosNegLayers))
 
 
-	def IsTypeBitSet(self, typeBit: mwObjectSelectFilters) -> bool:
-		"""Returns a value that indicates if this drawing object has a specific type bit set."""
-		return self.__IDrawingObject.IsTypeBitSet(typeBit)
-
-
 	def IsTypeBitSet2(self, typeBit: mwObjectSelectFilters) -> bool:
 		"""Returns a value that indicates if this drawing object has a specific type bit set, these include specific flags for Polygon, Path, and Circle"""
 		return self.__IDrawingObject.IsTypeBitSet2(typeBit)
@@ -21892,13 +21329,13 @@ class CDrawingObject:
 
 
 	@property
-	def InfoText(self) -> String:
+	def InfoText(self) -> str:
 		"""Returns the DrawingObject information text describing the object."""
 		return self.__IDrawingObject.InfoText
 
 
 	@property
-	def InfoTextEx(self) -> String:
+	def InfoTextEx(self) -> str:
 		"""Returns the detailed DrawingObject information text describing the object."""
 		return self.__IDrawingObject.InfoTextEx
 
@@ -21910,7 +21347,7 @@ class CDrawingObject:
 
 
 	@property
-	def LayerMapping(self) -> String:
+	def LayerMapping(self) -> str:
 		"""Returns/sets a value which specifies the name of the layer mapping applied to this DrawingObject"""
 		return self.__IDrawingObject.LayerMapping
 
@@ -21934,7 +21371,7 @@ class CDrawingObject:
 
 
 	@property
-	def NetName(self) -> String:
+	def NetName(self) -> str:
 		"""Returns/sets the shape network name associated with this DrawingObject."""
 		return self.__IDrawingObject.NetName
 
@@ -21958,7 +21395,7 @@ class CDrawingObject:
 
 
 	@property
-	def PCBPinName(self) -> String:
+	def PCBPinName(self) -> str:
 		"""Returns/sets the PCB pin name associated with this DrawingObject."""
 		return self.__IDrawingObject.PCBPinName
 
@@ -22033,12 +21470,6 @@ class CDrawingObject:
 	def SubObjects(self) -> CDrawingSubObjects:
 		"""Returns a reference to a collection of MWOffice DrawingSubObject objects."""
 		return CDrawingSubObjects(self.__IDrawingObject.SubObjects)
-
-
-	@property
-	def TypeBits(self) -> int:
-		"""Returns flags describing the DrawingObject type"""
-		return self.__IDrawingObject.TypeBits
 
 
 	@property
@@ -22181,7 +21612,7 @@ class CDrawingObjects:
 
 
 	@property
-	def ActiveNetName(self) -> String:
+	def ActiveNetName(self) -> str:
 		"""Returns/sets the active shape network name to be used with newly created DrawingObjects."""
 		return self.__IDrawingObjects.ActiveNetName
 
@@ -22372,7 +21803,7 @@ class CPolygonRecord:
 
 
 	@property
-	def PCBPinName(self) -> String:
+	def PCBPinName(self) -> str:
 		"""Returns/Sets a value that will be associated with the polygon object as a PCB pin name when it is created."""
 		return self.__IPolygonRecord.PCBPinName
 
@@ -22535,7 +21966,7 @@ class CPolygonWriter:
 
 
 	@property
-	def LayerMapping(self) -> String:
+	def LayerMapping(self) -> str:
 		"""Returns/sets the current layer mapping to be used by shapes added by the PolygonWriter object. """
 		return self.__IPolygonWriter.LayerMapping
 
@@ -22547,7 +21978,7 @@ class CPolygonWriter:
 
 
 	@property
-	def LayerName(self) -> String:
+	def LayerName(self) -> str:
 		"""Returns/sets the current layer name to be used by shapes added by the PolygonWriter object."""
 		return self.__IPolygonWriter.LayerName
 
@@ -22559,7 +21990,7 @@ class CPolygonWriter:
 
 
 	@property
-	def PCBPinName(self) -> String:
+	def PCBPinName(self) -> str:
 		"""Returns/Sets a value that will be associated with the polygons as the PCB pin name when they are created by the PolygonWriter."""
 		return self.__IPolygonWriter.PCBPinName
 
@@ -22656,7 +22087,7 @@ class CPathRecord:
 
 
 	@property
-	def PCBPinName(self) -> String:
+	def PCBPinName(self) -> str:
 		"""Returns/Sets a value that will be associated with the path object as a PCB pin name when it is created."""
 		return self.__IPathRecord.PCBPinName
 
@@ -22738,7 +22169,7 @@ class CPathWriter:
 
 
 	@property
-	def LayerMapping(self) -> String:
+	def LayerMapping(self) -> str:
 		"""Gets/sets the current layer mapping to be used by shapes added by the PathWriter object."""
 		return self.__IPathWriter.LayerMapping
 
@@ -22750,7 +22181,7 @@ class CPathWriter:
 
 
 	@property
-	def LayerName(self) -> String:
+	def LayerName(self) -> str:
 		"""Gets/sets the current layer name to be used by shapes added by the PathWriter object."""
 		return self.__IPathWriter.LayerName
 
@@ -22786,7 +22217,7 @@ class CPathWriter:
 
 
 	@property
-	def PCBPinName(self) -> String:
+	def PCBPinName(self) -> str:
 		"""Returns/Sets a value that will be associated with the paths as the PCB pin name when they are created by the PolygonWriter."""
 		return self.__IPathWriter.PCBPinName
 
@@ -23230,7 +22661,7 @@ class CEMInitializationRecord:
 
 
 	@property
-	def EMMappingName(self) -> String:
+	def EMMappingName(self) -> str:
 		"""Returns/sets the EMMapping name to be used when doing LPF initialization."""
 		return self.__IEMInitializationRecord.EMMappingName
 
@@ -23242,7 +22673,7 @@ class CEMInitializationRecord:
 
 
 	@property
-	def GlobalDocumentName(self) -> String:
+	def GlobalDocumentName(self) -> str:
 		"""Returns/sets the name of the global definition document containing the Stackup element when doing Stackup initialization."""
 		return self.__IEMInitializationRecord.GlobalDocumentName
 
@@ -23254,7 +22685,7 @@ class CEMInitializationRecord:
 
 
 	@property
-	def ProcessDefinitionName(self) -> String:
+	def ProcessDefinitionName(self) -> str:
 		"""Returns/sets the ProcessDefinition name when doing LPF initialization."""
 		return self.__IEMInitializationRecord.ProcessDefinitionName
 
@@ -23266,7 +22697,7 @@ class CEMInitializationRecord:
 
 
 	@property
-	def StackupName(self) -> String:
+	def StackupName(self) -> str:
 		"""Returns/sets the name of the stackup element in the global definition document when doing Stackup initialization."""
 		return self.__IEMInitializationRecord.StackupName
 
@@ -23451,18 +22882,6 @@ class CEMStructure:
 
 
 	@property
-	def ActiveLayer(self) -> int:
-		"""Returns/sets the active dielectric layer for the EMStructure object."""
-		return self.__IEMStructure.ActiveLayer
-
-
-	@ActiveLayer.setter
-	def ActiveLayer(self, value: int):
-		"""Returns/sets the active dielectric layer for the EMStructure object."""
-		self.__IEMStructure.ActiveLayer = value
-
-
-	@property
 	def CanPaste(self) -> bool:
 		"""Returns a value that determines the clipboard contents can be pasted to the object."""
 		return self.__IEMStructure.CanPaste
@@ -23535,7 +22954,7 @@ class CEMStructure:
 
 
 	@property
-	def FilePath(self) -> String:
+	def FilePath(self) -> str:
 		"""Returns the EMStructure file path."""
 		return self.__IEMStructure.FilePath
 
@@ -23589,7 +23008,7 @@ class CEMStructure:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IEMStructure.Name
 
@@ -23631,7 +23050,7 @@ class CEMStructure:
 
 
 	@property
-	def ProcessDefinition(self) -> String:
+	def ProcessDefinition(self) -> str:
 		"""Returns/sets the name of the layout process definition associated with this EMStructure."""
 		return self.__IEMStructure.ProcessDefinition
 
@@ -23685,7 +23104,7 @@ class CEMStructure:
 
 
 	@property
-	def SimulationLog(self) -> String:
+	def SimulationLog(self) -> str:
 		"""Returns the contents of the EM simulation log"""
 		return self.__IEMStructure.SimulationLog
 
@@ -23822,7 +23241,7 @@ class CEMStructures:
 		return CEMStructure(self.__IEMStructures.AddInit(StructureName, Simulator, pInitRecord.__get_inner()))
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IEMStructures.GetUniqueName(baseName)
 
@@ -23923,25 +23342,25 @@ class CExternalEditor:
 
 
 	@property
-	def CommandLine(self) -> String:
+	def CommandLine(self) -> str:
 		"""Returns the command line passed to the ExternalEditor when opened."""
 		return self.__IExternalEditor.CommandLine
 
 
 	@property
-	def Extension(self) -> String:
+	def Extension(self) -> str:
 		"""Returns the file name extension processed by the ExternalEditor."""
 		return self.__IExternalEditor.Extension
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IExternalEditor.Name
 
 
 	@property
-	def Path(self) -> String:
+	def Path(self) -> str:
 		"""Returns the path to the ExternalEditor executable."""
 		return self.__IExternalEditor.Path
 
@@ -24064,13 +23483,13 @@ class CEM3DStructure:
 
 
 	@property
-	def FilePath(self) -> String:
+	def FilePath(self) -> str:
 		"""Returns a path to this EM3DStructure document."""
 		return self.__IEM3DStructure.FilePath
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IEM3DStructure.Name
 
@@ -24163,7 +23582,7 @@ class CEM3DStructures:
 		return CEM3DStructure(self.__IEM3DStructures.LinkTo(Filename))
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IEM3DStructures.GetUniqueName(baseName)
 
@@ -24287,7 +23706,7 @@ class CFace:
 
 
 	@property
-	def ConnectedNetName(self) -> String:
+	def ConnectedNetName(self) -> str:
 		"""Returns the name of the PhysicalNet object the face is connected to or an empty string if it is not connected."""
 		return self.__IFace.ConnectedNetName
 
@@ -24299,13 +23718,13 @@ class CFace:
 
 
 	@property
-	def DrawingLayer(self) -> String:
+	def DrawingLayer(self) -> str:
 		"""Returns the name of the drawing layer associated with this Face object."""
 		return self.__IFace.DrawingLayer
 
 
 	@property
-	def ElementName(self) -> String:
+	def ElementName(self) -> str:
 		"""Returns the name of the element associated with this Face object."""
 		return self.__IFace.ElementName
 
@@ -24371,12 +23790,6 @@ class CFace:
 
 
 	@property
-	def LeftEnd(self) -> CVertex:
-		"""Returns a reference to a Vertex object."""
-		return CVertex(self.__IFace.LeftEnd)
-
-
-	@property
 	def NodeNumber(self) -> int:
 		"""Returns the unique node number of the Face object."""
 		return self.__IFace.NodeNumber
@@ -24413,12 +23826,6 @@ class CFace:
 
 
 	@property
-	def RightEnd(self) -> CVertex:
-		"""Returns a reference to a Vertex object."""
-		return CVertex(self.__IFace.RightEnd)
-
-
-	@property
 	def SnapToAdjacent(self) -> bool:
 		"""Returns/sets a value which specifies if the Face object should snap to an adjacent face."""
 		return self.__IFace.SnapToAdjacent
@@ -24431,7 +23838,7 @@ class CFace:
 
 
 	@property
-	def SnapToObject(self) -> String:
+	def SnapToObject(self) -> str:
 		"""Returns/sets the snap to object for this face, format <name>.<id>:<port number>, for example MLIN:TL2:1."""
 		return self.__IFace.SnapToObject
 
@@ -24597,11 +24004,6 @@ class CLayout:
 	def Export(self, Filename: str, ExportMap, Flat: bool = 0) -> bool:
 		"""Exports a design document file from MWOffice."""
 		return self.__ILayout.Export(Filename, ExportMap, Flat)
-
-
-	def DesignRuleCheck(self) -> bool:
-		"""Performs a design rule check of the layout."""
-		return self.__ILayout.DesignRuleCheck()
 
 
 	def Paste(self, x: float, y: float, CCWRotation: float = 0, Flipped: bool = 0) -> bool:
@@ -24799,7 +24201,7 @@ class CLayout:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__ILayout.Name
 
@@ -24829,7 +24231,7 @@ class CLayout:
 
 
 	@property
-	def ProcessDefinition(self) -> String:
+	def ProcessDefinition(self) -> str:
 		"""Returns/sets the name of the layout process definition associated with this layout."""
 		return self.__ILayout.ProcessDefinition
 
@@ -24856,18 +24258,6 @@ class CLayout:
 	def ShapeModifiers(self) -> CShapeModifiers:
 		"""Returns a reference to a collection of ShapeModifier objects."""
 		return CShapeModifiers(self.__ILayout.ShapeModifiers)
-
-
-	@property
-	def ShowGrid(self) -> bool:
-		"""Returns/sets a value which specifies if the layout grid should be displayed."""
-		return self.__ILayout.ShowGrid
-
-
-	@ShowGrid.setter
-	def ShowGrid(self, value: bool):
-		"""Returns/sets a value which specifies if the layout grid should be displayed."""
-		self.__ILayout.ShowGrid = value
 
 
 	@property
@@ -25135,7 +24525,7 @@ class CCellEditor:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__ICellEditor.Name
 
@@ -25156,18 +24546,6 @@ class CCellEditor:
 	def SelectedObjects(self) -> CSelectedDrawingObjects:
 		"""Returns a reference to a collection of DrawingObjects."""
 		return CSelectedDrawingObjects(self.__ICellEditor.SelectedObjects)
-
-
-	@property
-	def ShowGrid(self) -> bool:
-		"""Returns/sets a value which specifies if the layout grid should be displayed."""
-		return self.__ICellEditor.ShowGrid
-
-
-	@ShowGrid.setter
-	def ShowGrid(self, value: bool):
-		"""Returns/sets a value which specifies if the layout grid should be displayed."""
-		self.__ICellEditor.ShowGrid = value
 
 
 	@property
@@ -25379,7 +24757,7 @@ class CMaterial:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IMaterial.Name
 
@@ -25530,7 +24908,7 @@ class CMaterialLayer:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IMaterialLayer.Name
 
@@ -26047,7 +25425,7 @@ class CShape:
 
 
 	@property
-	def HierarchicalPath(self) -> String:
+	def HierarchicalPath(self) -> str:
 		"""Returns a value for some shapes which specifies the hierarchical path for the shape"""
 		return self.__IShape.HierarchicalPath
 
@@ -26132,11 +25510,6 @@ class CShapes:
 	def AddDrillHole(self, x: float, y: float, ToolName: str) -> CShape:
 		"""Adds a drill hole shape to a Shapes collection."""
 		return CShape(self.__IShapes.AddDrillHole(x, y, ToolName))
-
-
-	def AddPort(self, x1: float, y1: float, x2: float, y2: float, PortNumber: int = 0) -> CShape:
-		"""Adds a cell port shape to a Shapes collection."""
-		return CShape(self.__IShapes.AddPort(x1, y1, x2, y2, PortNumber))
 
 
 	def AddText(self, x: float, y: float, Height: float, Text: str, LayerName: str = "", RotationAngle: float = 0, FontName: str = "", Bold: bool = 0, Italic: bool = 0, DrawAsPolygons: bool = -1) -> CShape:
@@ -26481,7 +25854,7 @@ class CDrawingSegment:
 
 
 	@property
-	def LayerName(self) -> String:
+	def LayerName(self) -> str:
 		"""Returns the name of the drawing layer associated with this DrawingSegment object."""
 		return self.__IDrawingSegment.LayerName
 
@@ -26748,11 +26121,6 @@ class CSnapshot:
 		return self.__ISnapshot.UnionShapes(Type, destLayer)
 
 
-	def UnionLayers(self, sourceLayer1: str, sourceLayer2: str, destinationLayer: str) -> bool:
-		"""Process the shapes on the given source layers to combine overlapping shapes in the snapshot."""
-		return self.__ISnapshot.UnionLayers(sourceLayer1, sourceLayer2, destinationLayer)
-
-
 	def ResizeShapes(self, Offset: float) -> bool:
 		"""Resizes the shapes of this snapshot in place on each layer in the snapshot."""
 		return self.__ISnapshot.ResizeShapes(Offset)
@@ -26783,24 +26151,9 @@ class CSnapshot:
 		return self.__ISnapshot.IntersectShapes(Type, destLayer)
 
 
-	def IntersectLayers(self, sourceLayer1: str, sourceLayer2: str, destinationLayer: str) -> bool:
-		"""Process the shapes on the given source layers to produce the intersection of overlapping shapes in the snapshot."""
-		return self.__ISnapshot.IntersectLayers(sourceLayer1, sourceLayer2, destinationLayer)
-
-
 	def ExclusiveOrShapes(self, Type: mwExclusiveOrShapesType = 0, destLayer: str = "") -> bool:
 		"""Process the shapes of this snapshot produce the exclusive or of overlapped shapes."""
 		return self.__ISnapshot.ExclusiveOrShapes(Type, destLayer)
-
-
-	def ExclusiveOrLayers(self, sourceLayer1: str, sourceLayer2: str, destinationLayer: str) -> bool:
-		"""Process the shapes on the given source layers to produce the exclusive or of overlapping shapes in the snapshot."""
-		return self.__ISnapshot.ExclusiveOrLayers(sourceLayer1, sourceLayer2, destinationLayer)
-
-
-	def SubtractLayers(self, sourceLayer1: str, sourceLayer2: str, destinationLayer: str) -> bool:
-		"""Process the shapes to subtract overlapping sections of shapes on layer B from shapes on layer A in the snapshot."""
-		return self.__ISnapshot.SubtractLayers(sourceLayer1, sourceLayer2, destinationLayer)
 
 
 	def CopyToSnapshot(self, pSnapshot: CSnapshot, x: float, y: float, just: mwPlacementJustfication = 2) -> bool:
@@ -26890,25 +26243,25 @@ class CLibraryElement:
 
 
 	@property
-	def BrowserPath(self) -> String:
+	def BrowserPath(self) -> str:
 		"""Returns the browser path for a MWOffice LibraryElement object."""
 		return self.__ILibraryElement.BrowserPath
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns a text description of the MWOffice LibraryElement object."""
 		return self.__ILibraryElement.Description
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ILibraryElement.Name
 
 
 	@property
-	def SymbolName(self) -> String:
+	def SymbolName(self) -> str:
 		"""Returns the default symbol name for the MWOffice LibraryElement object."""
 		return self.__ILibraryElement.SymbolName
 
@@ -27062,57 +26415,9 @@ class CLibrary:
 
 
 	@property
-	def Category(self) -> String:
-		"""Returns the category name of level of a Library object."""
-		return self.__ILibrary.Category
-
-
-	@property
-	def Count(self) -> int:
-		"""Returns the number of objects in the collection."""
-		return self.__ILibrary.Count
-
-
-	@property
 	def HiddenLibraries(self) -> CHiddenLibraries:
 		"""Returns a reference to an MWOffice HiddenLibraries collection."""
 		return CHiddenLibraries(self.__ILibrary.HiddenLibraries)
-
-
-	def Item(self, Index) -> CModel:
-		"""Returns a specific item of a Collection object either by position or by key."""
-		return CModel(self.__ILibrary.Item(Index))
-
-
-	def __get_Item(self, Index) -> CModel:
-		"""Returns a specific item of a Collection object either by position or by key."""
-		return CModel(self.__ILibrary.Item(Index))
-
-
-	def __call__(self, index) -> CModel:
-		return self.__get_Item(index)
-
-
-	def __iter__(self) -> CModel:
-		for index in range(1, self.Count + 1):
-			 yield self.__get_Item(index)
-
-
-	def __len__(self) -> int:
-		return self.__ILibrary.Count
-
-
-	def __getitem__(self, index) -> Union[CModel, List[CModel]]:
-		if isinstance(index, int):
-			if index < 0:
-				index += self.Count
-			if index < 0 or index >= self.Count:
-				raise IndexError
-			return self.__get_Item(index + 1)
-		elif isinstance(index, slice):
-			return [self[ii] for ii in range (*index.indices(self.Count))]
-		else:
-			raise TypeError
 
 
 	@property
@@ -27128,7 +26433,7 @@ class CLibrary:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__ILibrary.Name
 
@@ -27231,7 +26536,7 @@ class CHiddenLibrary:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__IHiddenLibrary.Name
 
@@ -27321,7 +26626,7 @@ class CMeasurementInfo:
 
 
 	@property
-	def Category(self) -> String:
+	def Category(self) -> str:
 		"""Returns the category name of a MeasurementInfo object."""
 		return self.__IMeasurementInfo.Category
 
@@ -27333,7 +26638,7 @@ class CMeasurementInfo:
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns the description of the object."""
 		return self.__IMeasurementInfo.Description
 
@@ -27351,15 +26656,9 @@ class CMeasurementInfo:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__IMeasurementInfo.Name
-
-
-	@property
-	def SimId(self) -> String:
-		"""Returns the simulator type id for a measurement type"""
-		return self.__IMeasurementInfo.SimId
 
 
 	@property
@@ -27459,7 +26758,7 @@ class CSimulatorInfo:
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns the simulator description for the SimulatorInfo object."""
 		return self.__ISimulatorInfo.Description
 
@@ -27471,19 +26770,19 @@ class CSimulatorInfo:
 
 
 	@property
-	def LongName(self) -> String:
+	def LongName(self) -> str:
 		"""Returns the simulator long name for the SimulatorInfo object."""
 		return self.__ISimulatorInfo.LongName
 
 
 	@property
-	def ShortName(self) -> String:
+	def ShortName(self) -> str:
 		"""Returns the simulator short name for the SimulatorInfo object."""
 		return self.__ISimulatorInfo.ShortName
 
 
 	@property
-	def VendorName(self) -> String:
+	def VendorName(self) -> str:
 		"""Returns the simulation vendor name for the SimulatorInfo object."""
 		return self.__ISimulatorInfo.VendorName
 
@@ -27577,45 +26876,25 @@ class CModel:
 
 
 
-	def Category(self, Level: int) -> String:
+	def Category(self, Level: int) -> str:
 		"""Returns the category name of level of a Model object."""
 		return self.__IModel.Category(Level)
 
 
 	@property
-	def CategoryPath(self) -> String:
+	def CategoryPath(self) -> str:
 		"""Returns a string that defines the category path of the Model object."""
 		return self.__IModel.CategoryPath
 
 
 	@property
-	def Company(self) -> String:
+	def Company(self) -> str:
 		"""Returns the company name of the author for the object."""
 		return self.__IModel.Company
 
 
-	def DataParameter(self, Parameter, Index):
-		"""Returns/sets the value of a parameter contained in a parameter's data."""
-		return self.__IModel.DataParameter(Parameter, Index)
-
-
-	def SetDataParameter(self, Parameter, Index, value):
-		"""Returns/sets the value of a parameter contained in a parameter's data."""
-		self.__IModel.DataParameter = value
-
-
-	def DataParameterNames(self, Parameter):
-		"""Returns the names of the parameters contained in a parameter's data."""
-		return self.__IModel.DataParameterNames(Parameter)
-
-
-	def DataParameters(self, Parameter) -> int:
-		"""Returns the number of parameters contained in a parameter's data."""
-		return self.__IModel.DataParameters(Parameter)
-
-
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns the description of the object."""
 		return self.__IModel.Description
 
@@ -27627,15 +26906,9 @@ class CModel:
 
 
 	@property
-	def HelpFile(self) -> String:
+	def HelpFile(self) -> str:
 		"""Returns the name of the help file for the object."""
 		return self.__IModel.HelpFile
-
-
-	@property
-	def Hidden(self) -> bool:
-		"""Returns true if this model is hidden."""
-		return self.__IModel.Hidden
 
 
 	@property
@@ -27645,13 +26918,13 @@ class CModel:
 
 
 	@property
-	def Module(self) -> String:
+	def Module(self) -> str:
 		"""Returns the module name of a Model object."""
 		return self.__IModel.Module
 
 
 	@property
-	def ModuleFilename(self) -> String:
+	def ModuleFilename(self) -> str:
 		"""Returns a string that specifies the path to the module containing this model."""
 		return self.__IModel.ModuleFilename
 
@@ -27662,7 +26935,7 @@ class CModel:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__IModel.Name
 
@@ -27673,32 +26946,10 @@ class CModel:
 		return self.__IModel.NodeCount
 
 
-	def Parameter(self, Index):
-		"""Returns/sets the value of a parameters."""
-		return self.__IModel.Parameter(Index)
-
-
-	def SetParameter(self, Index, value):
-		"""Returns/sets the value of a parameters."""
-		self.__IModel.Parameter = value
-
-
 	@property
 	def ParameterDefinitions(self) -> CParameterDefinitions:
 		"""Returns a reference to a collection of ParameterDefinition objects."""
 		return CParameterDefinitions(self.__IModel.ParameterDefinitions)
-
-
-	@property
-	def ParameterNames(self):
-		"""Returns the names of the parameters."""
-		return self.__IModel.ParameterNames
-
-
-	@property
-	def Parameters(self) -> int:
-		"""Returns the number of parameters."""
-		return self.__IModel.Parameters
 
 
 	@property
@@ -27714,13 +26965,13 @@ class CModel:
 
 
 	@property
-	def SimulatorTypeID(self) -> String:
+	def SimulatorTypeID(self) -> str:
 		"""Returns a string that identifies the simulator type identifier for the Model Object."""
 		return self.__IModel.SimulatorTypeID
 
 
 	@property
-	def Symbol(self) -> String:
+	def Symbol(self) -> str:
 		"""Returns the symbol name of a Model object."""
 		return self.__IModel.Symbol
 
@@ -27816,31 +27067,31 @@ class CLayoutCell:
 
 
 	@property
-	def CompanyName(self) -> String:
+	def CompanyName(self) -> str:
 		"""Returns the company name of a LayoutCell object."""
 		return self.__ILayoutCell.CompanyName
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns a description of a LayoutCell object."""
 		return self.__ILayoutCell.Description
 
 
 	@property
-	def ModuleFilename(self) -> String:
+	def ModuleFilename(self) -> str:
 		"""Returns the module file name of the layout cell, which is the path to the Dll for the cell."""
 		return self.__ILayoutCell.ModuleFilename
 
 
 	@property
-	def ModuleName(self) -> String:
+	def ModuleName(self) -> str:
 		"""Returns the module name of a LayoutCell object."""
 		return self.__ILayoutCell.ModuleName
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__ILayoutCell.Name
 
@@ -27849,16 +27100,6 @@ class CLayoutCell:
 	def NumberNodes(self) -> int:
 		"""Returns the number of nodes in the cell."""
 		return self.__ILayoutCell.NumberNodes
-
-
-	def Parameter(self, Index):
-		"""Returns/sets the value of parameters contained in a parameter's data."""
-		return self.__ILayoutCell.Parameter(Index)
-
-
-	def SetParameter(self, Index, value):
-		"""Returns/sets the value of parameters contained in a parameter's data."""
-		self.__ILayoutCell.Parameter = value
 
 
 	@property
@@ -28007,7 +27248,7 @@ class COptVariable:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the file name of the project, not including the file's path specification."""
 		return self.__IOptVariable.Name
 
@@ -28186,18 +27427,6 @@ class COptimizer:
 
 
 	@property
-	def Iterations(self) -> int:
-		"""Returns/sets the maximum number of iterations to perform."""
-		return self.__IOptimizer.Iterations
-
-
-	@Iterations.setter
-	def Iterations(self, value: int):
-		"""Returns/sets the maximum number of iterations to perform."""
-		self.__IOptimizer.Iterations = value
-
-
-	@property
 	def LogToFile(self) -> bool:
 		"""Returns/sets a value which specifies if the optimizer should log all iterations to a file."""
 		return self.__IOptimizer.LogToFile
@@ -28299,7 +27528,7 @@ class COptimizer:
 		return self.__IOptimizer.TypeCount
 
 
-	def TypeName(self, Index: int) -> String:
+	def TypeName(self, Index: int) -> str:
 		"""Returns the name of a Optimizer type."""
 		return self.__IOptimizer.TypeName(Index)
 
@@ -28353,7 +27582,7 @@ class CSynthesizer:
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns a description of the model."""
 		return self.__ISynthesizer.Description
 
@@ -28381,7 +27610,7 @@ class CSynthesizer:
 
 
 	@property
-	def Model(self) -> String:
+	def Model(self) -> str:
 		"""Returns/set the model of the synthesizer."""
 		return self.__ISynthesizer.Model
 
@@ -28518,7 +27747,7 @@ class CTuneVariable:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the file name of the project, not including the file's path specification."""
 		return self.__ITuneVariable.Name
 
@@ -28702,7 +27931,7 @@ class CControlBarItem:
 
 
 	@property
-	def Caption(self) -> String:
+	def Caption(self) -> str:
 		"""Returns/Sets the caption of an object."""
 		return self.__IControlBarItem.Caption
 
@@ -28831,7 +28060,7 @@ class CMenuBar:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__IMenuBar.Name
 
@@ -28921,7 +28150,7 @@ class CMenu:
 
 
 	@property
-	def Caption(self) -> String:
+	def Caption(self) -> str:
 		"""Returns/Sets the caption of an object."""
 		return self.__IMenu.Caption
 
@@ -29039,7 +28268,7 @@ class CMenuItem:
 
 
 	@property
-	def Caption(self) -> String:
+	def Caption(self) -> str:
 		"""Returns/Sets the caption of an object."""
 		return self.__IMenuItem.Caption
 
@@ -29115,7 +28344,7 @@ class CHotkeyTable:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__IHotkeyTable.Name
 
@@ -29233,7 +28462,7 @@ class CHotkey:
 
 
 	@property
-	def Mnemonic(self) -> String:
+	def Mnemonic(self) -> str:
 		"""Returns the mnemonic of the Hotkey object."""
 		return self.__IHotkey.Mnemonic
 
@@ -29340,7 +28569,7 @@ class CCommandTable:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__ICommandTable.Name
 
@@ -29370,7 +28599,7 @@ class CCommandTables:
 		return CCommand(self.__ICommandTables.Find(Name))
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__ICommandTables.GetUniqueName(baseName)
 
@@ -29445,13 +28674,13 @@ class CCommand:
 
 
 	@property
-	def Caption(self) -> String:
+	def Caption(self) -> str:
 		"""Returns/Sets the caption of an object."""
 		return self.__ICommand.Caption
 
 
 	@property
-	def HelpFile(self) -> String:
+	def HelpFile(self) -> str:
 		"""Returns the help file of the Command object."""
 		return self.__ICommand.HelpFile
 
@@ -29463,7 +28692,7 @@ class CCommand:
 
 
 	@property
-	def Helpstring(self) -> String:
+	def Helpstring(self) -> str:
 		"""Returns the help string of the Command object."""
 		return self.__ICommand.Helpstring
 
@@ -29481,13 +28710,13 @@ class CCommand:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__ICommand.Name
 
 
 	@property
-	def Tooltip(self) -> String:
+	def Tooltip(self) -> str:
 		"""Returns the tooltip of the Command object."""
 		return self.__ICommand.Tooltip
 
@@ -29517,7 +28746,7 @@ class CCommands:
 		self.__ICommands.Clear()
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__ICommands.GetUniqueName(baseName)
 
@@ -29593,11 +28822,6 @@ class CDrawingShape:
 	def Delete(self) -> bool:
 		"""Removes the object."""
 		return self.__IDrawingShape.Delete()
-
-
-	def IsTypeBitSet(self, typeBit: mwObjectSelectFilters) -> bool:
-		"""Returns a value that indicates if this drawing object has a specific type bit set."""
-		return self.__IDrawingShape.IsTypeBitSet(typeBit)
 
 
 	def IsTypeBitSet2(self, typeBit: mwObjectSelectFilters) -> bool:
@@ -29682,12 +28906,6 @@ class CDrawingShape:
 	def Type(self):
 		"""Returns a value that specifies the type of the DrawingShape object."""
 		return self.__IDrawingShape.Type
-
-
-	@property
-	def TypeBits(self) -> int:
-		"""Returns flags describing the DrawingShape type"""
-		return self.__IDrawingShape.TypeBits
 
 
 	@property
@@ -29920,7 +29138,7 @@ class CArgument:
 
 
 	@property
-	def Value(self) -> String:
+	def Value(self) -> str:
 		"""Returns the argument value as a string."""
 		return self.__IArgument.Value
 
@@ -30119,7 +29337,7 @@ class CNetShape:
 
 
 	@property
-	def LayerName(self) -> String:
+	def LayerName(self) -> str:
 		"""Returns/sets the drawing layer used by this NetShape when not using process layers for drawing."""
 		return self.__INetShape.LayerName
 
@@ -30294,16 +29512,6 @@ class CPhysicalNet:
 
 
 
-	def CreateRouteRecord(self) -> CRouteRecord:
-		"""Returns a reference to a MWOffice RouteRecord object."""
-		return CRouteRecord(self.__IPhysicalNet.CreateRouteRecord())
-
-
-	def AddRoute(self, pRec: CRouteRecord) -> CRoute:
-		"""Adds the route described by the route record to the PhysicalNet object."""
-		return CRoute(self.__IPhysicalNet.AddRoute(pRec.__get_inner()))
-
-
 	def HighlightNet(self, bHighlightOn: bool, Color: int = 255) -> bool:
 		"""Sets the highlight state of the physical net to on or off and allows the specification of the highlight Color."""
 		return self.__IPhysicalNet.HighlightNet(bHighlightOn, Color)
@@ -30322,7 +29530,7 @@ class CPhysicalNet:
 
 
 	@property
-	def ElectNetName(self) -> String:
+	def ElectNetName(self) -> str:
 		"""Returns the name of the electrical net element associated with this physical net."""
 		return self.__IPhysicalNet.ElectNetName
 
@@ -30334,7 +29542,7 @@ class CPhysicalNet:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IPhysicalNet.Name
 
@@ -30740,7 +29948,7 @@ class CRoute:
 
 
 	@property
-	def ViaCellName(self) -> String:
+	def ViaCellName(self) -> str:
 		"""Returns the name of the programmatic cell used to draw vias on this Route object."""
 		return self.__IRoute.ViaCellName
 
@@ -31593,7 +30801,7 @@ class CRouteViaLineConnection:
 
 
 	@property
-	def LineType(self) -> String:
+	def LineType(self) -> str:
 		"""Returns the line type name of the segment connecting to the via."""
 		return self.__IRouteViaLineConnection.LineType
 
@@ -31902,13 +31110,13 @@ class CPin:
 
 
 	@property
-	def ConnectedNetName(self) -> String:
+	def ConnectedNetName(self) -> str:
 		"""Returns the name of the PhysicalNet connected to the Pin or empty string if it is not connected."""
 		return self.__IPin.ConnectedNetName
 
 
 	@property
-	def ElementName(self) -> String:
+	def ElementName(self) -> str:
 		"""Returns a string indicating the name of the element associated with this Pin object."""
 		return self.__IPin.ElementName
 
@@ -31932,7 +31140,7 @@ class CPin:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns a string indicating the name of this Pin object."""
 		return self.__IPin.Name
 
@@ -31950,7 +31158,7 @@ class CPin:
 
 
 	@property
-	def PreferredSnapPin(self) -> String:
+	def PreferredSnapPin(self) -> str:
 		"""Returns a string indicating the preferred snap Pin for this Pin object"""
 		return self.__IPin.PreferredSnapPin
 
@@ -32047,7 +31255,7 @@ class CLayoutModeSet:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__ILayoutModeSet.Name
 
@@ -32098,7 +31306,7 @@ class CLayoutModeSets:
 		return CLayoutModeSet(self.__ILayoutModeSets.GetActive())
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__ILayoutModeSets.GetUniqueName(baseName)
 
@@ -32168,7 +31376,7 @@ class CParameterDefaultValue:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IParameterDefaultValue.Name
 
@@ -32270,6 +31478,349 @@ class CParameterDefaultValues:
 		return '{}({})'.format(type(self).__name__, self.Count)
 
 
+# ConstraintLayer
+class CConstraintLayer:
+	"""An MWOffice ConstraintLayer object."""
+	def __init__(self, constraintlayer):
+		self.__IConstraintLayer = constraintlayer
+
+	def __get_inner(self):
+		return self.__IConstraintLayer
+
+
+
+
+	@property
+	def Name(self) -> str:
+		"""Returns/Sets the name used in code to identify an object."""
+		return self.__IConstraintLayer.Name
+
+
+	@Name.setter
+	def Name(self, value: str):
+		"""Returns/Sets the name used in code to identify an object."""
+		self.__IConstraintLayer.Name = value
+
+
+	def __str__(self):
+		return '{}({})'.format(type(self).__name__, self.Name)
+
+
+# ConstraintLayers
+class CConstraintLayers:
+	"""A collection of MWOffice ConstraintLayer objets."""
+	def __init__(self, constraintlayers):
+		self.__IConstraintLayers = constraintlayers
+
+	def __get_inner(self):
+		return self.__IConstraintLayers
+
+
+
+
+	@property
+	def Count(self) -> int:
+		"""Returns the number of objects in the collection."""
+		return self.__IConstraintLayers.Count
+
+
+	def Exists(self, Index) -> bool:
+		"""Returns whether an item matching the specified criteria exists in the collection."""
+		return self.__IConstraintLayers.Exists(Index)
+
+
+	def Item(self, Index) -> CConstraintLayer:
+		"""Returns a specific item of a Collection object either by position or by key."""
+		return CConstraintLayer(self.__IConstraintLayers.Item(Index))
+
+
+	def __get_Item(self, Index) -> CConstraintLayer:
+		"""Returns a specific item of a Collection object either by position or by key."""
+		return CConstraintLayer(self.__IConstraintLayers.Item(Index))
+
+
+	def __call__(self, index) -> CConstraintLayer:
+		return self.__get_Item(index)
+
+
+	def __iter__(self) -> CConstraintLayer:
+		for index in range(1, self.Count + 1):
+			 yield self.__get_Item(index)
+
+
+	def __len__(self) -> int:
+		return self.__IConstraintLayers.Count
+
+
+	def __getitem__(self, index) -> Union[CConstraintLayer, List[CConstraintLayer]]:
+		if isinstance(index, int):
+			if index < 0:
+				index += self.Count
+			if index < 0 or index >= self.Count:
+				raise IndexError
+			return self.__get_Item(index + 1)
+		elif isinstance(index, slice):
+			return [self[ii] for ii in range (*index.indices(self.Count))]
+		else:
+			raise TypeError
+
+
+	def __str__(self):
+		return '{}({})'.format(type(self).__name__, self.Count)
+
+
+# ConstraintTable
+class CConstraintTable:
+	"""An MWOffice ConstraintTable object."""
+	def __init__(self, constrainttable):
+		self.__IConstraintTable = constrainttable
+
+	def __get_inner(self):
+		return self.__IConstraintTable
+
+
+
+	def SetAll(self, Value: float) -> bool:
+		"""Sets all the contraint values in the table to the given constraint value."""
+		return self.__IConstraintTable.SetAll(Value)
+
+
+
+	def MostCommon(self, fromType: mwConstraintInfoType) -> float:
+		"""Returns the most common constrain value for a given type in the table."""
+		return self.__IConstraintTable.MostCommon(fromType)
+
+
+	@property
+	def Name(self) -> str:
+		"""Returns/Sets the name used in code to identify an object."""
+		return self.__IConstraintTable.Name
+
+
+	@Name.setter
+	def Name(self, value: str):
+		"""Returns/Sets the name used in code to identify an object."""
+		self.__IConstraintTable.Name = value
+
+
+	def Value(self, fromType: mwConstraintInfoType, toType: mwConstraintInfoType) -> float:
+		"""Returns/sets a constraint value between two specified constraint types."""
+		return self.__IConstraintTable.Value(fromType, toType)
+
+
+	def SetValue(self, fromType: mwConstraintInfoType, toType: mwConstraintInfoType, value: float):
+		"""Returns/sets a constraint value between two specified constraint types."""
+		self.__IConstraintTable.Value = value
+
+
+	def __str__(self):
+		return '{}({})'.format(type(self).__name__, self.Name)
+
+
+# ConstraintTables
+class CConstraintTables:
+	"""A collection of MWOffice ConstraintTable objects."""
+	def __init__(self, constrainttables):
+		self.__IConstraintTables = constrainttables
+
+	def __get_inner(self):
+		return self.__IConstraintTables
+
+
+
+
+	@property
+	def Count(self) -> int:
+		"""Returns the number of objects in the collection."""
+		return self.__IConstraintTables.Count
+
+
+	def Exists(self, Index) -> bool:
+		"""Returns whether an item matching the specified criteria exists in the collection."""
+		return self.__IConstraintTables.Exists(Index)
+
+
+	def Item(self, Index) -> CConstraintTable:
+		"""Returns a specific item of a Collection object either by position or by key."""
+		return CConstraintTable(self.__IConstraintTables.Item(Index))
+
+
+	def __get_Item(self, Index) -> CConstraintTable:
+		"""Returns a specific item of a Collection object either by position or by key."""
+		return CConstraintTable(self.__IConstraintTables.Item(Index))
+
+
+	def __call__(self, index) -> CConstraintTable:
+		return self.__get_Item(index)
+
+
+	def __iter__(self) -> CConstraintTable:
+		for index in range(1, self.Count + 1):
+			 yield self.__get_Item(index)
+
+
+	def __len__(self) -> int:
+		return self.__IConstraintTables.Count
+
+
+	def __getitem__(self, index) -> Union[CConstraintTable, List[CConstraintTable]]:
+		if isinstance(index, int):
+			if index < 0:
+				index += self.Count
+			if index < 0 or index >= self.Count:
+				raise IndexError
+			return self.__get_Item(index + 1)
+		elif isinstance(index, slice):
+			return [self[ii] for ii in range (*index.indices(self.Count))]
+		else:
+			raise TypeError
+
+
+	def __str__(self):
+		return '{}({})'.format(type(self).__name__, self.Count)
+
+
+# ConstraintSet
+class CConstraintSet:
+	"""An MWOffice ConstraintSet object."""
+	def __init__(self, constraintset):
+		self.__IConstraintSet = constraintset
+
+	def __get_inner(self):
+		return self.__IConstraintSet
+
+
+
+	def SetNumPhysicalLayers(self, numLayers: int, DefaultValue: float) -> bool:
+		"""Sets the number of physical layers associated with this MWOffice ConstraintSet object. """
+		return self.__IConstraintSet.SetNumPhysicalLayers(numLayers, DefaultValue)
+
+
+
+	@property
+	def Name(self) -> str:
+		"""Returns/Sets the name used in code to identify an object."""
+		return self.__IConstraintSet.Name
+
+
+	@Name.setter
+	def Name(self, value: str):
+		"""Returns/Sets the name used in code to identify an object."""
+		self.__IConstraintSet.Name = value
+
+
+	@property
+	def NumPhysicalLayers(self) -> int:
+		"""Returns the number of physical layers associated with this MWOffice ConstraintSet object."""
+		return self.__IConstraintSet.NumPhysicalLayers
+
+
+	@property
+	def Tables(self) -> CConstraintTables:
+		"""Return a reference to a MWOffice ConstraintTables collection."""
+		return CConstraintTables(self.__IConstraintSet.Tables)
+
+
+	@property
+	def Type(self):
+		"""Returns/sets the type of the MWOffice ConstraintSet object."""
+		return self.__IConstraintSet.Type
+
+
+	@Type.setter
+	def Type(self, value: mwConstraintSetType):
+		"""Returns/sets the type of the MWOffice ConstraintSet object."""
+		self.__IConstraintSet.Type = value
+
+
+	def __str__(self):
+		return '{}({})'.format(type(self).__name__, self.Name)
+
+
+# ConstraintSets
+class CConstraintSets:
+	"""A collection of MWOffice ConstraintSet objects."""
+	def __init__(self, constraintsets):
+		self.__IConstraintSets = constraintsets
+
+	def __get_inner(self):
+		return self.__IConstraintSets
+
+
+
+	def Add(self, Type: mwConstraintSetType, Name: str, nLayers: int, defValue: float) -> CConstraintSet:
+		"""Adds an object to the collection and returns a reference to the created object."""
+		return CConstraintSet(self.__IConstraintSets.Add(Type, Name, nLayers, defValue))
+
+
+	def Remove(self, Index) -> bool:
+		"""Removes a specific member from a collection."""
+		return self.__IConstraintSets.Remove(Index)
+
+
+	def Clear(self) -> bool:
+		"""Removes all objects in a collection."""
+		return self.__IConstraintSets.Clear()
+
+
+
+	@property
+	def Count(self) -> int:
+		"""Returns the number of objects in the collection."""
+		return self.__IConstraintSets.Count
+
+
+	def Exists(self, Index) -> bool:
+		"""Returns whether an item matching the specified criteria exists in the collection."""
+		return self.__IConstraintSets.Exists(Index)
+
+
+	def Item(self, Index) -> CConstraintSet:
+		"""Returns a specific item of a Collection object either by position or by key."""
+		return CConstraintSet(self.__IConstraintSets.Item(Index))
+
+
+	def __get_Item(self, Index) -> CConstraintSet:
+		"""Returns a specific item of a Collection object either by position or by key."""
+		return CConstraintSet(self.__IConstraintSets.Item(Index))
+
+
+	def __call__(self, index) -> CConstraintSet:
+		return self.__get_Item(index)
+
+
+	def __iter__(self) -> CConstraintSet:
+		for index in range(1, self.Count + 1):
+			 yield self.__get_Item(index)
+
+
+	def __len__(self) -> int:
+		return self.__IConstraintSets.Count
+
+
+	def __getitem__(self, index) -> Union[CConstraintSet, List[CConstraintSet]]:
+		if isinstance(index, int):
+			if index < 0:
+				index += self.Count
+			if index < 0 or index >= self.Count:
+				raise IndexError
+			return self.__get_Item(index + 1)
+		elif isinstance(index, slice):
+			return [self[ii] for ii in range (*index.indices(self.Count))]
+		else:
+			raise TypeError
+
+
+	@property
+	def Layers(self) -> CConstraintLayers:
+		"""Returns a reference to a MWOffice ConstraintLayers collection."""
+		return CConstraintLayers(self.__IConstraintSets.Layers)
+
+
+	def __str__(self):
+		return '{}({})'.format(type(self).__name__, self.Count)
+
+
 # LayoutProcessDefinition
 class CLayoutProcessDefinition:
 	"""An MWOffice LayoutProcessDefinition object."""
@@ -32284,16 +31835,6 @@ class CLayoutProcessDefinition:
 	def Export(self, Filename: str) -> bool:
 		"""Exports a design document file from MWOffice."""
 		return self.__ILayoutProcessDefinition.Export(Filename)
-
-
-	def UpdateDependentProcessDefinition(self, procName: str, EMMapping: bool = -1, FileMapping: bool = -1, ModelMapping: bool = -1, DrawingLayers: bool = -1, UnusedLayers: bool = -1) -> bool:
-		"""Update a specific dependent LayoutProcessDefinition object."""
-		return self.__ILayoutProcessDefinition.UpdateDependentProcessDefinition(procName, EMMapping, FileMapping, ModelMapping, DrawingLayers, UnusedLayers)
-
-
-	def UpdateAllDependentProcessDefinitions(self, EMMapping: bool = -1, FileMapping: bool = -1, ModelMapping: bool = -1, DrawingLayers: bool = -1, UnusedLayers: bool = -1) -> bool:
-		"""Update all dependent LayoutProcessDefinitions."""
-		return self.__ILayoutProcessDefinition.UpdateAllDependentProcessDefinitions(EMMapping, FileMapping, ModelMapping, DrawingLayers, UnusedLayers)
 
 
 	def UpdateDependentProcessDefinitionEx(self, procName: str, pUpdateAtributes: CAttributes) -> bool:
@@ -32321,9 +31862,19 @@ class CLayoutProcessDefinition:
 		return self.__ILayoutProcessDefinition.NotifyUpdateDefinitionChanged()
 
 
+	def IsVoidFlagSet(self, Type: mwVoidFlagType) -> bool:
+		"""Returns the if a specific voiding flag is set."""
+		return self.__ILayoutProcessDefinition.IsVoidFlagSet(Type)
+
+
+	def SetVoidFlag(self, Type: mwVoidFlagType, flagSetting: bool) -> None:
+		"""Sets a specific voiding flag to a specific value."""
+		self.__ILayoutProcessDefinition.SetVoidFlag(Type, flagSetting)
+
+
 
 	@property
-	def ActiveLineTypeName(self) -> String:
+	def ActiveLineTypeName(self) -> str:
 		"""Returns/sets the name of the active line type for the LayoutProcessDefinition."""
 		return self.__ILayoutProcessDefinition.ActiveLineTypeName
 
@@ -32344,6 +31895,12 @@ class CLayoutProcessDefinition:
 	def ConnectionRules(self) -> CConnectionRules:
 		"""Returns a reference to a collection of ConnectionRule objects."""
 		return CConnectionRules(self.__ILayoutProcessDefinition.ConnectionRules)
+
+
+	@property
+	def ConstraintSets(self) -> CConstraintSets:
+		"""Returns a reference to a MWOffice ConstrainSets collection."""
+		return CConstraintSets(self.__ILayoutProcessDefinition.ConstraintSets)
 
 
 	@property
@@ -32377,7 +31934,7 @@ class CLayoutProcessDefinition:
 
 
 	@property
-	def DependentMasterName(self) -> String:
+	def DependentMasterName(self) -> str:
 		"""Returns the name of the master layout process definition for this dependent process definition, same as Name for independent process definitions."""
 		return self.__ILayoutProcessDefinition.DependentMasterName
 
@@ -32389,7 +31946,7 @@ class CLayoutProcessDefinition:
 
 
 	@property
-	def DrawUtility(self) -> String:
+	def DrawUtility(self) -> str:
 		"""Returns a string name for the drawing utility to be used for this layout process."""
 		return self.__ILayoutProcessDefinition.DrawUtility
 
@@ -32401,7 +31958,7 @@ class CLayoutProcessDefinition:
 
 
 	@property
-	def DrcRules(self) -> String:
+	def DrcRules(self) -> str:
 		"""Returns a filename path for the DRC rules file for this layout process."""
 		return self.__ILayoutProcessDefinition.DrcRules
 
@@ -32419,7 +31976,7 @@ class CLayoutProcessDefinition:
 
 
 	@property
-	def FilePath(self) -> String:
+	def FilePath(self) -> str:
 		"""Returns the layout process definition linked file path."""
 		return self.__ILayoutProcessDefinition.FilePath
 
@@ -32473,7 +32030,7 @@ class CLayoutProcessDefinition:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ILayoutProcessDefinition.Name
 
@@ -32533,7 +32090,7 @@ class CLayoutProcessDefinition:
 
 
 	@property
-	def ViaCellName(self) -> String:
+	def ViaCellName(self) -> str:
 		"""Returns a string name for the cell used to draw vias between different layers in routes in the process."""
 		return self.__ILayoutProcessDefinition.ViaCellName
 
@@ -32568,6 +32125,42 @@ class CLayoutProcessDefinition:
 		return CProcessTypeInfos(self.__ILayoutProcessDefinition.Vias)
 
 
+	@property
+	def VoidAperature(self) -> float:
+		"""Returns/sets a value indicating the aperature to be used for voiding operations."""
+		return self.__ILayoutProcessDefinition.VoidAperature
+
+
+	@VoidAperature.setter
+	def VoidAperature(self, value: float):
+		"""Returns/sets a value indicating the aperature to be used for voiding operations."""
+		self.__ILayoutProcessDefinition.VoidAperature = value
+
+
+	@property
+	def VoidFlags(self) -> int:
+		"""Returns/sets the flags to be applied during voiding operations."""
+		return self.__ILayoutProcessDefinition.VoidFlags
+
+
+	@VoidFlags.setter
+	def VoidFlags(self, value: int):
+		"""Returns/sets the flags to be applied during voiding operations."""
+		self.__ILayoutProcessDefinition.VoidFlags = value
+
+
+	@property
+	def VoidSpacing(self) -> float:
+		"""Returns/sets a value indicating the spacing to be used for voiding oprations."""
+		return self.__ILayoutProcessDefinition.VoidSpacing
+
+
+	@VoidSpacing.setter
+	def VoidSpacing(self, value: float):
+		"""Returns/sets a value indicating the spacing to be used for voiding oprations."""
+		self.__ILayoutProcessDefinition.VoidSpacing = value
+
+
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
@@ -32598,7 +32191,7 @@ class CLayoutProcessDefinitions:
 		return self.__ILayoutProcessDefinitions.Remove(Index)
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__ILayoutProcessDefinitions.GetUniqueName(baseName)
 
@@ -32730,7 +32323,7 @@ class CProcessLayerInfo:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IProcessLayerInfo.Name
 
@@ -32783,7 +32376,7 @@ class CProcessLayerInfos:
 		self.__IProcessLayerInfos.RemoveAll()
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IProcessLayerInfos.GetUniqueName(baseName)
 
@@ -32859,7 +32452,7 @@ class CProcessTypeInfo:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IProcessTypeInfo.Name
 
@@ -32906,7 +32499,7 @@ class CProcessTypeInfos:
 		self.__IProcessTypeInfos.RemoveAll()
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IProcessTypeInfos.GetUniqueName(baseName)
 
@@ -32976,7 +32569,7 @@ class CProcessPdkLineTypeInfo:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IProcessPdkLineTypeInfo.Name
 
@@ -33023,7 +32616,7 @@ class CProcessPdkLineTypeInfos:
 		self.__IProcessPdkLineTypeInfos.RemoveAll()
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IProcessPdkLineTypeInfos.GetUniqueName(baseName)
 
@@ -33117,7 +32710,7 @@ class CProcessBridgeInfo:
 
 
 	@property
-	def TypeName(self) -> String:
+	def TypeName(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IProcessBridgeInfo.TypeName
 
@@ -33152,7 +32745,7 @@ class CProcessBridgeInfos:
 		self.__IProcessBridgeInfos.RemoveAll()
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IProcessBridgeInfos.GetUniqueName(baseName)
 
@@ -33258,7 +32851,7 @@ class CFontInfo:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IFontInfo.Name
 
@@ -33349,7 +32942,7 @@ class CProcessProperty:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IProcessProperty.Name
 
@@ -33390,7 +32983,7 @@ class CProcessProperties:
 		self.__IProcessProperties.RemoveAll()
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IProcessProperties.GetUniqueName(baseName)
 
@@ -33460,7 +33053,7 @@ class CProcessViaType:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IProcessViaType.Name
 
@@ -33530,7 +33123,7 @@ class CProcessViaTypes:
 		self.__IProcessViaTypes.RemoveAll()
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IProcessViaTypes.GetUniqueName(baseName)
 
@@ -33583,7 +33176,7 @@ class CProcessViaTypes:
 			raise TypeError
 
 
-	def PreferredBetween(self, LineType1, LineType2) -> String:
+	def PreferredBetween(self, LineType1, LineType2) -> str:
 		"""Returns/sets the name of the via type preferred between two given line types."""
 		return self.__IProcessViaTypes.PreferredBetween(LineType1, LineType2)
 
@@ -33656,7 +33249,7 @@ class CBusNetName:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IBusNetName.Name
 
@@ -33789,13 +33382,13 @@ class CBundleBit:
 
 
 	@property
-	def BusName(self) -> String:
+	def BusName(self) -> str:
 		"""Returns the name of the bus associated with this BundleBit."""
 		return self.__IBundleBit.BusName
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IBundleBit.Name
 
@@ -33897,7 +33490,7 @@ class CBundleBus:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IBundleBus.Name
 
@@ -34012,7 +33605,7 @@ class CBundleInfo:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IBundleInfo.Name
 
@@ -34187,7 +33780,7 @@ class CSelectFilterItem:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ISelectFilterItem.Name
 
@@ -34290,7 +33883,7 @@ class CSelectFilter:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ISelectFilter.Name
 
@@ -35034,7 +34627,7 @@ class CZipArchiveItem:
 
 
 	@property
-	def AccessTime(self) -> String:
+	def AccessTime(self) -> str:
 		"""Returns the last access time for the ZipArchiveItem as a string."""
 		return self.__IZipArchiveItem.AccessTime
 
@@ -35052,25 +34645,25 @@ class CZipArchiveItem:
 
 
 	@property
-	def CreateTime(self) -> String:
+	def CreateTime(self) -> str:
 		"""Returns the creation time for the ZipArchiveItem as a string."""
 		return self.__IZipArchiveItem.CreateTime
 
 
 	@property
-	def Extension(self) -> String:
+	def Extension(self) -> str:
 		"""Returns the file name extension for the ZipArchiveItem as a string."""
 		return self.__IZipArchiveItem.Extension
 
 
 	@property
-	def ModifyTime(self) -> String:
+	def ModifyTime(self) -> str:
 		"""Returns the last modification time for the ZipArchiveItem as a string."""
 		return self.__IZipArchiveItem.ModifyTime
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IZipArchiveItem.Name
 
@@ -35248,7 +34841,7 @@ class CBrowseForFolderDialog:
 
 
 	@property
-	def DirectoryPath(self) -> String:
+	def DirectoryPath(self) -> str:
 		"""Returns/Sets the directory path of the BrowseForFolderDialog object."""
 		return self.__IBrowseForFolderDialog.DirectoryPath
 
@@ -35332,7 +34925,7 @@ class CBrowseForFolderDialog:
 
 
 	@property
-	def Title(self) -> String:
+	def Title(self) -> str:
 		"""Returns/Sets the dialog title string for the BrowseForFolderDialog object."""
 		return self.__IBrowseForFolderDialog.Title
 
@@ -35396,7 +34989,7 @@ class CFileFilterEntry:
 
 
 	@property
-	def Filter(self) -> String:
+	def Filter(self) -> str:
 		"""Returns/Sets the filter string for a FileFilterEntry object."""
 		return self.__IFileFilterEntry.Filter
 
@@ -35408,7 +35001,7 @@ class CFileFilterEntry:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IFileFilterEntry.Name
 
@@ -35449,7 +35042,7 @@ class CFileFilterEntries:
 		return self.__IFileFilterEntries.RemoveAll()
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IFileFilterEntries.GetUniqueName(baseName)
 
@@ -35519,25 +35112,25 @@ class CFilePathEntry:
 
 
 	@property
-	def Directory(self) -> String:
+	def Directory(self) -> str:
 		"""Returns just the directory portion of the full file specification for the FilePathEntry object."""
 		return self.__IFilePathEntry.Directory
 
 
 	@property
-	def Extension(self) -> String:
+	def Extension(self) -> str:
 		"""Returns just the extension portion of the full file specification for the FilePathEntry object."""
 		return self.__IFilePathEntry.Extension
 
 
 	@property
-	def Filename(self) -> String:
+	def Filename(self) -> str:
 		"""Returns just the filename portion of the full file specification for the FilePathEntry object."""
 		return self.__IFilePathEntry.Filename
 
 
 	@property
-	def FullPath(self) -> String:
+	def FullPath(self) -> str:
 		"""Returns/Sets the full path specification for the FilePathEntry object."""
 		return self.__IFilePathEntry.FullPath
 
@@ -35660,7 +35253,7 @@ class CFilePathDialog:
 
 
 	@property
-	def DefaultExtension(self) -> String:
+	def DefaultExtension(self) -> str:
 		"""Returns/Sets the default extension to be appended if the user does not specify one."""
 		return self.__IFilePathDialog.DefaultExtension
 
@@ -35762,7 +35355,7 @@ class CFilePathDialog:
 
 
 	@property
-	def Filename(self) -> String:
+	def Filename(self) -> str:
 		"""Returns/Sets the name of the file to be opened or saved."""
 		return self.__IFilePathDialog.Filename
 
@@ -35804,7 +35397,7 @@ class CFilePathDialog:
 
 
 	@property
-	def InitialDirectory(self) -> String:
+	def InitialDirectory(self) -> str:
 		"""Returns/Sets the initial directory displayed in the dialog."""
 		return self.__IFilePathDialog.InitialDirectory
 
@@ -35900,7 +35493,7 @@ class CFilePathDialog:
 
 
 	@property
-	def Title(self) -> String:
+	def Title(self) -> str:
 		"""Returns/Sets the dialog title string."""
 		return self.__IFilePathDialog.Title
 
@@ -35968,7 +35561,7 @@ class CFileUtil:
 
 
 	@property
-	def TempFileName(self) -> String:
+	def TempFileName(self) -> str:
 		"""Returns a file path name for a unique temporary file that can be used for intermediate results or log file output"""
 		return self.__IFileUtil.TempFileName
 
@@ -35990,7 +35583,7 @@ class CFileAttribute:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IFileAttribute.Name
 
@@ -36097,7 +35690,7 @@ class CScriptRoutine:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IScriptRoutine.Name
 
@@ -36193,13 +35786,13 @@ class CScriptModule:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IScriptModule.Name
 
 
 	@property
-	def Path(self) -> String:
+	def Path(self) -> str:
 		"""Returns the file path for the script module if one exists."""
 		return self.__IScriptModule.Path
 
@@ -36317,7 +35910,7 @@ class CSimulationResult:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ISimulationResult.Name
 
@@ -36540,7 +36133,7 @@ class CSimulationFilter:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ISimulationFilter.Name
 
@@ -36605,7 +36198,7 @@ class CSimulationFilters:
 		self.__ISimulationFilters.RemoveAll()
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__ISimulationFilters.GetUniqueName(baseName)
 
@@ -36675,7 +36268,7 @@ class CSwitchList:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ISwitchList.Name
 
@@ -36728,7 +36321,7 @@ class CSwitchLists:
 		self.__ISwitchLists.RemoveAll()
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__ISwitchLists.GetUniqueName(baseName)
 
@@ -36810,7 +36403,7 @@ class CConnectionRule:
 
 
 	@property
-	def Rule(self) -> String:
+	def Rule(self) -> str:
 		"""Returns/sets the rule of a ConnectionRule object."""
 		return self.__IConnectionRule.Rule
 
@@ -36839,11 +36432,6 @@ class CConnectionRules:
 	def Add(self, Rule: str, bEnable: bool = -1) -> CConnectionRule:
 		"""Adds an object to the collection and returns a reference to the created object."""
 		return CConnectionRule(self.__IConnectionRules.Add(Rule, bEnable))
-
-
-	def Remove(self, Index) -> bool:
-		"""Removes a specific member from a collection."""
-		return self.__IConnectionRules.Remove(Index)
 
 
 	def RemoveAll(self) -> bool:
@@ -36916,7 +36504,7 @@ class CCrossoverRuleEntry:
 
 
 	@property
-	def FromLineTypeName(self) -> String:
+	def FromLineTypeName(self) -> str:
 		"""Returns/Sets the from line type name."""
 		return self.__ICrossoverRuleEntry.FromLineTypeName
 
@@ -36940,13 +36528,13 @@ class CCrossoverRuleEntry:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__ICrossoverRuleEntry.Name
 
 
 	@property
-	def ToLineTypeName(self) -> String:
+	def ToLineTypeName(self) -> str:
 		"""Returns/Sets the to line type name."""
 		return self.__ICrossoverRuleEntry.ToLineTypeName
 
@@ -37080,7 +36668,7 @@ class CCrossoverRule:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__ICrossoverRule.Name
 
@@ -37192,7 +36780,7 @@ class CProcessViaFillEntry:
 
 
 	@property
-	def CellName(self) -> String:
+	def CellName(self) -> str:
 		"""Returns/sets the via cell name for the ProcessViaFillEntry."""
 		return self.__IProcessViaFillEntry.CellName
 
@@ -37216,7 +36804,7 @@ class CProcessViaFillEntry:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IProcessViaFillEntry.Name
 
@@ -37300,7 +36888,7 @@ class CProcessViaFillEntry:
 
 
 	@property
-	def libName(self) -> String:
+	def libName(self) -> str:
 		"""Returns/sets the via cell library name for the ProcessViaFillEntry."""
 		return self.__IProcessViaFillEntry.libName
 
@@ -37406,7 +36994,7 @@ class CProcessViaFenceEntry:
 
 
 	@property
-	def CellName(self) -> String:
+	def CellName(self) -> str:
 		"""Returns/sets the via cell name for the ProcessViaFenceEntry."""
 		return self.__IProcessViaFenceEntry.CellName
 
@@ -37430,7 +37018,7 @@ class CProcessViaFenceEntry:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IProcessViaFenceEntry.Name
 
@@ -37526,7 +37114,7 @@ class CProcessViaFenceEntry:
 
 
 	@property
-	def libName(self) -> String:
+	def libName(self) -> str:
 		"""Returns/sets the via cell library name for the ProcessViaFenceEntry."""
 		return self.__IProcessViaFenceEntry.libName
 
@@ -37567,7 +37155,7 @@ class CProcessViaFenceEntries:
 		return self.__IProcessViaFenceEntries.RemoveAll()
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IProcessViaFenceEntries.GetUniqueName(baseName)
 
@@ -37637,7 +37225,7 @@ class CProcessViaLineType:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IProcessViaLineType.Name
 
@@ -37782,13 +37370,13 @@ class CCellMapping:
 
 
 	@property
-	def CellName(self) -> String:
+	def CellName(self) -> str:
 		"""Returns the cell mapping cell name."""
 		return self.__ICellMapping.CellName
 
 
 	@property
-	def ElementName(self) -> String:
+	def ElementName(self) -> str:
 		"""Returns the cell mapping element name."""
 		return self.__ICellMapping.ElementName
 
@@ -38004,7 +37592,7 @@ class CEMPort:
 
 
 	@property
-	def Conductor(self) -> String:
+	def Conductor(self) -> str:
 		"""Returns/Sets the conductor name for the EMPort object."""
 		return self.__IEMPort.Conductor
 
@@ -38330,7 +37918,7 @@ class CSweepLabel:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__ISweepLabel.Name
 
@@ -38516,13 +38104,13 @@ class CComponentTest:
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns a description of the component test and results."""
 		return self.__IComponentTest.Description
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name used in code to identify an object."""
 		return self.__IComponentTest.Name
 
@@ -38623,7 +38211,7 @@ class CStatusItem:
 
 
 	@property
-	def Date(self) -> String:
+	def Date(self) -> str:
 		"""Returns the date from the MWOffice StatusItem object."""
 		return self.__IStatusItem.Date
 
@@ -38647,13 +38235,13 @@ class CStatusItem:
 
 
 	@property
-	def Text(self) -> String:
+	def Text(self) -> str:
 		"""Returns the text associated with the MWOffice StatusItem object."""
 		return self.__IStatusItem.Text
 
 
 	@property
-	def Time(self) -> String:
+	def Time(self) -> str:
 		"""Returns the time from the MWOffice StatusItem object."""
 		return self.__IStatusItem.Time
 
@@ -38759,7 +38347,7 @@ class CStatusGroup:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IStatusGroup.Name
 
@@ -38790,7 +38378,7 @@ class CStatusGroups:
 		return CStatusGroup(self.__IStatusGroups.Add(Name, Owner))
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IStatusGroups.GetUniqueName(baseName)
 
@@ -39018,13 +38606,13 @@ class CView:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IView.Name
 
 
 	@property
-	def ViewName(self) -> String:
+	def ViewName(self) -> str:
 		"""Returns the static view name for this view"""
 		return self.__IView.ViewName
 
@@ -39196,7 +38784,7 @@ class CThreeDView:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IThreeDView.Name
 
@@ -39316,7 +38904,7 @@ class CThreeDView:
 
 
 	@property
-	def ViewName(self) -> String:
+	def ViewName(self) -> str:
 		"""Returns the static view name for this view"""
 		return self.__IThreeDView.ViewName
 
@@ -39449,13 +39037,13 @@ class CEmbeddedDesign:
 
 
 	@property
-	def DesignName(self) -> String:
+	def DesignName(self) -> str:
 		"""Returns the name of the design displayed by this EmbeddedDesign object."""
 		return self.__IEmbeddedDesign.DesignName
 
 
 	@property
-	def DocSetName(self) -> String:
+	def DocSetName(self) -> str:
 		"""Returns/sets the document set name."""
 		return self.__IEmbeddedDesign.DocSetName
 
@@ -39467,7 +39055,7 @@ class CEmbeddedDesign:
 
 
 	@property
-	def Extension(self) -> String:
+	def Extension(self) -> str:
 		"""Returns the extension of the design type displayed by this EmbeddedDesign object."""
 		return self.__IEmbeddedDesign.Extension
 
@@ -39621,7 +39209,7 @@ class CEMail:
 
 
 	@property
-	def BccRecipients(self) -> String:
+	def BccRecipients(self) -> str:
 		"""Returns/Sets the Bcc: recipient line for this MWOffice EMail object."""
 		return self.__IEMail.BccRecipients
 
@@ -39633,7 +39221,7 @@ class CEMail:
 
 
 	@property
-	def Body(self) -> String:
+	def Body(self) -> str:
 		"""Returns/Sets the body content text for this MWOffice EMail object."""
 		return self.__IEMail.Body
 
@@ -39645,7 +39233,7 @@ class CEMail:
 
 
 	@property
-	def CcRecipients(self) -> String:
+	def CcRecipients(self) -> str:
 		"""Returns/Sets the Cc: recipient line for this MWOffice EMail object."""
 		return self.__IEMail.CcRecipients
 
@@ -39657,7 +39245,7 @@ class CEMail:
 
 
 	@property
-	def Subject(self) -> String:
+	def Subject(self) -> str:
 		"""Returns/Sets the subject line for this MWOffice EMail object."""
 		return self.__IEMail.Subject
 
@@ -39669,7 +39257,7 @@ class CEMail:
 
 
 	@property
-	def ToRecipients(self) -> String:
+	def ToRecipients(self) -> str:
 		"""Returns/Sets the To: recipient line for this MWOffice EMail object."""
 		return self.__IEMail.ToRecipients
 
@@ -39700,6 +39288,11 @@ class CFileInfo:
 		return self.__IFileInfo.Delete()
 
 
+	def Recycle(self) -> bool:
+		"""Recycles the file referenced by this MWOffice FileInfo object."""
+		return self.__IFileInfo.Recycle()
+
+
 
 	@property
 	def Attributes(self) -> CFileAttributes:
@@ -39708,7 +39301,7 @@ class CFileInfo:
 
 
 	@property
-	def Extension(self) -> String:
+	def Extension(self) -> str:
 		"""Returns the extension portion of the file name."""
 		return self.__IFileInfo.Extension
 
@@ -39726,13 +39319,19 @@ class CFileInfo:
 
 
 	@property
-	def Name(self) -> String:
+	def IsRegular(self) -> bool:
+		"""Returns a value indicating whether this MWOffice FileInfo object references a regular file."""
+		return self.__IFileInfo.IsRegular
+
+
+	@property
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IFileInfo.Name
 
 
 	@property
-	def Path(self) -> String:
+	def Path(self) -> str:
 		"""Returns/Sets the file path for this MWOffice FileInfo object."""
 		return self.__IFileInfo.Path
 
@@ -39753,6 +39352,12 @@ class CFileInfo:
 	def ReadOnly(self, value: bool):
 		"""Returns/Sets a value indicating whether this MWOffice FileInfo object is readonly."""
 		self.__IFileInfo.ReadOnly = value
+
+
+	@property
+	def Size(self) -> int:
+		"""Returns the size of the file in bytes if it exists, zero if not"""
+		return self.__IFileInfo.Size
 
 
 	def __str__(self):
@@ -39868,13 +39473,13 @@ class CFolderInfo:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IFolderInfo.Name
 
 
 	@property
-	def Path(self) -> String:
+	def Path(self) -> str:
 		"""Returns/Sets the file path for this MWOffice FolderInfo object."""
 		return self.__IFolderInfo.Path
 
@@ -39883,6 +39488,12 @@ class CFolderInfo:
 	def Path(self, value: str):
 		"""Returns/Sets the file path for this MWOffice FolderInfo object."""
 		self.__IFolderInfo.Path = value
+
+
+	@property
+	def Size(self):
+		"""Returns the recursive size of all regular files in the folder and subfolders in bytes."""
+		return self.__IFolderInfo.Size
 
 
 	def __str__(self):
@@ -39985,7 +39596,7 @@ class CImportProject:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the file name of the project, not including the file's path specification."""
 		return self.__IImportProject.Name
 
@@ -40124,7 +39735,7 @@ class CTreeNode:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name of the MWOffice TreeNode object."""
 		return self.__ITreeNode.Name
 
@@ -40142,7 +39753,7 @@ class CTreeNode:
 
 
 	@property
-	def Text(self) -> String:
+	def Text(self) -> str:
 		"""Returns the text of the MWOffice TreeNode object."""
 		return self.__ITreeNode.Text
 
@@ -40233,7 +39844,7 @@ class CProjectItem:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IProjectItem.Name
 
@@ -40362,7 +39973,7 @@ class CUserFolder:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IUserFolder.Name
 
@@ -40421,7 +40032,7 @@ class CUserFolders:
 		return self.__IUserFolders.RemoveAll()
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IUserFolders.GetUniqueName(baseName)
 
@@ -40501,13 +40112,13 @@ class CWizardDoc:
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns a description of the MWOffice Wizard object."""
 		return self.__IWizardDoc.Description
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name of and instance of a MWOffice Wizard object."""
 		return self.__IWizardDoc.Name
 
@@ -40519,7 +40130,7 @@ class CWizardDoc:
 
 
 	@property
-	def WizardName(self) -> String:
+	def WizardName(self) -> str:
 		"""Returns the name of the MWOffice Wizard object."""
 		return self.__IWizardDoc.WizardName
 
@@ -40629,13 +40240,13 @@ class CWizard:
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns a description of the MWOffice Wizard object."""
 		return self.__IWizard.Description
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name of the MWOffice Wizard object."""
 		return self.__IWizard.Name
 
@@ -40718,14 +40329,14 @@ class CVersionHistoryItem:
 
 
 
-	def Date(self) -> String:
+	def Date(self) -> str:
 		"""The date of the item in the MWOffice Version History."""
 		return self.__IVersionHistoryItem.Date()
 
 
 
 	@property
-	def Comment(self) -> String:
+	def Comment(self) -> str:
 		"""The comment used in the commit of the item in the MWOffice Version History."""
 		return self.__IVersionHistoryItem.Comment
 
@@ -40737,7 +40348,7 @@ class CVersionHistoryItem:
 
 
 	@property
-	def User(self) -> String:
+	def User(self) -> str:
 		"""The user who made the commit in the MWOffice Version History."""
 		return self.__IVersionHistoryItem.User
 
@@ -40857,13 +40468,13 @@ class CVersionedItem:
 
 
 	@property
-	def LocalComment(self) -> String:
+	def LocalComment(self) -> str:
 		"""Returns the commit comment of the local version of the MWOffice Version Control Item."""
 		return self.__IVersionedItem.LocalComment
 
 
 	@property
-	def LocalFileDate(self) -> String:
+	def LocalFileDate(self) -> str:
 		"""Returns the date and time of the local version of the MWOffice Version Control Item."""
 		return self.__IVersionedItem.LocalFileDate
 
@@ -40875,7 +40486,7 @@ class CVersionedItem:
 
 
 	@property
-	def LocalRevisionDate(self) -> String:
+	def LocalRevisionDate(self) -> str:
 		"""Returns the date and time of the local version of the MWOffice Version Control Item."""
 		return self.__IVersionedItem.LocalRevisionDate
 
@@ -40887,19 +40498,19 @@ class CVersionedItem:
 
 
 	@property
-	def LocalUser(self) -> String:
+	def LocalUser(self) -> str:
 		"""Returns the user who committed the local version of the MWOffice Version Control Item."""
 		return self.__IVersionedItem.LocalUser
 
 
 	@property
-	def LockComment(self) -> String:
+	def LockComment(self) -> str:
 		"""Returns the date and time MWOffice Version Control Item was locked."""
 		return self.__IVersionedItem.LockComment
 
 
 	@property
-	def LockDate(self) -> String:
+	def LockDate(self) -> str:
 		"""Returns the date and time MWOffice Version Control Item was locked."""
 		return self.__IVersionedItem.LockDate
 
@@ -40911,25 +40522,25 @@ class CVersionedItem:
 
 
 	@property
-	def LockUser(self) -> String:
+	def LockUser(self) -> str:
 		"""Returns the user who locked the MWOffice Version Control Item."""
 		return self.__IVersionedItem.LockUser
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name of the MWOffice Version Control Item."""
 		return self.__IVersionedItem.Name
 
 
 	@property
-	def RemoteComment(self) -> String:
+	def RemoteComment(self) -> str:
 		"""Returns the commit comment of the remote version of the MWOffice Version Control Item."""
 		return self.__IVersionedItem.RemoteComment
 
 
 	@property
-	def RemoteDate(self) -> String:
+	def RemoteDate(self) -> str:
 		"""Returns the date and time of the remote version of the MWOffice Version Control Item."""
 		return self.__IVersionedItem.RemoteDate
 
@@ -40947,7 +40558,7 @@ class CVersionedItem:
 
 
 	@property
-	def RemoteUser(self) -> String:
+	def RemoteUser(self) -> str:
 		"""Returns the user who committed the remote version of the MWOffice Version Control Item."""
 		return self.__IVersionedItem.RemoteUser
 
@@ -41067,13 +40678,13 @@ class CVersionControl:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name of the MWOffice Version Control working copy."""
 		return self.__IVersionControl.Name
 
 
 	@property
-	def Path(self) -> String:
+	def Path(self) -> str:
 		"""Returns the path of the MWOffice Version Control working copy."""
 		return self.__IVersionControl.Path
 
@@ -41085,13 +40696,13 @@ class CVersionControl:
 
 
 	@property
-	def Server(self) -> String:
+	def Server(self) -> str:
 		"""Returns the server for the MWOffice Version Control working copy."""
 		return self.__IVersionControl.Server
 
 
 	@property
-	def Vendor(self) -> String:
+	def Vendor(self) -> str:
 		"""Returns the path of the MWOffice Version Control working copy."""
 		return self.__IVersionControl.Vendor
 
@@ -41242,7 +40853,7 @@ class CAnnotation:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/sets the name of the MWOffice Annotation object."""
 		return self.__IAnnotation.Name
 
@@ -41283,7 +40894,7 @@ class CAnnotations:
 		self.__IAnnotations.RemoveAll()
 
 
-	def GetUniqueName(self, baseName: str) -> String:
+	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IAnnotations.GetUniqueName(baseName)
 
@@ -41462,7 +41073,7 @@ class CJobEntry:
 
 
 	@property
-	def Description(self) -> String:
+	def Description(self) -> str:
 		"""Returns a string description of the JobEntry object."""
 		return self.__IJobEntry.Description
 
@@ -41474,7 +41085,7 @@ class CJobEntry:
 
 
 	@property
-	def EndTime(self) -> String:
+	def EndTime(self) -> str:
 		"""Returns a string with the end time for the AsyncJob object. Empty if the Job has not ended."""
 		return self.__IJobEntry.EndTime
 
@@ -41510,25 +41121,25 @@ class CJobEntry:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IJobEntry.Name
 
 
 	@property
-	def Owner(self) -> String:
+	def Owner(self) -> str:
 		"""Returns the user name of the owner for the JobEntry object."""
 		return self.__IJobEntry.Owner
 
 
 	@property
-	def Project(self) -> String:
+	def Project(self) -> str:
 		"""Returns the name of the project associated with the JobEntry object."""
 		return self.__IJobEntry.Project
 
 
 	@property
-	def StartTime(self) -> String:
+	def StartTime(self) -> str:
 		"""Returns a string with the start time for the JobEntry object. Empty if the Job has not started."""
 		return self.__IJobEntry.StartTime
 
@@ -41647,7 +41258,7 @@ class CJobQueue:
 
 
 	@property
-	def Host(self) -> String:
+	def Host(self) -> str:
 		"""Returns a value which contains the host name for the JobQueue object."""
 		return self.__IJobQueue.Host
 
@@ -41659,7 +41270,7 @@ class CJobQueue:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns/Sets the name used in code to identify an object."""
 		return self.__IJobQueue.Name
 
@@ -41671,13 +41282,13 @@ class CJobQueue:
 
 
 	@property
-	def Transport(self) -> String:
+	def Transport(self) -> str:
 		"""Returns a value which indicates the transport type for the JobQueue object."""
 		return self.__IJobQueue.Transport
 
 
 	@property
-	def Type(self) -> String:
+	def Type(self) -> str:
 		"""Returns a value indicating the type of the JobQueue object."""
 		return self.__IJobQueue.Type
 
@@ -42054,7 +41665,7 @@ class CSystemInfo:
 
 
 	@property
-	def ComputerName(self) -> String:
+	def ComputerName(self) -> str:
 		"""Returns a string with the current computer name."""
 		return self.__ISystemInfo.ComputerName
 
@@ -42072,7 +41683,7 @@ class CSystemInfo:
 
 
 	@property
-	def SystemDirectory(self) -> String:
+	def SystemDirectory(self) -> str:
 		"""Returns a path string to the active system directory for this system."""
 		return self.__ISystemInfo.SystemDirectory
 
@@ -42084,25 +41695,25 @@ class CSystemInfo:
 
 
 	@property
-	def SystemProcessorString(self) -> String:
+	def SystemProcessorString(self) -> str:
 		"""Returns a string indicating the system processor architecture and version for this system."""
 		return self.__ISystemInfo.SystemProcessorString
 
 
 	@property
-	def SystemVersionString(self) -> String:
+	def SystemVersionString(self) -> str:
 		"""Returns a string indicating the operating system version for this system."""
 		return self.__ISystemInfo.SystemVersionString
 
 
 	@property
-	def UserName(self) -> String:
+	def UserName(self) -> str:
 		"""Returns a string with the current user name."""
 		return self.__ISystemInfo.UserName
 
 
 	@property
-	def WindowsDirectory(self) -> String:
+	def WindowsDirectory(self) -> str:
 		"""Returns a path string to the active windows directory for this system."""
 		return self.__ISystemInfo.WindowsDirectory
 
@@ -42124,19 +41735,19 @@ class CSystemFolder:
 
 
 	@property
-	def CanonicalName(self) -> String:
+	def CanonicalName(self) -> str:
 		"""Returns the canonical name of the SystemFolder object."""
 		return self.__ISystemFolder.CanonicalName
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name of the SystemFolder object."""
 		return self.__ISystemFolder.Name
 
 
 	@property
-	def Path(self) -> String:
+	def Path(self) -> str:
 		"""Returns a path string for the SystemFolder object."""
 		return self.__ISystemFolder.Path
 
@@ -42221,13 +41832,13 @@ class CEnvironmentVariable:
 
 
 	@property
-	def Name(self) -> String:
+	def Name(self) -> str:
 		"""Returns the name of the EnvironmentVariable object."""
 		return self.__IEnvironmentVariable.Name
 
 
 	@property
-	def Value(self) -> String:
+	def Value(self) -> str:
 		"""Returns the value of the EnvironmentVariable object."""
 		return self.__IEnvironmentVariable.Value
 
@@ -42714,7 +42325,7 @@ class COAWiz:
 		return self.__IOAWiz.OaLibCellCount
 
 
-	def OaLibCellName(self, Index: int) -> String:
+	def OaLibCellName(self, Index: int) -> str:
 		"""Get name of cell with specified view by index from OpenAccess library."""
 		return self.__IOAWiz.OaLibCellName(Index)
 
@@ -42731,7 +42342,7 @@ class COAWiz:
 		return self.__IOAWiz.OaLibCount
 
 
-	def OaLibName(self, Index: int) -> String:
+	def OaLibName(self, Index: int) -> str:
 		"""Get name of library from OpenAccess lib defs file by index."""
 		return self.__IOAWiz.OaLibName(Index)
 
@@ -42815,7 +42426,7 @@ class CNetSynthWiz:
 		self.__INetSynthWiz.FrequencyList = value
 
 
-	def Goal(self, Index: int) -> String:
+	def Goal(self, Index: int) -> str:
 		"""Get synthesis goal"""
 		return self.__INetSynthWiz.Goal(Index)
 
@@ -42853,7 +42464,7 @@ class CNetSynthWiz:
 		return self.__INetSynthWiz.NetworkSens(Index)
 
 
-	def NetworkTopology(self, Index: int) -> String:
+	def NetworkTopology(self, Index: int) -> str:
 		"""Get description of synthesized network topology"""
 		return self.__INetSynthWiz.NetworkTopology(Index)
 
@@ -42977,7 +42588,7 @@ class CNetSynthWiz_ParamConstraint:
 
 
 	@property
-	def ValueListName(self) -> String:
+	def ValueListName(self) -> str:
 		"""Get name of parameter discrete value list"""
 		return self.__INetSynthWiz_ParamConstraints.ValueListName
 
