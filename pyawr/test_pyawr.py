@@ -12,9 +12,10 @@ import pdb
 def awrde() -> mwo.CMWOffice:
     global awrde  # type: mwo.CMWOffice
     awrde = mwo.CMWOffice()
-    awrde.TestMode = 1
+    awrde._CMWOffice__IMWOffice.testmode=True
     test_project = os.path.join(os.path.dirname(__file__), '..', 'testdata', 'lpf_lumped.emp')
     try:
+        # TODO: use projectopen to test instead
         awrde.Project.Name
     except:
         print('Opening lpf_lumped.emp')
