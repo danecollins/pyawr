@@ -104,6 +104,7 @@ class Netlister:
         self.subcircuits = set()
         self.datafiles = set()
 
+
     def output_nodes(self, element):
         for i, n in enumerate(element.Nodes, 1):
             pn = n.PortNumber
@@ -129,7 +130,6 @@ class Netlister:
             elif awrde.Project.DataFiles.Exists(subckt_name):
                 self.output_datafile(elem, subckt_name)
             else:
-                pdb.set_trace()
                 raise ValueError(f'Cannot find subcircuit named "{subckt_name}"')
         else:
             try:
@@ -185,3 +185,31 @@ class Netlister:
         while self.datafiles:
             datafile = self.datafiles.pop()
             print(f'INCLUDE "{datafile}"')
+
+
+def object_to_dict(self):
+    r = {}
+    for a in dir(self):
+        if a.startswith('_'):
+            continue
+        # splitting if allows us to skip value get sometimes
+        try:
+            value = getattr(self, a)
+            if callable(value):
+                continue
+            elif isinstance(value, int) or isinstance(value, float):
+                r[a] = value
+            else:
+                r[a] =  str(value)
+        except Exception as e:
+            print(f'Could not get value for attribute "{a}"')
+            raise(e)       
+    return r
+
+
+if __name__ == "__main__":
+    awrde = mwo.CMWOffice()
+    open_example(awrde, 'LPF_Lumped.emp')
+    element = awrde.Project.Schematics('LPF').Elements.Item(1)
+    print(object_to_dict(element.DrawingObjects.Item(1)))
+    
