@@ -10,12 +10,13 @@
     A log file of the form optuna_log_datetime.csv is generated with the iterations parameters
     to allow analysis of the Optuna iterations.
 """
+from typing import List
 import optuna
 import mwoffice as mwo
 import helpers
 from time import sleep
 import datetime
-import pdb
+import pandas as pd
 
 class Logger:
     """Generates a log file of the optimizer run."""
@@ -23,14 +24,17 @@ class Logger:
 
     def __init__(self):
         d = datetime.datetime.now()
-        self.logfile = d.strftime('optuna_log_%y%m%d_%H%M.csv')
+        self.logfile = d.strftime('optuna_log_%y%m%d_%H%M.xlsx')
         print(f'Logging to {self.logfile}')
-        self.log('OptIndex', 'BestCost', 'OptName', 'Param0', 'Param1', 'Param2')
+        self.log_data = []
 
-    def log(self, idx, cost, name, p0, p1, p2):
+    def log(self, log_dict):
+        self.log_data.append(log_dict)
+
+    def write(self):
         """Do atomic writes to the file in case of crashes"""
-        with open(self.logfile, 'a') as fp:
-            print(f'{idx},{cost},{name},{p0},{p1},{p2}', file=fp)
+        df = pd.DataFrame.from_records(self.log_data)
+        df.to_excel(self.logfile, index=False)
 
 
 def get_optimizer_map(awrde):
@@ -46,7 +50,7 @@ awrde = mwo.CMWOffice()
 logger = Logger()
 DesiredIterations = 50
 OptimizerMap = get_optimizer_map(awrde)
-InitialCostCheck = 62000
+InitialCostCheck = 13.5
 OptimizerList = ["Advanced Genetic Algorithm",
                  "Particle Swarm",
                  "Kapu Optimizer",
@@ -82,16 +86,32 @@ def run_optimizer(awrde, opt, iterations=500):
         at the right initial point.
     """
     global OptimizerMap
-
-    initial_cost = opt.Cost
-    opt.MaxIterations = iterations
-    opt.start()
-    while opt.Running:
-        sleep(1)  # to give optimizer time to run
-    
-    best_cost = opt.BestCost
+    results = {}
+    results['initial_cost'] = opt.Cost
+    if isinstance(iterations, int):
+        opt.MaxIterations = iterations
+        opt.start()
+        while opt.Running:
+            sleep(2)  # to give optimizer time to run
+        
+        results['final_cost'] = opt.BestCost
+        
+    elif isinstance(iterations, List):
+        # will collect intermediate results
+        total_iterations = 0
+        computed_cost = 0
+        for num_iterations, error_weight in iterations:
+            total_iterations += num_iterations
+            opt.MaxIterations = num_iterations
+            opt.start()
+            while opt.Running:
+                sleep(1)
+            cost = opt.BestCost
+            results[total_iterations] = cost
+            computed_cost += cost * error_weight
+        results['final_cost'] = computed_cost
     opt.Reset()  # reset to initial state
-    return initial_cost, best_cost
+    return results
 
 
 def test_optimizers():
@@ -244,19 +264,26 @@ def objective(trial):
         p0 = trial.suggest_float("Step Size", 1e-07, 1e-03, log=True)                                          
         set_opt_prop(opt_object, "Step Size", p0)                                                    
 
-    initial_cost, final_cost = run_optimizer(awrde, opt_object, iterations=DesiredIterations)
+    #optim_dict = run_optimizer(awrde, opt_object, iterations=DesiredIterations)
+    optim_dict = run_optimizer(awrde, opt_object,
+                             iterations=[(20,1), (20,1), (20,1), (20,1), (20,1)])
     # Check initial cost
-    if initial_cost < InitialCostCheck:
-        print(f"Initial cost was only {initial_cost}")
+    if optim_dict['initial_cost'] < InitialCostCheck:
+        print(f"Initial cost was only {optim_dict['initial_cost']}")
         exit()
-    logger.log(OptimizerMap[opt], final_cost, opt, p0, p1, p2)
-    return final_cost
+    log_dict = dict(opidx=OptimizerMap[opt], final_cost=optim_dict['final_cost'], optim=opt,
+                    P0=p0, P1=p1, p2=p2,circuit=awrde.Project.Name)
+    log_dict.update(optim_dict)
+    logger.log(log_dict)
+    return log_dict['final_cost']
     
 if __name__ == '__main__':
     # assume project is open and setup
+    # run this before running optuna to make sure each optimizer will run without error
     # test_optimizers()
     
+    # prior to running get the error function and set the threshold in InitialCostCheck
     study = optuna.create_study()
     study.optimize(objective, n_trials=500)
     print(study.best_params)
-
+    logger.write()
