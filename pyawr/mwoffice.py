@@ -2,14 +2,14 @@
 # Id String = {5AE2215C-270C-470B-A2B6-609A964E53A2}#16.0#0#Win64
 # Guid      = {5AE2215C-270C-470B-A2B6-609A964E53A2}
 # Lib File  = C:\AWR\MWO_Dev\Debug\MWOffice.exe
-# 01/28/21 21:01:49
+# 02/13/21 14:16:53
 
 from __future__ import annotations
-from enum import IntEnum
+from enum import Enum
 import win32com.client
 awrc = win32com.client.constants
 
-class mwFeatureTypeFlags(IntEnum):
+class mwFeatureTypeFlags(Enum):
 	"""Constants that define the project features."""
 	mwFTF_CircuitSimulator = 1
 	mwFTF_NonLinearSimulator = 2
@@ -19,8 +19,11 @@ class mwFeatureTypeFlags(IntEnum):
 	mwFTF_AdvancedSystem = 32
 	mwFTF_AdvancedMWO = 64
 	mwFTF_MMIC = 128
+	
+	def __int__(self):
+		return self.value
 
-class mwShapeToolFlags(IntEnum):
+class mwShapeToolFlags(Enum):
 	"""Constants that define the types of shape tools."""
 	mwSTF_Rectangle = 1
 	mwSTF_Polygon = 2
@@ -42,8 +45,11 @@ class mwShapeToolFlags(IntEnum):
 	mwSTF_Text = 131072
 	mwSTF_Ruler = 262144
 	mwSTF_DimLine = 524288
+	
+	def __int__(self):
+		return self.value
 
-class mwAlignToolFlags(IntEnum):
+class mwAlignToolFlags(Enum):
 	"""Constants that define the types of alignment tools."""
 	mwATF_Top = 1
 	mwATF_Bottom = 2
@@ -53,8 +59,11 @@ class mwAlignToolFlags(IntEnum):
 	mwATF_HorzCenter = 32
 	mwATF_SpaceV = 64
 	mwATF_SpaceH = 128
+	
+	def __int__(self):
+		return self.value
 
-class mwProjectToolFlags(IntEnum):
+class mwProjectToolFlags(Enum):
 	"""Constants that define the types of project tools."""
 	mwPTF_Undo = 1
 	mwPTF_Redo = 2
@@ -72,20 +81,29 @@ class mwProjectToolFlags(IntEnum):
 	mwPTF_View3D = 8192
 	mwPTF_GridMult = 16384
 	mwPTF_DRC = 32768
+	
+	def __int__(self):
+		return self.value
 
-class mwLinearSolveType(IntEnum):
+class mwLinearSolveType(Enum):
 	"""Constants that define the solution types available in the linear circuit simulator."""
 	mwLST_Smart = 0
 	mwLST_Sparse = 1
 	mwLST_Full = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwNonLinearSolveType(IntEnum):
+class mwNonLinearSolveType(Enum):
 	"""Constants that define the solution types available in the non-linear circuit simulator."""
 	mwNLST_Smart = 0
 	mwNLST_Iterative = 1
 	mwNLST_Direct = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwEMSolverType(IntEnum):
+class mwEMSolverType(Enum):
 	"""Constants that define the matrix solution types available in the EM simulator."""
 	mwEMST_DefaultDirect = 0
 	mwEMST_FullDirect = 1
@@ -94,22 +112,31 @@ class mwEMSolverType(IntEnum):
 	mwEMST_IterativeMedium = 4
 	mwEMST_IterativeSmall = 5
 	mwEMST_IterativeCustom = 6
+	
+	def __int__(self):
+		return self.value
 
-class mwEMSolverToleranceLevel(IntEnum):
+class mwEMSolverToleranceLevel(Enum):
 	"""Constants that define the tolerance level for the matrix solver."""
 	mwEMSL_Low = 0
 	mwEMSL_Medium = 1
 	mwEMSL_High = 2
 	mwEMSL_VeryHigh = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwEMMeshDensity(IntEnum):
+class mwEMMeshDensity(Enum):
 	"""Constants that define the mesh density levels available for EM simulation."""
 	mwEMMD_High = 0
 	mwEMMD_Normal = 1
 	mwEMMD_Medium = 2
 	mwEMME_Low = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwColor(IntEnum):
+class mwColor(Enum):
 	"""Constants that define different types of standard colors."""
 	mwCLR_AliceBlue = 16775408
 	mwCLR_AntiqueWhite = 14150650
@@ -251,8 +278,11 @@ class mwColor(IntEnum):
 	mwCLR_WhiteSmoke = 16119285
 	mwCLR_Yellow = 65535
 	mwCLR_YellowGreen = 3329434
+	
+	def __int__(self):
+		return self.value
 
-class mwGraphColorIndex(IntEnum):
+class mwGraphColorIndex(Enum):
 	"""Constants that define indexes for the graph color values for graph color options."""
 	mwGCI_Black = 0
 	mwGCI_Red = 1
@@ -264,96 +294,141 @@ class mwGraphColorIndex(IntEnum):
 	mwGCI_Yellow = 7
 	mwGCI_Gray = 8
 	mwGCI_LtGray = 9
+	
+	def __int__(self):
+		return self.value
 
-class mwGraphLineStyleIndex(IntEnum):
+class mwGraphLineStyleIndex(Enum):
 	"""Constants that define indexes for the graph line style values for graph line style options."""
 	mwGLS_SolidLine = 0
 	mwGLS_DashedLine = 1
 	mwGLS_DottedLine = 2
 	mwGLS_DotDashLine = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwGraphLineWeightIndex(IntEnum):
+class mwGraphLineWeightIndex(Enum):
 	"""Constants that define index for the graph line weight values for graph line weight options."""
 	mwGLW_1PixelWidth = 0
 	mwGLW_2PixelWidth = 1
 	mwGLW_3PixelWidth = 2
 	mwGLW_4PixelWidth = 3
 	mwGLW_5PixelWidth = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwGraphLegendStyleIndex(IntEnum):
+class mwGraphLegendStyleIndex(Enum):
 	"""Constants that define index values pf legend styles for the legend text entries."""
 	mwGLE_DataName = 0
 	mwGLE_MeasurementName = 1
 	mwGLE_BothNames = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwGraphYieldRangeStyle(IntEnum):
+class mwGraphYieldRangeStyle(Enum):
 	"""Constants that define different modes for displaying range values for yield data."""
 	mwGYR_MinAndMax = 0
 	mwGYR_Envelope = 1
 	mwGYR_RangeBox = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwGraphYieldDisplayStyle(IntEnum):
+class mwGraphYieldDisplayStyle(Enum):
 	"""Constants that define different modes for displaying traces for yield data."""
 	mwGYD_AllTraces = 0
 	mwGYD_Passed = 1
 	mwGYD_Failed = 2
 	mwGYD_Mean = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutViewDetails(IntEnum):
+class mwLayoutViewDetails(Enum):
 	"""Constants that define different levels of layout viewing details."""
 	mwLVD_AllDetails = 0
 	mwLVD_NormalDetails = 1
 	mwLVD_LowDetails = 2
 	mwLVD_VeryLowDetails = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutSelectMode(IntEnum):
+class mwLayoutSelectMode(Enum):
 	"""Constants that define different types of layout selection modes."""
 	mwLSM_AutoSelect = 0
 	mwLSM_ManualSelect = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutCommandMode(IntEnum):
+class mwLayoutCommandMode(Enum):
 	"""Constants that define different types of layout design entry modes."""
 	mwLCM_ClickAndDrag = 0
 	mwLCM_TwoClick = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutRouteGravity(IntEnum):
+class mwLayoutRouteGravity(Enum):
 	"""Constants that define different levels of layout route inference snap gravity."""
 	mwLRG_NoneGravity = 0
 	mwLRG_WeakGravity = 1
 	mwLRG_NormalGravity = 2
 	mwLRG_StrongGravity = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwSysNoiseModeling(IntEnum):
+class mwSysNoiseModeling(Enum):
 	"""Constants that define different modes of system noise modeling."""
 	mwSNM_Noiseless = 0
 	mwSNM_RFBudgetOnly = 1
 	mwSNM_RFBudgetAndTimeDomain = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutSnapMode(IntEnum):
+class mwLayoutSnapMode(Enum):
 	"""Constants that define different types of layout snap modes."""
 	mwLSM_Auto = 0
 	mwLSM_Manual = 1
 	mwLSM_Selected = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwInterpolationMethod(IntEnum):
+class mwInterpolationMethod(Enum):
 	"""Constants that define different methods for value interpolation."""
 	mwIM_Linear = 0
 	mwIM_RationalFunction = 1
 	mwIM_SplineCurve = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwInterpolationCoords(IntEnum):
+class mwInterpolationCoords(Enum):
 	"""Constants that define different interpolation coordinate system types."""
 	mwIC_Cartesian = 0
 	mwIC_Polar = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwInstanceExportOptions(IntEnum):
+class mwInstanceExportOptions(Enum):
 	"""Constants that define different options for exporting instances from layout."""
 	mwIEO_NoChangesToCellNames = 0
 	mwIEO_AppendNumberToDuplicates = 1
 	mwIEO_AppendLibNameToDuplicates = 2
 	mwIEO_AppendLibNameToAll = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwFaceInsetOptions(IntEnum):
+class mwFaceInsetOptions(Enum):
 	"""Constants that define different options for inserting layout cell faces."""
 	mwFIO_NoInset = 0
 	mwFIO_InsetNonOrthogOneQtrDbUnit = 1
@@ -364,8 +439,11 @@ class mwFaceInsetOptions(IntEnum):
 	mwFIO_InsetAllOneHalfDbUnit = 6
 	mwFIO_InsetAllThreeQtrDbUnit = 7
 	mwFIO_InsetAllOneDbUnit = 8
+	
+	def __int__(self):
+		return self.value
 
-class mwPortFaceConnectTypes(IntEnum):
+class mwPortFaceConnectTypes(Enum):
 	"""Constants that define different types of face connection options."""
 	mwCT_Unknown = 0
 	mwCT_CapTopPlate = 1
@@ -387,24 +465,36 @@ class mwPortFaceConnectTypes(IntEnum):
 	mwCT_PassThroughBase = 399
 	mwCT_PassThrough = 400
 	mwCT_PassThroughN = 499
+	
+	def __int__(self):
+		return self.value
 
-class mwPathEndTypeOptions(IntEnum):
+class mwPathEndTypeOptions(Enum):
 	"""Constants that define different options for path end types."""
 	mwPETO_ExtendedHalfWidth = 0
 	mwPETO_FlushEnd = 1
 	mwPETO_Rounded = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwPathMiterTypeOptions(IntEnum):
+class mwPathMiterTypeOptions(Enum):
 	"""Constants that define different options for path miter types."""
 	mwPMTO_Square = 0
 	mwPMTO_Mitered = 1
 	mwPMTO_OffsetMiter = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwRectangleAttributes(IntEnum):
+class mwRectangleAttributes(Enum):
 	"""Constants that define different types of Rectangle attributes."""
 	mwRA_LayerIndex = 0
+	
+	def __int__(self):
+		return self.value
 
-class mwPolygonAttributes(IntEnum):
+class mwPolygonAttributes(Enum):
 	"""Constants that define different types of Polygon attributes."""
 	mwPOA_LayerIndex = 0
 	mwPOA_Area = 1
@@ -412,8 +502,11 @@ class mwPolygonAttributes(IntEnum):
 	mwPOA_Flipped = 3
 	mwPOA_BasePositionX = 4
 	mwPOA_BasePositionY = 5
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutCellAttributes(IntEnum):
+class mwLayoutCellAttributes(Enum):
 	"""Constants that define different types of Layout Cell attributes."""
 	mwLCA_LineTypeIndex = 0
 	mwLCA_UsesProcessLayers = 1
@@ -422,67 +515,103 @@ class mwLayoutCellAttributes(IntEnum):
 	mwLCA_Frozen = 4
 	mwLCA_CellName = 5
 	mwLCA_ElementName = 6
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutShapeAttributes(IntEnum):
+class mwLayoutShapeAttributes(Enum):
 	"""Constants that define different types of Layout Shape attributes."""
 	mwLSA_LineTypeIndex = 0
 	mwLSA_UsesProcessLayers = 1
 	mwLSA_LayerMappingIndex = 2
 	mwLSA_LayerIndex = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutPinAttributes(IntEnum):
+class mwLayoutPinAttributes(Enum):
 	"""Constants that define different types of Layout Pin attributes."""
 	mwLPA_PortNumber = 0
 	mwLPA_ConnectType = 1
 	mwLPA_PinGroup = 2
 	mwLPA_GroupType = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutRoutePathAttributes(IntEnum):
+class mwLayoutRoutePathAttributes(Enum):
 	"""Constants that define different types of Layout Route attributes."""
 	mwLRP_NetworkId = 0
 	mwLRP_Associated = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutNetShapeAttributes(IntEnum):
+class mwLayoutNetShapeAttributes(Enum):
 	"""Constants that define different types of LayoutNetShape attributes."""
 	mwLNS_NetworkId = 0
 	mwLNS_Associated = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutCellShapeAttributes(IntEnum):
+class mwLayoutCellShapeAttributes(Enum):
 	"""Constants that define the different types of LayoutCellShape attributes."""
 	mwLCS_CellName = 0
 	mwLCS_IsArtwork = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutSubcircuitAttributes(IntEnum):
+class mwLayoutSubcircuitAttributes(Enum):
 	"""Constants that define the different types of LayoutSubcircuit attributes."""
 	mwLSA_MasterDocName = 0
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutGroupAttributes(IntEnum):
+class mwLayoutGroupAttributes(Enum):
 	"""Constants that define the different types of Layout Group attributes."""
 	mwLGA_GroupChildCount = 0
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutLayerAttributes(IntEnum):
+class mwLayoutLayerAttributes(Enum):
 	"""Constants that define the different types of LayoutLayer attributes."""
 	mwLLA_LayerName = 0
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutMagnificationAttributes(IntEnum):
+class mwLayoutMagnificationAttributes(Enum):
 	"""Constants that define different types of layout magnification attributes."""
 	mwLMA_Magnification = 0
+	
+	def __int__(self):
+		return self.value
 
-class mwLayout3DPlacementAttributes(IntEnum):
+class mwLayout3DPlacementAttributes(Enum):
 	"""Constants that define different types of layout 3D placement attributes."""
 	mwTDP_EmLayer = 0
 	mwTDP_ZOffset = 1
 	mwTDP_XAngle = 2
 	mwTDP_YAngle = 3
 	mwTDP_ZFlip = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutOrientationAttributes(IntEnum):
+class mwLayoutOrientationAttributes(Enum):
 	"""Constants that define different types of layout orientation attributes."""
 	mwLOA_FixedPosition = 0
 	mwLOA_FlipState = 1
 	mwLOA_RotationAngle = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutCellStretcherAttributes(IntEnum):
+class mwLayoutCellStretcherAttributes(Enum):
 	"""Constants that define different types of layout cell stretcher attributes."""
 	mwLCS_ParameterName = 0
 	mwLCS_Multiplier = 1
@@ -492,35 +621,50 @@ class mwLayoutCellStretcherAttributes(IntEnum):
 	mwLCS_IsBound = 5
 	mwLCS_Direction = 6
 	mwLCS_ArrowHeight = 7
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutDragLayoutObjectAttributes(IntEnum):
+class mwLayoutDragLayoutObjectAttributes(Enum):
 	"""Constants that define different types of layout drag object attributes."""
 	mwDLO_UseForAnchor = 0
 	mwDLO_StretchToFix = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutFontAttributes(IntEnum):
+class mwLayoutFontAttributes(Enum):
 	"""Constants that define different types of layout font attributes."""
 	mwLFA_FontName = 0
 	mwLFA_BoldStyle = 1
 	mwLFA_ItalicStyle = 2
 	mwLFA_FontHeight = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwSchematicFontAttributes(IntEnum):
+class mwSchematicFontAttributes(Enum):
 	"""Constants that define different types of schematic font attributes."""
 	mwSFA_FontName = 0
 	mwSFA_BoldStyle = 1
 	mwSFA_ItalicStyle = 2
 	mwSFA_FontHeight = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutTextAttributes(IntEnum):
+class mwLayoutTextAttributes(Enum):
 	"""Constants that define different types of layout text attributes."""
 	mwLTA_DrawTextAsPoly = 0
 	mwLTA_DrawTextArrow = 1
 	mwLTA_ArrowPointX = 2
 	mwLTA_ArrowPointY = 3
 	mwLTA_TextString = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutDimensionLineAttributes(IntEnum):
+class mwLayoutDimensionLineAttributes(Enum):
 	"""Constants that define different types of layout dimension line attributes."""
 	mwDLA_ArrowLocation = 0
 	mwDLA_TextLocation = 1
@@ -531,8 +675,11 @@ class mwLayoutDimensionLineAttributes(IntEnum):
 	mwDLA_ShowTolerance = 6
 	mwDLA_LengthTolerance = 7
 	mwDLA_Length = 8
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutRulerAttributes(IntEnum):
+class mwLayoutRulerAttributes(Enum):
 	"""Constants that define different types of layout ruler attributes."""
 	mwLRA_RulerSpacing = 0
 	mwLRA_GapLength = 1
@@ -544,19 +691,28 @@ class mwLayoutRulerAttributes(IntEnum):
 	mwLRA_ShowMinorTicks = 7
 	mwLRA_ShowLabels = 8
 	mwLRA_Length = 9
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutPolyAttributes(IntEnum):
+class mwLayoutPolyAttributes(Enum):
 	"""Constants that define different types of layout polygon attributes."""
 	mwLP_Area = 0
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutEllipseAttributes(IntEnum):
+class mwLayoutEllipseAttributes(Enum):
 	"""Constants that define different types of layout ellipse attributes."""
 	mwLEA_Area = 0
 	mwLEA_Width = 1
 	mwLEA_Height = 2
 	mwLEA_Eccentricity = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutPathAttributes(IntEnum):
+class mwLayoutPathAttributes(Enum):
 	"""Constants that define different types of layout path attributes."""
 	mwLPA_PathWidth = 0
 	mwLPA_PathEndType = 1
@@ -566,12 +722,18 @@ class mwLayoutPathAttributes(IntEnum):
 	mwLPA_EndExt = 5
 	mwLPA_Length = 6
 	mwLPA_CurvesFixedRadius = 7
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutPolylineAttributes(IntEnum):
+class mwLayoutPolylineAttributes(Enum):
 	"""Constants that define different types of layout polyline attributes."""
 	mwLPLA_Length = 0
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutArcAttributes(IntEnum):
+class mwLayoutArcAttributes(Enum):
 	"""Constants that define different types of layout arc attributes."""
 	mwLAA_CenterX = 0
 	mwLAA_CenterY = 1
@@ -579,34 +741,52 @@ class mwLayoutArcAttributes(IntEnum):
 	mwLAA_StartAngle = 3
 	mwLAA_StopAngle = 4
 	mwLAA_Filled = 5
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutFaceAttributes(IntEnum):
+class mwLayoutFaceAttributes(Enum):
 	"""Constants that define different types of layout face attributes."""
 	mwFAT_FaceJustification = 0
 	mwFAT_XOffset = 1
 	mwFAT_YOffset = 2
 	mwFAT_AngleOffset = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutDrillHoleAttributes(IntEnum):
+class mwLayoutDrillHoleAttributes(Enum):
 	"""Constants that define different types of layout drill hole attributes."""
 	mwDHA_DrillHoleIndex = 0
+	
+	def __int__(self):
+		return self.value
 
-class mwEmExtractAtrributes(IntEnum):
+class mwEmExtractAtrributes(Enum):
 	"""Constants that define different types of layout EM extraction attributes."""
 	mwEEA_IsEMExtract = 0
 	mwEEA_GroupName = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwObjSubShapeAttributes(IntEnum):
+class mwObjSubShapeAttributes(Enum):
 	"""Constants that define different type of object sub shape attributes."""
 	mwSSA_SubShapeCount = 0
+	
+	def __int__(self):
+		return self.value
 
-class mwObjectNameAttributes(IntEnum):
+class mwObjectNameAttributes(Enum):
 	"""Constants that define different types of object name attributes."""
 	mwONA_NetName = 0
 	mwONA_PinName = 1
 	mwONA_EmExtractName = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwShapeMeshOptionAttributes(IntEnum):
+class mwShapeMeshOptionAttributes(Enum):
 	"""Constants that define different types of object mesh attributes."""
 	mwMOA_MeshUseDefault = 0
 	mwMOA_MeshConformalFill = 1
@@ -620,8 +800,11 @@ class mwShapeMeshOptionAttributes(IntEnum):
 	mwMOA_EdgeMeshing = 9
 	mwMOA_Decimation = 10
 	mwMOA_AspectRatio = 11
+	
+	def __int__(self):
+		return self.value
 
-class mwEllipseAttributes(IntEnum):
+class mwEllipseAttributes(Enum):
 	"""Constants that define different types of Ellipse attributes."""
 	mwEA_LayerIndex = 0
 	mwEA_Area = 1
@@ -632,8 +815,11 @@ class mwEllipseAttributes(IntEnum):
 	mwEA_Flipped = 6
 	mwEA_BasePositionX = 7
 	mwEA_BasePositionY = 8
+	
+	def __int__(self):
+		return self.value
 
-class mwArcAttributes(IntEnum):
+class mwArcAttributes(Enum):
 	"""Constants that define different types of Arc attributes."""
 	mwAA_LayerIndex = 0
 	mwAA_CenterX = 1
@@ -646,8 +832,11 @@ class mwArcAttributes(IntEnum):
 	mwAA_Flipped = 8
 	mwAA_BasePositionX = 9
 	mwAA_BasePositionY = 10
+	
+	def __int__(self):
+		return self.value
 
-class mwPolylineAttributes(IntEnum):
+class mwPolylineAttributes(Enum):
 	"""Constants that defined different types of Polyline attributes."""
 	mwPLA_LayerIndex = 0
 	mwPLA_Length = 1
@@ -655,8 +844,11 @@ class mwPolylineAttributes(IntEnum):
 	mwPLA_Flipped = 3
 	mwPLA_BasePositionX = 4
 	mwPLA_BasePositionY = 5
+	
+	def __int__(self):
+		return self.value
 
-class mwPathAttributes(IntEnum):
+class mwPathAttributes(Enum):
 	"""Constants that define attributes of a shape path object."""
 	mwPA_LayerIndex = 0
 	mwPA_PathWidth = 1
@@ -671,16 +863,22 @@ class mwPathAttributes(IntEnum):
 	mwPA_Flipped = 10
 	mwPA_BasePositionX = 11
 	mwPA_BasePositionY = 12
+	
+	def __int__(self):
+		return self.value
 
-class mwArrayCellAttributes(IntEnum):
+class mwArrayCellAttributes(Enum):
 	"""Constants that define attributes of an array cell object."""
 	mwACA_IsArrayCell = 0
 	mwACA_ArrayCellRows = 1
 	mwACA_ArrayCellCols = 2
 	mwACA_ArrayCellDx = 3
 	mwACA_ArrayCellDy = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwCellStretcherAttributes(IntEnum):
+class mwCellStretcherAttributes(Enum):
 	"""Constants that define different attribute types for cell stretcher shapes"""
 	mwCSA_StretchType = 0
 	mwCSA_ParameterName = 1
@@ -691,16 +889,22 @@ class mwCellStretcherAttributes(IntEnum):
 	mwCSA_ArrowHeight = 6
 	mwCSA_IsBound = 7
 	mwCSA_Region = 8
+	
+	def __int__(self):
+		return self.value
 
-class mwSymbolTextAttributes(IntEnum):
+class mwSymbolTextAttributes(Enum):
 	"""Constants that define different types of symbol text attributes."""
 	mwSTA_Height = 1
 	mwSTA_Width = 2
 	mwSTA_Rotation = 3
 	mwSTA_Text = 4
 	mwSTA_Font = 5
+	
+	def __int__(self):
+		return self.value
 
-class mwSymbolPathAttributes(IntEnum):
+class mwSymbolPathAttributes(Enum):
 	"""Constants that define different types of symbol path attributes."""
 	mwSPA_Width = 1
 	mwSPA_MiterType = 2
@@ -708,30 +912,42 @@ class mwSymbolPathAttributes(IntEnum):
 	mwSPA_endType = 4
 	mwSPA_bOffset = 5
 	mwSPA_eOffset = 6
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutConnectionLineTypes(IntEnum):
+class mwLayoutConnectionLineTypes(Enum):
 	"""Constants that define different types of layout connection line drawing."""
 	mwLCL_StaightLines = 0
 	mwLCL_CenterPointLines = 1
 	mwLCL_MinimumSpanningLines = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwSpiceExtractionModelLevel(IntEnum):
+class mwSpiceExtractionModelLevel(Enum):
 	"""Constants that define different spice model extraction levels"""
 	mwSML_Simplest = 0
 	mwSML_1stOrder = 1
 	mwSML_2ndOrder = 2
 	mwSML_Distributed = 3
 	mwSML_MostAccurate = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwINetModelingLevel(IntEnum):
+class mwINetModelingLevel(Enum):
 	"""Constants that define different iNet modeling accuracy levels"""
 	mwNML_ShortCircuits = 0
 	mwNML_RCLumped = 1
 	mwNML_RLCLumped = 2
 	mwNML_Distrubuted = 3
 	mwNML_EmExtraction = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwModelCompatibilityVersion(IntEnum):
+class mwModelCompatibilityVersion(Enum):
 	"""Constants that define different model compatibility version levels"""
 	mwMCV_Version553 = 553
 	mwMCV_Version600 = 600
@@ -739,32 +955,47 @@ class mwModelCompatibilityVersion(IntEnum):
 	mwMCV_Version750 = 750
 	mwMCV_Version800 = 800
 	mwMCV_Version900 = 900
+	
+	def __int__(self):
+		return self.value
 
-class mwRouteObstructionLevel(IntEnum):
+class mwRouteObstructionLevel(Enum):
 	"""Constants that define different routing obstruction avoidance levels"""
 	mwROL_IgnoreObstructions = 0
 	mwROL_IgnoreExistingNets = 1
 	mwROL_AvoidObjstructions = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwModelExtractType(IntEnum):
+class mwModelExtractType(Enum):
 	"""Constants that define different model options for an element."""
 	mwMET_CircuitBasedModel = 0
 	mwMET_EMExtractedModel = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwDrawingTextAttributes(IntEnum):
+class mwDrawingTextAttributes(Enum):
 	"""Constants that define different types of drawing text attributes."""
 	mwDTA_Height = 1
 	mwDTA_Text = 2
 	mwDTA_Font = 3
 	mwDTA_Bold = 4
 	mwDTA_Italic = 5
+	
+	def __int__(self):
+		return self.value
 
-class mwDefaultFaceAlignType(IntEnum):
+class mwDefaultFaceAlignType(Enum):
 	"""Constants that define different types of default face alignments."""
 	mwDFA_Center = 0
 	mwDFA_Variable = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwApplicationAttributeType(IntEnum):
+class mwApplicationAttributeType(Enum):
 	"""Constants that define different types of application attribute types"""
 	mwAAT_IniFilePath = 1
 	mwAAT_EnvIniFilePath = 2
@@ -785,8 +1016,11 @@ class mwApplicationAttributeType(IntEnum):
 	mwAAT_ApiMajorVersion = 17
 	mwAAT_ApiMinorVersion = 18
 	mwAAT_AppAttributeCount = 19
+	
+	def __int__(self):
+		return self.value
 
-class mwApplicationDirectoryType(IntEnum):
+class mwApplicationDirectoryType(Enum):
 	"""Constants that define different types of application directories."""
 	mwADT_AppDir = 0
 	mwADT_AppData = 1
@@ -823,8 +1057,11 @@ class mwApplicationDirectoryType(IntEnum):
 	mwADT_DataSet = 32
 	mwADT_VersionControl = 33
 	mwADT_OpenAccess = 34
+	
+	def __int__(self):
+		return self.value
 
-class mwApplicationFileType(IntEnum):
+class mwApplicationFileType(Enum):
 	"""Constants that define different types of application files."""
 	mwAFT_Temporary = 0
 	mwAFT_CommonIni = 1
@@ -837,14 +1074,20 @@ class mwApplicationFileType(IntEnum):
 	mwAFT_MWOfficeExe = 8
 	mwAFT_Project = 9
 	mwAFT_GlobalScript = 10
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutCellExportOptions(IntEnum):
+class mwLayoutCellExportOptions(Enum):
 	"""Constants that define different types of layout cell export options"""
 	mwLCE_ExportFlattenedOption = 0
 	mwLCE_ExportAsInstancesOption = 1
 	mwLCE_ExportSpecifiedAsInstances = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutObjectSelectFilters(IntEnum):
+class mwLayoutObjectSelectFilters(Enum):
 	"""Constants that define bits for specific object types for restricting selection in layout"""
 	mwLSF_None = 0
 	mwLSF_Graphics = 1
@@ -862,19 +1105,28 @@ class mwLayoutObjectSelectFilters(IntEnum):
 	mwLSF_Polygon = 4194304
 	mwLSF_Path = 8388608
 	mwLSF_Circle = 16777216
+	
+	def __int__(self):
+		return self.value
 
-class mwNetViaSizeOpts(IntEnum):
+class mwNetViaSizeOpts(Enum):
 	"""Constants that define different types of iNet route to pin via size options."""
 	mwVSO_ViaCoversPinRouteIntersection = 0
 	mwVSO_ViaConversEntirePin = 1
 	mwVSO_ViaMinimalSize = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwDefRouteConnModelTypes(IntEnum):
+class mwDefRouteConnModelTypes(Enum):
 	"""Constants that define different types of route-to-route connection models."""
 	mwDRCM_CenterlineModel = 0
 	mwDRCM_CenterlineAndAdjacent = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwSmithGridAttributes(IntEnum):
+class mwSmithGridAttributes(Enum):
 	"""Constants that define the different types of attributes for a Smith Chart type Graph."""
 	mwSGA_None = 0
 	mwSGA_SmithChartStyle = 1
@@ -896,8 +1148,11 @@ class mwSmithGridAttributes(IntEnum):
 	mwSGA_SweepMinimum = 17
 	mwSGA_SweepMaximum = 18
 	mwSGA_SweepMinMaxVisible = 19
+	
+	def __int__(self):
+		return self.value
 
-class mwPolarGridAttributes(IntEnum):
+class mwPolarGridAttributes(Enum):
 	"""Constants that define the different types of attributes for a Polar Chart type Graph."""
 	mwPGA_None = 0
 	mwPGA_PolarChartStyle = 1
@@ -927,8 +1182,11 @@ class mwPolarGridAttributes(IntEnum):
 	mwPGA_SweepMinimum = 25
 	mwPGA_SweepMaximum = 26
 	mwPGA_SweepMinMaxVisible = 27
+	
+	def __int__(self):
+		return self.value
 
-class mwRectGridAttributes(IntEnum):
+class mwRectGridAttributes(Enum):
 	"""Constants that define the different types of attributes for a Rectangular Chart type Graph."""
 	mwRGA_None = 0
 	mwRGA_RectChartType = 1
@@ -943,8 +1201,11 @@ class mwRectGridAttributes(IntEnum):
 	mwRGA_UseDefaultXLabel = 10
 	mwRGA_DefaultXLabel = 11
 	mwRGA_SweepMinMaxVisible = 12
+	
+	def __int__(self):
+		return self.value
 
-class mwPlot3DGridAttributes(IntEnum):
+class mwPlot3DGridAttributes(Enum):
 	"""Constants that define the different types of attributes for a 3D Plot type Graph."""
 	mwP3A_None = 0
 	mwP3A_AxisGridColorX = 1
@@ -996,49 +1257,73 @@ class mwPlot3DGridAttributes(IntEnum):
 	mwP3A_ShowUnitsLabelX = 47
 	mwP3A_UseDefaultLabelY = 48
 	mwP3A_ShowUnitsLabelY = 49
+	
+	def __int__(self):
+		return self.value
 
-class mwTabularGridAttributes(IntEnum):
+class mwTabularGridAttributes(Enum):
 	"""Constants that define the different types of attributes for a Tabular Grid type Graph."""
 	mwTGA_None = 0
 	mwTGA_NumberFormat = 1
 	mwTGA_DisplayFormat = 2
 	mwTGA_DataPrecision = 3
 	mwTGA_SweepPrecision = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwShowFileFlags(IntEnum):
+class mwShowFileFlags(Enum):
 	"""Constants that define flags for the options when displaying a file using the file util ShowFile."""
 	mwSFF_USEEXPLORER = 16
 	mwSFF_AUTOUPDATE = 32
 	mwSFF_FILEBUFFER = 64
+	
+	def __int__(self):
+		return self.value
 
-class mwShapePreprocessorAttributes(IntEnum):
+class mwShapePreprocessorAttributes(Enum):
 	"""Constants that define the different types of Preprocessor attributes."""
 	mwSPA_PreprocessorRules = 0
+	
+	def __int__(self):
+		return self.value
 
-class mwBooleanEngineVersions(IntEnum):
+class mwBooleanEngineVersions(Enum):
 	"""Constants that define the different types of boolean engines that can be used for shape processing in layout."""
 	mwBEV_BooleanLatest = 0
 	mwBEV_BooleanPolyBool = 1
 	mwBEV_BooleanBoost = 2
 	mwBEV_BooleanClipper = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwBooleanCornerStyles(IntEnum):
+class mwBooleanCornerStyles(Enum):
 	"""Constants that define the different types of corner styles that can be used when resizing shapes with acute angles"""
 	mwBCS_CornerRounded = 0
 	mwBCS_CornerSharp = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwEditGraphPropertiesCommands(IntEnum):
+class mwEditGraphPropertiesCommands(Enum):
 	"""Constants that define the different types of commands for Edit Graph Properties."""
 	mwEGP_RectangularAddAxis = 0
 	mwEGP_RectangularRemoveAxis = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwWindowState(IntEnum):
+class mwWindowState(Enum):
 	"""Constants that define the different window states."""
 	mwWS_Maximized = 1
 	mwWS_Minimized = 2
 	mwWS_Normal = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwOptimizerSetting(IntEnum):
+class mwOptimizerSetting(Enum):
 	"""Constants that define the different optimizer settings."""
 	mwOS_OptimizerSelected = 100
 	mwOS_MaxIterations = 101
@@ -1050,8 +1335,11 @@ class mwOptimizerSetting(IntEnum):
 	mwOS_ResultsCleared = 107
 	mwOS_ResetYield = 108
 	mwOS_StopOnErr = 109
+	
+	def __int__(self):
+		return self.value
 
-class mwStatisticalDist(IntEnum):
+class mwStatisticalDist(Enum):
 	"""Constants that define different types of statistical distributions."""
 	mwSD_Deterministic = 0
 	mwSD_UniformDist = 1
@@ -1061,20 +1349,29 @@ class mwStatisticalDist(IntEnum):
 	mwSD_Discrete = 5
 	mwSD_NormalMinusTol = 6
 	mwSD_NormalClipped = 7
+	
+	def __int__(self):
+		return self.value
 
-class mwVarPropMode(IntEnum):
+class mwVarPropMode(Enum):
 	"""Constants that define different types of variable passing down hierarchy"""
 	mwVPM_None = 0
 	mwVPM_Weak = 1
 	mwVPM_Strong = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwEquationVariableType(IntEnum):
+class mwEquationVariableType(Enum):
 	"""Constants that define different types of equation variables"""
 	mwEVT_VariableDefinition = 0
 	mwEVT_ParameterDefinition = 1
 	mwEVT_DisplayValue = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwEquationDataType(IntEnum):
+class mwEquationDataType(Enum):
 	"""Constants that define different types of data for equations"""
 	mwEDT_Real = 0
 	mwEDT_Complex = 1
@@ -1088,8 +1385,11 @@ class mwEquationDataType(IntEnum):
 	mwEDT_RealVector = 9
 	mwEDT_FileName = 10
 	mwEDT_ComplexVector = 11
+	
+	def __int__(self):
+		return self.value
 
-class mwUnitType(IntEnum):
+class mwUnitType(Enum):
 	"""Constants that define different types of units."""
 	mwUT_None = 0
 	mwUT_Frequency = 1
@@ -1112,8 +1412,11 @@ class mwUnitType(IntEnum):
 	mwUT_DBOnlyPower = 18
 	mwUT_WattsOnlyPower = 19
 	mwUT_TextOnly = 20
+	
+	def __int__(self):
+		return self.value
 
-class mwParameterStyle(IntEnum):
+class mwParameterStyle(Enum):
 	"""Constants that define different types of parameter styles."""
 	mwPS_Hide = 0
 	mwPS_HideUnits = 1
@@ -1122,14 +1425,20 @@ class mwParameterStyle(IntEnum):
 	mwPS_LeftJustify = 4
 	mwPS_BoldFont = 5
 	mwPS_HideIfSecondary = 6
+	
+	def __int__(self):
+		return self.value
 
-class mwParameterStyleSetting(IntEnum):
+class mwParameterStyleSetting(Enum):
 	"""Constants that define different types of parameter style settings."""
 	mwPSS_SetStyle = 0
 	mwPSS_ClearStyle = 1
 	mwPSS_UseDefaultStyle = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwParamDefDataType(IntEnum):
+class mwParamDefDataType(Enum):
 	"""Constants that define the data types of a ParameterDefinition."""
 	mwPDDT_Real = 0
 	mwPDDT_Complex = 1
@@ -1142,8 +1451,11 @@ class mwParamDefDataType(IntEnum):
 	mwPDDT_Enumeration = 8
 	mwPDDT_RealVector = 9
 	mwPDDT_FileName = 10
+	
+	def __int__(self):
+		return self.value
 
-class mwParameterDefinitionFlagType(IntEnum):
+class mwParameterDefinitionFlagType(Enum):
 	"""Constants that define different types of parameter default flags for parameter definitions."""
 	mwPDF_Default = 0
 	mwPDF_Hide = 1
@@ -1173,23 +1485,32 @@ class mwParameterDefinitionFlagType(IntEnum):
 	mwPDF_ChangeConnectivity = 25
 	mwPDF_NoDocNameSync = 26
 	mwPDF_LayCell_EleParam = 27
+	
+	def __int__(self):
+		return self.value
 
-class mwNodeType(IntEnum):
+class mwNodeType(Enum):
 	"""Constants that define different types of element nodes."""
 	mwNT_Electrical = 0
 	mwNT_Input = 1
 	mwNT_Output = 2
 	mwNT_BiDirectional = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwNodeDataType(IntEnum):
+class mwNodeDataType(Enum):
 	"""Constants that define different types of node data types."""
 	mwNDT_Unset = 0
 	mwNDT_Real = 1
 	mwNDT_Digital = 2
 	mwNDT_Complex = 3
 	mwNDT_FixedPoint = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwNodeFlags(IntEnum):
+class mwNodeFlags(Enum):
 	"""Constants that define different types of node flags."""
 	mwNF_Default = 0
 	mwNF_Secondary = 1
@@ -1200,16 +1521,22 @@ class mwNodeFlags(IntEnum):
 	mwNF_RFSignal = 32
 	mwNF_AllowDataTypeChange = 64
 	mwNF_RW_BiDirection = 128
+	
+	def __int__(self):
+		return self.value
 
-class mwDisplayModeType(IntEnum):
+class mwDisplayModeType(Enum):
 	"""Constants that define the different types of drawing object display modes."""
 	mwDMT_Highlighted = 1
 	mwDMT_BuddySelected = 2
 	mwDMT_BuddyUnselected = 4
 	mwDMT_ObjectMarked = 8
 	mwDMT_ObjectCondemned = 16
+	
+	def __int__(self):
+		return self.value
 
-class mwPropertyDataType(IntEnum):
+class mwPropertyDataType(Enum):
 	"""Constants that define different data types of property objects."""
 	mwPDT_Boolean = 0
 	mwPDT_Byte = 1
@@ -1219,8 +1546,11 @@ class mwPropertyDataType(IntEnum):
 	mwPDT_Double = 5
 	mwPDT_Text = 6
 	mwPDT_Date = 7
+	
+	def __int__(self):
+		return self.value
 
-class mwShapeType(IntEnum):
+class mwShapeType(Enum):
 	"""Constants that define different types of shapes."""
 	mwST_Rectangle = 0
 	mwST_Polygon = 1
@@ -1233,8 +1563,11 @@ class mwShapeType(IntEnum):
 	mwST_Arc = 8
 	mwST_Pin = 9
 	mwST_Polyline = 10
+	
+	def __int__(self):
+		return self.value
 
-class mwFillStyle(IntEnum):
+class mwFillStyle(Enum):
 	"""Constants that define different fill style types."""
 	mwFS_None = 0
 	mwFS_Solid = 1
@@ -1262,16 +1595,22 @@ class mwFillStyle(IntEnum):
 	mwFS_Vertical = 23
 	mwFS_Cross = 24
 	mwFS_DiagonalCross = 25
+	
+	def __int__(self):
+		return self.value
 
-class mwLineStyle(IntEnum):
+class mwLineStyle(Enum):
 	"""Constants that define different line style types."""
 	mwLS_Solid = 0
 	mwLS_Dash = 1
 	mwLS_Dot = 2
 	mwLS_DashDot = 3
 	mwLS_DashDotDot = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwDrawLayerFlags(IntEnum):
+class mwDrawLayerFlags(Enum):
 	"""Constants that define different flags for attributes that can be set on DrawingLayer objects."""
 	mwDF_Translucent = 1
 	mwDF_NegativeLayer = 2
@@ -1281,19 +1620,28 @@ class mwDrawLayerFlags(IntEnum):
 	mwDF_AutoGenFromPCell = 32
 	mwDF_For3DPcell = 64
 	mwDF_ThermalHeatSrc = 128
+	
+	def __int__(self):
+		return self.value
 
-class mwShapeSubObjectType(IntEnum):
+class mwShapeSubObjectType(Enum):
 	"""Constants that define different types of shape sub-objects."""
 	mwSSO_CutoutPolygon = 0
 	mwSSO_CutoutCircle = 1
 	mwSSO_CutoutEllipse = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwShapeArcDirection(IntEnum):
+class mwShapeArcDirection(Enum):
 	"""Constants that define different arc segment directions."""
 	mwSAD_CounterClockwise = 0
 	mwSAD_Clockwise = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwPathEndType(IntEnum):
+class mwPathEndType(Enum):
 	"""Constants that define different types of path ends."""
 	mwPET_Various = 0
 	mwPET_ExtendedHalfWidth = 1
@@ -1302,8 +1650,11 @@ class mwPathEndType(IntEnum):
 	mwPET_ExtendedUserDefined = 4
 	mwPET_Chamfered = 5
 	mwPET_Truncated = 6
+	
+	def __int__(self):
+		return self.value
 
-class mwPathMiterType(IntEnum):
+class mwPathMiterType(Enum):
 	"""Constants that define different types of path miters."""
 	mwPMT_Various = 0
 	mwPMT_Square = 1
@@ -1312,8 +1663,11 @@ class mwPathMiterType(IntEnum):
 	mwPMT_Curved = 4
 	mwPMT_Rounded = 5
 	mwPMT_Chamfered = 6
+	
+	def __int__(self):
+		return self.value
 
-class mwTextAlignment(IntEnum):
+class mwTextAlignment(Enum):
 	"""Constants that define different types of Text alignment."""
 	mwTAl_TopLeft = 1
 	mwTAl_TopCenter = 2
@@ -1324,8 +1678,11 @@ class mwTextAlignment(IntEnum):
 	mwTAl_BottomLeft = 7
 	mwTAl_BottomCenter = 8
 	mwTAl_BottomRight = 9
+	
+	def __int__(self):
+		return self.value
 
-class mwFaceAlignment(IntEnum):
+class mwFaceAlignment(Enum):
 	"""Constants that define different types of face alignments."""
 	mwFA_Left = 0
 	mwFA_Center = 1
@@ -1333,8 +1690,11 @@ class mwFaceAlignment(IntEnum):
 	mwFA_OffsetFix = 3
 	mwFA_OffsetVar = 4
 	mwFA_Adapt = 5
+	
+	def __int__(self):
+		return self.value
 
-class mwFaceMultiLayerProperty(IntEnum):
+class mwFaceMultiLayerProperty(Enum):
 	"""Constants that define different types of face multi-layer drawing properties."""
 	mwFLP_Default = 0
 	mwFLP_Flush = 1
@@ -1344,19 +1704,28 @@ class mwFaceMultiLayerProperty(IntEnum):
 	mwFLP_Bridge2 = 5
 	mwFLP_Bridge3 = 6
 	mwFLP_Bridge4 = 7
+	
+	def __int__(self):
+		return self.value
 
-class mwFaceShapeType(IntEnum):
+class mwFaceShapeType(Enum):
 	"""Constants that define different types of face shapes, segment for faces and area for pins"""
 	mwFST_SegmentFaceType = 0
 	mwFST_AreaFaceType = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwFaceGroupType(IntEnum):
+class mwFaceGroupType(Enum):
 	"""Constants that define different types of face groups"""
 	mwFGT_StrongPinGroup = 0
 	mwFGT_WeakPinGroup = 1
 	mwFGT_MustConnectPinGroup = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwWindowType(IntEnum):
+class mwWindowType(Enum):
 	"""Constants that define the different window types."""
 	mwWT_Unknown = 0
 	mwWT_Datafile = 1
@@ -1379,36 +1748,54 @@ class mwWindowType(IntEnum):
 	mwWT_EmLayoutStructure3D = 18
 	mwWT_EmLayoutStructureSchematic = 19
 	mwWT_EmLayoutG3DStructure = 20
+	
+	def __int__(self):
+		return self.value
 
-class mwWindowTileDirection(IntEnum):
+class mwWindowTileDirection(Enum):
 	"""Constants that define the different window tile directions."""
 	mwWTD_Horizontal = 0
 	mwWTD_Vertical = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwDimensionTextLocation(IntEnum):
+class mwDimensionTextLocation(Enum):
 	"""Constants that define different types of text locations for dimension line objects."""
 	mwDTL_CenterPar = 0
 	mwDTL_CenterPer = 1
 	mwDTL_RightPar = 2
 	mwDTL_LeftPar = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwDimensionArrowLocation(IntEnum):
+class mwDimensionArrowLocation(Enum):
 	"""Constants that define different types of arrow locations for dimension line objects."""
 	mwDAL_Inside = 0
 	mwDAL_Outside = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutRulerTickLocation(IntEnum):
+class mwLayoutRulerTickLocation(Enum):
 	"""Constants that define different types of layout ruler tick mark locations."""
 	mwLRT_AboveRuler = -1
 	mwLRT_BelowRuler = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwRouteObjectType(IntEnum):
+class mwRouteObjectType(Enum):
 	"""Constants that define different types of route object types"""
 	mwROT_PathRouteObject = 0
 	mwROT_ViaRouteObject = 1
 	mwROT_GuideRouteObject = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwRouteSegmentEndStyleType(IntEnum):
+class mwRouteSegmentEndStyleType(Enum):
 	"""Constants that define different route segment end style types"""
 	mwEST_FlushEndStyle = 0
 	mwEST_ExtendedEndStyle = 1
@@ -1417,47 +1804,74 @@ class mwRouteSegmentEndStyleType(IntEnum):
 	mwEST_CustomEndStyle = 4
 	mwEST_RoundedEndStyle = 5
 	mwEST_TruncateEndStyle = 6
+	
+	def __int__(self):
+		return self.value
 
-class mwRouteViaDirectionType(IntEnum):
+class mwRouteViaDirectionType(Enum):
 	"""Constants that define different route via direction types"""
 	mwVDT_Layer1ToLayer2ViaDirection = 0
 	mwVDT_Layer2ToLayer1ViaDirection = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwRouteSegmentEndOffsetType(IntEnum):
+class mwRouteSegmentEndOffsetType(Enum):
 	"""Constants that define different route segment end offset style types."""
 	mwEOS_NormalEndOffsetType = 0
 	mwEOS_FlushEndOffsetType = 1
 	mwEOS_ExtendedEndOffsetType = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwDrawingArcDirection(IntEnum):
+class mwDrawingArcDirection(Enum):
 	"""Constants that define different arc segment directions."""
 	mwDAD_CounterClockwise = 0
 	mwDAD_Clockwise = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwShapeNetType(IntEnum):
+class mwShapeNetType(Enum):
 	"""Constants that define different types of networks for layout shape objects."""
 	mwSNT_Normal = 0
+	
+	def __int__(self):
+		return self.value
 
-class mwFilletPolyOptions(IntEnum):
+class mwFilletPolyOptions(Enum):
 	"""Constants that define different types of filleted polygon drawing styles."""
 	mwFPDS_Default = 0
 	mwFPDS_SkipVertexIfTooSmall = 1
 	mwFPDS_CanRemovePreFilletedVerts = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwFilletPolyArcPtStyle(IntEnum):
+class mwFilletPolyArcPtStyle(Enum):
 	"""Constants that define different types of filleted polygon vertex placement styles."""
 	mwFPAS_Default = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutBoundaryType(IntEnum):
+class mwLayoutBoundaryType(Enum):
 	"""Constants that define the different types of layout boundaries."""
 	mwLBT_EmSimulationBoundaryType = 0
+	
+	def __int__(self):
+		return self.value
 
-class mwObjectIncludeType(IntEnum):
+class mwObjectIncludeType(Enum):
 	"""Constants that define the types of objects to be included in an operation."""
 	mwOIT_SelectedObjects = 0
 	mwOIT_AllObjects = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwDesignRuleType(IntEnum):
+class mwDesignRuleType(Enum):
 	"""Constants that define different types of design rule types"""
 	mwDRT_Width = 0
 	mwDRT_Notch = 1
@@ -1480,51 +1894,78 @@ class mwDesignRuleType(IntEnum):
 	mwDRT_Notch_In = 18
 	mwDRT_Notch_Out = 19
 	mwDRT_Unknown = 20
+	
+	def __int__(self):
+		return self.value
 
-class mwDesignRuleState(IntEnum):
+class mwDesignRuleState(Enum):
 	"""Constants that define different types of design rule states"""
 	mwDRS_Error = 0
 	mwDRS_FalseError = 1
 	mwDRS_CheckedError = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwDesignRuleErrorFileFormat(IntEnum):
+class mwDesignRuleErrorFileFormat(Enum):
 	"""Constants that define different types of DRC error file formats."""
 	mwDREF_AWR = 0
 	mwDREF_Calibre = 1
 	mwDREF_Assura = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwAreaAddType(IntEnum):
+class mwAreaAddType(Enum):
 	"""Constants that define different constraints for adding objects in an area"""
 	mwAAT_ContainedObjects = 0
 	mwAAT_OverlappedObjects = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwObjectNameType(IntEnum):
+class mwObjectNameType(Enum):
 	"""Constants that define the different types of named that can be assigned to an object."""
 	mwNT_NetName = 0
 	mwNT_PinName = 1
 	mwNT_ExtractName = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwDesignViewType(IntEnum):
+class mwDesignViewType(Enum):
 	"""Constants that defined different views on a design"""
 	mwDVT_DesignView2D = 0
 	mwDVT_DesignView3D = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwComponentTestResultType(IntEnum):
+class mwComponentTestResultType(Enum):
 	"""Constants that define the different types of component test result types."""
 	mwDMT_TestRunResultData = 0
 	mwDMT_TestRunPerformanceData = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutSnapType(IntEnum):
+class mwLayoutSnapType(Enum):
 	"""Constants that define different types of layout snap types."""
 	mwLST_AllObjects = 0
 	mwLST_SelectedOnly = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutWindowType(IntEnum):
+class mwLayoutWindowType(Enum):
 	"""Constants that define the different layout window styles."""
 	mwLWT_Layout2D = 0
 	mwLWT_Layout3D = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwRouteTopologyType(IntEnum):
+class mwRouteTopologyType(Enum):
 	"""Constants that define different route topologies"""
 	mwRTT_NoneRouteTopology = 0
 	mwRTT_StripeRouteTopology = 1
@@ -1535,36 +1976,51 @@ class mwRouteTopologyType(IntEnum):
 	mwRTT_PadRingRouteTopology = 6
 	mwRTT_BlockRingRouteTopology = 7
 	mwRTT_CoreWireRouteTopology = 8
+	
+	def __int__(self):
+		return self.value
 
-class mwRouteStatusType(IntEnum):
+class mwRouteStatusType(Enum):
 	"""Constants that define different route status types"""
 	mwRST_NormalRouteStatus = 0
 	mwRST_FixedRouteStatus = 1
 	mwRST_LockedRouteStatus = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwRouteBendStyleType(IntEnum):
+class mwRouteBendStyleType(Enum):
 	"""Constants that define different types of bend styles for route objects."""
 	mwBS_SquareBendStyle = 0
 	mwBS_MiterBendStyle = 1
 	mwBS_CurveBendStyle = 2
 	mwBS_ChamferBendStyle = 3
 	mwBS_RoundedBendStyle = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwNetViaMode(IntEnum):
+class mwNetViaMode(Enum):
 	"""Constants that define different types of via modes."""
 	mwNVM_FullVias = 0
 	mwNVM_MinimalVias = 1
 	mwNVM_ManualVias = 2
 	mwNVM_SemiAutoVias = 3
 	mwNVM_Minimal2Vias = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwRouteConnModel(IntEnum):
+class mwRouteConnModel(Enum):
 	"""Constants that define different types of route-to-route connection models for a physical net."""
 	mwRCM_UseProjectDefault = 0
 	mwRCM_CenterlineConnectionModel = 1
 	mwRCM_CenterLineAndAdjacentModel = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwViewFrom(IntEnum):
+class mwViewFrom(Enum):
 	"""Constants that define the different predefined view from perspectives in a 3D view"""
 	mwVF_Ortho = 0
 	mwVF_Top = 1
@@ -1574,14 +2030,20 @@ class mwViewFrom(IntEnum):
 	mwVF_Right = 5
 	mwVF_Bottom = 6
 	mwVF_None = 7
+	
+	def __int__(self):
+		return self.value
 
-class mwViewAutoRotate(IntEnum):
+class mwViewAutoRotate(Enum):
 	"""Constants that define the different modes for auto rotation within a 3D view."""
 	mwVAW_RotateNone = 0
 	mwVAW_RotateNormal = 1
 	mwVAW_RotateChangeSlope = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwViewVisual(IntEnum):
+class mwViewVisual(Enum):
 	"""Constants that define the different predefined visual modes in a 3D view."""
 	mwVV_WireFrame = 1
 	mwVV_Shaded = 2
@@ -1592,27 +2054,39 @@ class mwViewVisual(IntEnum):
 	mwVV_ShapesMerged = 64
 	mwVV_ShapesSelected = 128
 	mwVV_Stippling = 256
+	
+	def __int__(self):
+		return self.value
 
-class mwLVSHighlightLoc(IntEnum):
+class mwLVSHighlightLoc(Enum):
 	"""Constants that define where an LVS SchematicHighlight item should be highlighted."""
 	mwLVSHL_NoHighlighting = 0
 	mwLVSHL_HighlightInSchematic = 1
 	mwLVSHL_HighlightInLayout = 2
 	mwLVSHL_HighlightInSchemAndLay = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwShapeModifierType(IntEnum):
+class mwShapeModifierType(Enum):
 	"""Constants that define the different types of shape modifiers."""
 	mwMD_ShapeModifier = 0
 	mwMD_GlobalModifier = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwShapeModifierPriority(IntEnum):
+class mwShapeModifierPriority(Enum):
 	"""Constants that define the different types of modifier priority levels."""
 	mwSMP_NormalShape = 1
 	mwSMP_FlattenShape = 2
 	mwSMP_GlobalModifier = 3
 	mwSMP_ShapeProcessor = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwEMPortType(IntEnum):
+class mwEMPortType(Enum):
 	"""Constants that define the different types of EM ports."""
 	mwEMP_None = 1
 	mwEMP_Left = 2
@@ -1627,16 +2101,22 @@ class mwEMPortType(IntEnum):
 	mwEMP_FullLine = 11
 	mwEMP_HalfLine = 12
 	mwEMP_PinPad = 13
+	
+	def __int__(self):
+		return self.value
 
-class mwEMGroupType(IntEnum):
+class mwEMGroupType(Enum):
 	"""Constants that define the different types of EM port group types."""
 	mwEMG_None = 0
 	mwEMG_NoneOld = 1
 	mwEMG_Series = 2
 	mwEMG_Mutual = 3
 	mwEMG_Coupled = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwEMPortFlags(IntEnum):
+class mwEMPortFlags(Enum):
 	"""Constants that define flags which can be used in the EM port flags field."""
 	mwEMF_Default = 0
 	mwEMF_EdgeToGround = 1
@@ -1649,15 +2129,21 @@ class mwEMPortFlags(IntEnum):
 	mwEMF_WaveCustomExtent = 128
 	mwEMF_LumpedDifferential = 256
 	mwEMF_EndOfTypes = 512
+	
+	def __int__(self):
+		return self.value
 
-class mwEMShapePortType(IntEnum):
+class mwEMShapePortType(Enum):
 	"""Constants that define the different types of EM shape port types."""
 	mwSPT_EdgePort = 1
 	mwSPT_InternalPort = 2
 	mwSPT_ViaPort = 3
 	mwSPT_PinPadPort = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwCoordEntryMode(IntEnum):
+class mwCoordEntryMode(Enum):
 	"""Constants that define the different bits that can be set in a coordinate entry mode value."""
 	mwCE_None = 0
 	mwCE_SpecifyPoint = 1
@@ -1665,8 +2151,11 @@ class mwCoordEntryMode(IntEnum):
 	mwCE_FirstPoint = 4
 	mwCE_SegmentInfo = 8
 	mwCE_RadiusMode = 16
+	
+	def __int__(self):
+		return self.value
 
-class mwPlacementJustfication(IntEnum):
+class mwPlacementJustfication(Enum):
 	"""Constants that define the different types of placement justification styles."""
 	mwPJ_BBoxCenter = 0
 	mwPJ_BBoxUpperLeft = 1
@@ -1674,56 +2163,83 @@ class mwPlacementJustfication(IntEnum):
 	mwPJ_BBoxUpperRight = 3
 	mwPJ_BBoxLowerRight = 4
 	mwPJ_SameOrigin = 5
+	
+	def __int__(self):
+		return self.value
 
-class mwUnionShapesType(IntEnum):
+class mwUnionShapesType(Enum):
 	"""Constants that define the different types of shape union types."""
 	mwUST_UnionOnExistingLayers = 0
 	mwUST_UnionToDestinationLayer = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwIntersectShapesType(IntEnum):
+class mwIntersectShapesType(Enum):
 	"""Constants that define the different types of shape intersection types."""
 	mwIST_IntersectOnExistingLayers = 0
 	mwIST_IntersectToDestinationLayer = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwExclusiveOrShapesType(IntEnum):
+class mwExclusiveOrShapesType(Enum):
 	"""Constants that define the different types of shape exclusive or types."""
 	mwEST_ExclusiveOrOnExistingLayers = 0
 	mwEST_ExclusiveOrOnDestinationLayer = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwCellExportFormat(IntEnum):
+class mwCellExportFormat(Enum):
 	"""Constants that define different types of cell export formats."""
 	mwCEF_GDSII = 0
 	mwCEF_DXF = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwCellRenameSyncType(IntEnum):
+class mwCellRenameSyncType(Enum):
 	"""Constants that define different types of updates that should be performed when a cell in a library is renamed."""
 	mwCRT_DontSynchronize = 0
 	mwCRT_SynchronizeLibrary = 1
 	mwCRT_SynchronizeAllLibraries = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwCellStatus(IntEnum):
+class mwCellStatus(Enum):
 	"""Constants that define the different types of flags which may be included in the cell status field."""
 	mwCES_FromProject = 1
 	mwCES_LibDeleted = 2
 	mwCES_NewerCellAvail = 4
 	mwCES_CellModified = 8
 	mwCES_CellCondemned = 16
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutParamDataType(IntEnum):
+class mwLayoutParamDataType(Enum):
 	"""Constants that define the data types of a LayoutParameter."""
 	mwLPDT_Real = 0
 	mwLPDT_Integer = 1
 	mwLPDT_String = 2
 	mwLPDT_RealVector = 3
 	mwLPDT_IntVector = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwDrawingSubObjectType(IntEnum):
+class mwDrawingSubObjectType(Enum):
 	"""Constants that define different types of drawing sub-objects."""
 	mwDSO_CutoutPolygon = 0
 	mwDSO_CutoutCircle = 1
 	mwDSO_CutoutEllipse = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwObjectSelectFilters(IntEnum):
+class mwObjectSelectFilters(Enum):
 	"""Constants that define bits for specific object types for restricting selection"""
 	mwOSF_None = 0
 	mwOSF_Graphics = 1
@@ -1753,19 +2269,28 @@ class mwObjectSelectFilters(IntEnum):
 	mwOSF_Circle = 16777216
 	mwOSF_PinObject = 28672
 	mwOSF_InstObject = 768
+	
+	def __int__(self):
+		return self.value
 
-class mwElementType(IntEnum):
+class mwElementType(Enum):
 	"""Constants that define different types of elements."""
 	mwET_Circuit = 0
 	mwET_System = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwSubcktGroundType(IntEnum):
+class mwSubcktGroundType(Enum):
 	"""Constants that define different types of sub-circuit grounding."""
 	mwSG_Normal = 0
 	mwSG_Explicit = 1
 	mwSG_Balanced = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwModelParseType(IntEnum):
+class mwModelParseType(Enum):
 	"""Constants that define different types of model parse types."""
 	mwMPT_Unknown = 0
 	mwMPT_AWRNet = 1
@@ -1777,17 +2302,26 @@ class mwModelParseType(IntEnum):
 	mwMPT_PSpice = 7
 	mwMPT_Touchstone = 8
 	mwMPT_MMICAD = 9
+	
+	def __int__(self):
+		return self.value
 
-class mwSchematicExportFormat(IntEnum):
+class mwSchematicExportFormat(Enum):
 	"""Constants that define different types of schematic export formats."""
 	mwSEF_MWOSchematicFile = 0
 	mwSEF_JsonFile = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwSchematicNetlistExportFormat(IntEnum):
+class mwSchematicNetlistExportFormat(Enum):
 	"""Constants that define different types of schematic netlist export formats."""
 	mwNEF_MWONetlistFile = 0
+	
+	def __int__(self):
+		return self.value
 
-class mwDrawingShapeType(IntEnum):
+class mwDrawingShapeType(Enum):
 	"""Constants that define different types of drawing shape objects."""
 	mwDST_Unknown = 0
 	mwDST_Line = 1
@@ -1799,14 +2333,20 @@ class mwDrawingShapeType(IntEnum):
 	mwDST_Rectangle = 7
 	mwDST_Arrow = 8
 	mwDST_RichText = 9
+	
+	def __int__(self):
+		return self.value
 
-class mwDiagramLockLevel(IntEnum):
+class mwDiagramLockLevel(Enum):
 	"""Constants that define different types of lock levels for schematic and system diagrams"""
 	mwDLL_Unlocked = 0
 	mwDLL_LockedForEdit = 1
 	mwDLL_LockedForViewing = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwEmbeddedDocType(IntEnum):
+class mwEmbeddedDocType(Enum):
 	"""Values that define different embedded document types."""
 	mwEDT_Unknown = 0
 	mwEDT_Schematic = 1
@@ -1816,8 +2356,11 @@ class mwEmbeddedDocType(IntEnum):
 	mwEDT_EMLayout3D = 5
 	mwEDT_SystemDiagram = 6
 	mwEDT_Graph = 7
+	
+	def __int__(self):
+		return self.value
 
-class mwTestPointType(IntEnum):
+class mwTestPointType(Enum):
 	"""Constants that define the different types of test point objects."""
 	mwTPT_NL_Linear = 0
 	mwTPT_NL_Element = 1
@@ -1833,8 +2376,11 @@ class mwTestPointType(IntEnum):
 	mwTPT_NoiseControl = 11
 	mwTPT_V_Noise = 12
 	mwTPT_I_Noise = 13
+	
+	def __int__(self):
+		return self.value
 
-class mwTestPointFlags(IntEnum):
+class mwTestPointFlags(Enum):
 	"""Constants that define the different types of component test point flags."""
 	mwTPF_InternalComp = 1
 	mwTPF_Node = 2
@@ -1848,21 +2394,30 @@ class mwTestPointFlags(IntEnum):
 	mwTPF_CurveTracer = 512
 	mwTPF_NoiseMeasure = 1024
 	mwTPF_OpPoint = 2048
+	
+	def __int__(self):
+		return self.value
 
-class mwSimStateFlags(IntEnum):
+class mwSimStateFlags(Enum):
 	"""Constants that define flags for the different types of simulation dirty states."""
 	mwSSF_SimClean = 0
 	mwSSF_SimStructureDirty = 1
 	mwSSF_SimFrequencyDirty = 2
 	mwSSF_ParameterDirty = 8
 	mwSSF_NeedsUpdate = 16
+	
+	def __int__(self):
+		return self.value
 
-class mwSystemExportFormat(IntEnum):
+class mwSystemExportFormat(Enum):
 	"""Constants that define different types of system export formats."""
 	mwSYF_MWOSystemFile = 0
 	mwSYF_JsonFile = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwHatchStyle(IntEnum):
+class mwHatchStyle(Enum):
 	"""Constants that define different types of Hatch fill styles."""
 	mwHS_None = 0
 	mwHS_Solid = 1
@@ -1872,8 +2427,11 @@ class mwHatchStyle(IntEnum):
 	mwHS_BackwardDiagonal = 5
 	mwHS_Cross = 6
 	mwHS_DiagonalCross = 7
+	
+	def __int__(self):
+		return self.value
 
-class mwBoundaryModelType(IntEnum):
+class mwBoundaryModelType(Enum):
 	"""Constants that define different types of boundary models."""
 	mwBMT_PerfectConductor = 0
 	mwBMT_SpecifiedMaterial = 1
@@ -1881,8 +2439,11 @@ class mwBoundaryModelType(IntEnum):
 	mwBMT_InfiniteWaveguide = 3
 	mwBMT_ReadConductor = 4
 	mwBMT_Dielectric = 5
+	
+	def __int__(self):
+		return self.value
 
-class mwEmSimulator(IntEnum):
+class mwEmSimulator(Enum):
 	"""Constants that define the different types of electromagnetic simulators."""
 	mwEMS_AwrAxiem = 0
 	mwEMS_AwrAxiem32 = 1
@@ -1899,13 +2460,19 @@ class mwEmSimulator(IntEnum):
 	mwEMS_SonnetAsync = 12
 	mwEMS_ClarityAsync = 13
 	mwEMS_CelsiusAsync = 14
+	
+	def __int__(self):
+		return self.value
 
-class mwEMInputDataXMLType(IntEnum):
+class mwEMInputDataXMLType(Enum):
 	"""Constants that define the different types of XML Input Data formats."""
 	mwEIX_EMSocketDataFile = 0
 	mwEIX_EMSocketSimplifiedDataFile = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwMaterialType(IntEnum):
+class mwMaterialType(Enum):
 	"""Constants that define the different types of Materials."""
 	mwMT_Begin = 0
 	mwMT_RealCond = 1
@@ -1920,8 +2487,11 @@ class mwMaterialType(IntEnum):
 	mwMT_BoundMagneticSymmetry = 10
 	mwMT_BoundPML = 11
 	mwMT_End = 12
+	
+	def __int__(self):
+		return self.value
 
-class mwMaterialProperties(IntEnum):
+class mwMaterialProperties(Enum):
 	"""Constants that define the different types of Material properties."""
 	mwMP_Er = 1
 	mwMP_ErX = 2
@@ -1955,12 +2525,18 @@ class mwMaterialProperties(IntEnum):
 	mwMP_MetalMatlPropDefault = 117506048
 	mwMP_MatlPropMin = 0
 	mwMP_MatlPropMax = 536870911
+	
+	def __int__(self):
+		return self.value
 
-class mw3DCadFileType(IntEnum):
+class mw3DCadFileType(Enum):
 	"""Constants that define the different types of 3D CAD files that can be exported from a 3D EMStructure object."""
 	mw3DC_SATFileType = 0
+	
+	def __int__(self):
+		return self.value
 
-class mwGraphType(IntEnum):
+class mwGraphType(Enum):
 	"""Constants that define different types of graphs."""
 	mwGT_RectangularComplex = 0
 	mwGT_Polar = 1
@@ -1971,8 +2547,11 @@ class mwGraphType(IntEnum):
 	mwGT_Histogram = 6
 	mwGT_ThreeDim = 7
 	mwGT_Constellation = 8
+	
+	def __int__(self):
+		return self.value
 
-class mwMeasDataType(IntEnum):
+class mwMeasDataType(Enum):
 	"""Constants that define different measurement data types."""
 	mwMDT_UnKnown = 0
 	mwMDT_ReflectionData = 1
@@ -1988,28 +2567,40 @@ class mwMeasDataType(IntEnum):
 	mwMDT_MultiTraceData = 11
 	mwMDT_LoadPullContour = 12
 	mwMDT_DiscreteTimeData = 13
+	
+	def __int__(self):
+		return self.value
 
-class mwThickness(IntEnum):
+class mwThickness(Enum):
 	"""Constants that define the thickness of a line or trace."""
 	mwHairline = 1
 	mwThin = 2
 	mwMedium = 3
 	mwThick = 4
 	mwFat = 5
+	
+	def __int__(self):
+		return self.value
 
-class mwScaleType(IntEnum):
+class mwScaleType(Enum):
 	"""Constants that define the type of scale of an Axis object."""
 	mwScaleLinear = 1
 	mwScaleLogarithmic = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwDashStyle(IntEnum):
+class mwDashStyle(Enum):
 	"""Constants that define the dash styles of a line."""
 	mwLineSolid = 1
 	mwLineThick = 2
 	mwLineThin = 3
 	mwLineThickThin = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwTraceSymbols(IntEnum):
+class mwTraceSymbols(Enum):
 	"""Constants that define the different symbols for traces objects."""
 	mwSymbolTriangle = 1
 	mwSymbolSquare = 2
@@ -2023,13 +2614,19 @@ class mwTraceSymbols(IntEnum):
 	mwSymbolCircle = 10
 	mwSymbolSmallX = 11
 	mwSymbolCross = 12
+	
+	def __int__(self):
+		return self.value
 
-class mwPlotAxis(IntEnum):
+class mwPlotAxis(Enum):
 	"""Constants that define different axes for plotting."""
 	mwPA_Left = 0
 	mwPA_Right = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwTraceStyle(IntEnum):
+class mwTraceStyle(Enum):
 	"""Constants that define different styles for a graph trace object."""
 	mwTraceStyleAuto = 1
 	mwTraceStyleLinear = 2
@@ -2039,8 +2636,11 @@ class mwTraceStyle(IntEnum):
 	mwTraceStyleDigital = 6
 	mwTraceStyleSampled = 7
 	mwTraceStyleVariationBars = 8
+	
+	def __int__(self):
+		return self.value
 
-class mwTraceSteppedColorStyle(IntEnum):
+class mwTraceSteppedColorStyle(Enum):
 	"""Constants that define different stepped color styles for a graph trace object."""
 	mwSteppedColorStyleNone = 1
 	mwSteppedColorStyleStepped = 2
@@ -2049,43 +2649,64 @@ class mwTraceSteppedColorStyle(IntEnum):
 	mwSteppedColorStyleGradientGreen = 5
 	mwSteppedColorStyleGradientBlue = 6
 	mwSteppedColorStyleShaded = 7
+	
+	def __int__(self):
+		return self.value
 
-class mwLegendFrameResizeTypes(IntEnum):
+class mwLegendFrameResizeTypes(Enum):
 	"""Constants that define the types of graph legend resize styles."""
 	mwLFR_TextFitsFrame = 0
 	mwLFR_FrameFitsText = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwLegendFormatTypes(IntEnum):
+class mwLegendFormatTypes(Enum):
 	"""Constants that define the different type of legend entry format styles."""
 	mwLFT_DataNames = 0
 	mwLFT_MeasurementNames = 1
 	mwLFT_MeasurementAndDataNames = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwMarkerSearchMode(IntEnum):
+class mwMarkerSearchMode(Enum):
 	"""Constants that define different search modes for markers."""
 	mwMST_Absolute = 0
 	mwMST_Delta = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwMarkerSearchDirection(IntEnum):
+class mwMarkerSearchDirection(Enum):
 	"""Constants that define different search directions for markers."""
 	mwMSD_SearchRight = 0
 	mwMSD_SearchLeft = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwMarkerSearchVariable(IntEnum):
+class mwMarkerSearchVariable(Enum):
 	"""Constants that define different search variable types for markers."""
 	mwMSV_X = 0
 	mwMSV_Y = 1
 	mwMSV_SWP = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwMarkerType(IntEnum):
+class mwMarkerType(Enum):
 	"""Constants that define different types of graph markers."""
 	mwMT_Normal = 0
 	mwMT_Parameter = 1
 	mwMT_DataSet = 2
 	mwMT_AutoSearch = 3
 	mwMT_Offset = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwMarkerAutoSearchMode(IntEnum):
+class mwMarkerAutoSearchMode(Enum):
 	"""Constants that define different auto-search marker modes."""
 	mwMAM_Max = 0
 	mwMAM_Min = 1
@@ -2093,19 +2714,28 @@ class mwMarkerAutoSearchMode(IntEnum):
 	mwMAM_Valley = 3
 	mwMAM_Value = 4
 	mwMAM_XIndex = 5
+	
+	def __int__(self):
+		return self.value
 
-class mwMarkerOffsetMode(IntEnum):
+class mwMarkerOffsetMode(Enum):
 	"""Constants that define different offset marker modes."""
 	mwMOM_X = 0
 	mwMOM_Y = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwMarkerOffsetSearchDir(IntEnum):
+class mwMarkerOffsetSearchDir(Enum):
 	"""Constants that define the search direction for y-offset markers."""
 	mwMOD_Left = 0
 	mwMOD_Right = 1
 	mwMOD_Default = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwMarkerSymbolType(IntEnum):
+class mwMarkerSymbolType(Enum):
 	"""Constants that define different types of marker symbols."""
 	mwMST_None = 0
 	mwMST_TriangleUp = 1
@@ -2120,43 +2750,64 @@ class mwMarkerSymbolType(IntEnum):
 	mwMST_Circle = 10
 	mwMST_Cross = 11
 	mwMST_Plus = 12
+	
+	def __int__(self):
+		return self.value
 
-class mwGraphMarkerType(IntEnum):
+class mwGraphMarkerType(Enum):
 	"""Constants that define different output data types for graph cursors and markers."""
 	mwGMT_ReflectionCoefficient = 0
 	mwGMT_Impdedence = 1
 	mwGMT_Admittance = 2
 	mwGMT_Unknown = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwGraphMarkerFormat(IntEnum):
+class mwGraphMarkerFormat(Enum):
 	"""Constants that define different output formats for graph cursors and markers."""
 	mwGMF_RealImaginary = 0
 	mwGMF_MagnitudeAngle = 1
 	mwGMF_DbMagnitudeAngle = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwPrecisionMode(IntEnum):
+class mwPrecisionMode(Enum):
 	"""Constants that define the different types of precision display modes."""
 	mwPM_Auto = 1
 	mwPM_Manual = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwPrecisionStyle(IntEnum):
+class mwPrecisionStyle(Enum):
 	"""Constants that define the different types of precision display styles."""
 	mwPS_FixedSigFigures = 1
 	mwPS_FixedRightDecimal = 2
 	mwPS_Scientific = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwLineMarkerType(IntEnum):
+class mwLineMarkerType(Enum):
 	"""Constants that define different types of LineMarker objects."""
 	mwLM_HorizontalLineMarker = 1
 	mwLM_VerticalLineMarker = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwLineMarkerTrackType(IntEnum):
+class mwLineMarkerTrackType(Enum):
 	"""Constants that define different types of LineMarker track types."""
 	mwLMT_XAxis = 1
 	mwLMT_LeftYAxis = 2
 	mwLMT_RightYAxis = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwDataFileType(IntEnum):
+class mwDataFileType(Enum):
 	"""Constants that define different types of data files."""
 	mwDFT_SNP = 0
 	mwDFT_RAW = 1
@@ -2166,41 +2817,59 @@ class mwDataFileType(IntEnum):
 	mwDFT_GMDIF = 5
 	mwDFT_DSCR = 6
 	mwDFT_GMDIFD = 7
+	
+	def __int__(self):
+		return self.value
 
-class mwOutputFilePortParameterType(IntEnum):
+class mwOutputFilePortParameterType(Enum):
 	"""Constants that define different types of output port parameter types."""
 	mwOFP_SParameter = 0
 	mwOFP_YParameter = 1
 	mwOFP_ZParameter = 2
 	mwOFP_GParameter = 3
 	mwOFP_HParameter = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwOutputFilePortParameterFormat(IntEnum):
+class mwOutputFilePortParameterFormat(Enum):
 	"""Constants that define different types of output parameter formats."""
 	mwOFF_Real_Imaginary = 0
 	mwOFF_Magnitude_Angle = 1
 	mwOFF_DB_Magnitude_Angle = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwOutputFilePortParameterFreqUnits(IntEnum):
+class mwOutputFilePortParameterFreqUnits(Enum):
 	"""Constants that define different types of output parameter frequency units."""
 	mwOFU_Hz = 0
 	mwOFU_kHz = 1
 	mwOFU_MHz = 2
 	mwOFU_GHz = 3
 	mwOFU_THz = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwOutputFileLineEndFormat(IntEnum):
+class mwOutputFileLineEndFormat(Enum):
 	"""Constants that define different types of output file line ends."""
 	mwOFE_NormalLineEnd = 0
 	mwOFE_DOSFormatLineEnd = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwCellLibraryType(IntEnum):
+class mwCellLibraryType(Enum):
 	"""Constants that define the different cell library types."""
 	mwCLT_GDSII = 0
 	mwCLT_DXF = 1
 	mwCLT_OA = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwCellLibraryStatus(IntEnum):
+class mwCellLibraryStatus(Enum):
 	"""Constants that define the different types of flags which may be included in the cell library status field."""
 	mwCLS_IncProjCells = 1
 	mwCLS_FileNotFound = 2
@@ -2217,14 +2886,20 @@ class mwCellLibraryStatus(IntEnum):
 	mwCLS_AllowPathBasedExtraction = 4096
 	mwCLS_IncludesRenamedDeletedCells = 8192
 	mwCLS_NotSearchable = 16384
+	
+	def __int__(self):
+		return self.value
 
-class mwOptGoalType(IntEnum):
+class mwOptGoalType(Enum):
 	"""Constants that define different types of optimization goals."""
 	mwOGT_Equals = 0
 	mwOGT_LessThan = 1
 	mwOGT_GreaterThan = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwLayoutExportFormat(IntEnum):
+class mwLayoutExportFormat(Enum):
 	"""Constants that define different types of layout export formats."""
 	mwLEF_GDSII_Hierarchical = 0
 	mwLEF_GDSII_Flat = 1
@@ -2232,28 +2907,43 @@ class mwLayoutExportFormat(IntEnum):
 	mwLEF_Gerber = 3
 	mwLEF_DrillFile = 4
 	mwLEF_Pads = 5
+	
+	def __int__(self):
+		return self.value
 
-class mwCrossoverRuleFlags(IntEnum):
+class mwCrossoverRuleFlags(Enum):
 	"""Constants that define the different types of CrossoverRule flags."""
 	mwCRF_ExtendHalfWidthEnds = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwViaSpacingType(IntEnum):
+class mwViaSpacingType(Enum):
 	"""Constants that define the different types of via spacings for via fill entries and via fence entries."""
 	mwVST_CenterToCenter = 0
 	mwVST_EdgeToEdge = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwViaFillStaggerMode(IntEnum):
+class mwViaFillStaggerMode(Enum):
 	"""Constants that define the different types of via stagger mode for via fill entries."""
 	mwVSM_StaggerNone = 0
 	mwVSM_StaggerRows = 1
 	mwVSM_StaggerColumns = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwViaAlignType(IntEnum):
+class mwViaAlignType(Enum):
 	"""Constants that define the different types of via alignments for via fill entries."""
 	mwVAT_ConstantSpacing = 0
 	mwVAT_ConstantClearance = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwUnitMultType(IntEnum):
+class mwUnitMultType(Enum):
 	"""Constants that define different types of multipliers."""
 	mwUMT_f = 0
 	mwUMT_p = 1
@@ -2277,8 +2967,11 @@ class mwUnitMultType(IntEnum):
 	mwUMT_Deg = 19
 	mwUMT_dbm = 20
 	mwUMT_dbw = 21
+	
+	def __int__(self):
+		return self.value
 
-class mwVoidFlagType(IntEnum):
+class mwVoidFlagType(Enum):
 	"""Constants that define the different flags that can be set for the voiding options."""
 	mwVDF_None = 0
 	mwVDF_IsDynShape = 1
@@ -2288,14 +2981,20 @@ class mwVoidFlagType(IntEnum):
 	mwVDF_FullRound = 16
 	mwVDF_AnyRound = 24
 	mwVDF_ShowTopDynOnly = 32
+	
+	def __int__(self):
+		return self.value
 
-class mwConstraintSetType(IntEnum):
+class mwConstraintSetType(Enum):
 	"""Constants that define the different types of constraint set types."""
 	mwCST_Spacing = 0
 	mwCST_SameNetSpacing = 1
 	mwCST_NetOnly = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwConstraintInfoType(IntEnum):
+class mwConstraintInfoType(Enum):
 	"""Constants that define the different types of constraint info types."""
 	mwCIT_AllTypes = -1
 	mwCIT_Line = 0
@@ -2314,8 +3013,11 @@ class mwConstraintInfoType(IntEnum):
 	mwCIT_VIA = 13
 	mwCIT_MIN_BVIA_GAP = 14
 	mwCIT_END_ALL = 15
+	
+	def __int__(self):
+		return self.value
 
-class mwNetlistType(IntEnum):
+class mwNetlistType(Enum):
 	"""Constants that define different types of netlists."""
 	mwNLT_AWR = 0
 	mwNLT_SPICE = 1
@@ -2328,13 +3030,19 @@ class mwNetlistType(IntEnum):
 	mwNLT_Native_APLAC = 7
 	mwNLT_Spectre = 8
 	mwNLT_HSPICE2 = 10
+	
+	def __int__(self):
+		return self.value
 
-class mwYieldGoalType(IntEnum):
+class mwYieldGoalType(Enum):
 	"""Constants that define different types of yield goals."""
 	mwYGT_LessThan = 0
 	mwYGT_GreaterThan = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwSymbolShapeType(IntEnum):
+class mwSymbolShapeType(Enum):
 	"""Constants that define different types of symbol shapes."""
 	mwSST_Line = 0
 	mwSST_Arc = 1
@@ -2345,31 +3053,46 @@ class mwSymbolShapeType(IntEnum):
 	mwSST_Node = 6
 	mwSST_Polyline = 7
 	mwSST_MetaText = 8
+	
+	def __int__(self):
+		return self.value
 
-class mwSymbolType(IntEnum):
+class mwSymbolType(Enum):
 	"""Constants that define different types of symbol categories like project or system symbols"""
 	mwST_SystemSymbolType = 0
 	mwST_ProjectSymbolType = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwSymbolSelectMode(IntEnum):
+class mwSymbolSelectMode(Enum):
 	"""Constants that define different types of symbol select modes."""
 	mwSM_NormalSelect = 0
 	mwSM_EdgeSelect = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwErrorType(IntEnum):
+class mwErrorType(Enum):
 	"""Constants that define different types of errors."""
 	mwET_None = 0
 	mwET_Warning = 1
 	mwET_Error = 2
 	mwET_Fatal = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwEMInitType(IntEnum):
+class mwEMInitType(Enum):
 	"""Constants that define the different types of EMStructure initialization types."""
 	mwEMI_Stackup = 0
 	mwEMI_LPF = 1
 	mwEMI_Default = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwModelPriorityType(IntEnum):
+class mwModelPriorityType(Enum):
 	"""Constants that define different types of priorities for Model objects."""
 	mwMPT_UNINIT = 0
 	mwMPT_ALL = 1
@@ -2383,8 +3106,11 @@ class mwModelPriorityType(IntEnum):
 	mwMPT_GROUND = 9
 	mwMPT_ISOLATED = 10
 	mwMPT_SINK = 11
+	
+	def __int__(self):
+		return self.value
 
-class mwModelPropertyFlags(IntEnum):
+class mwModelPropertyFlags(Enum):
 	"""Constants that define different bits for model flag types."""
 	mwEF_Default = 0
 	mwEF_HideName = 1
@@ -2415,8 +3141,11 @@ class mwModelPropertyFlags(IntEnum):
 	mwEF_SimDocRef = 67108864
 	mwEF_PartialEmExtraction = 134217728
 	mwEF_ExtractFromSelf = 268435456
+	
+	def __int__(self):
+		return self.value
 
-class mwMeasInfoParamFlags(IntEnum):
+class mwMeasInfoParamFlags(Enum):
 	"""Constants that define the different types of MeasurementInfo parameter flags"""
 	mwMIP_BackAnnotation = 1
 	mwMIP_EM_Annotation = 2
@@ -2433,43 +3162,61 @@ class mwMeasInfoParamFlags(IntEnum):
 	mwMIP_FileOutput = 2048
 	mwMIP_SynthMeas = 4096
 	mwMIP_Hidden = 8192
+	
+	def __int__(self):
+		return self.value
 
-class mwLibraryElementType(IntEnum):
+class mwLibraryElementType(Enum):
 	"""Constants that define the different types of library elements."""
 	mwLET_Unknown = 0
 	mwLET_Model = 1
 	mwLET_XML = 2
 	mwLET_DataFile = 3
 	mwLET_Subcircuit = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwDockBorder(IntEnum):
+class mwDockBorder(Enum):
 	"""Constants that define the locations that a window can be docked to."""
 	mwDB_Top = 1
 	mwDB_Bottom = 2
 	mwDB_Left = 3
 	mwDB_Right = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwDockState(IntEnum):
+class mwDockState(Enum):
 	"""Constants that define the different dockable states of a window."""
 	mwDS_Docked = 1
 	mwDS_Floating = 2
 	mwDS_Normal = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwHotKeyFlags(IntEnum):
+class mwHotKeyFlags(Enum):
 	"""Constants that define the different flags for hotkeys."""
 	mwHKF_VirtKey = 1
 	mwHKF_NoInvert = 2
 	mwHKF_ShiftKey = 4
 	mwHKF_ControlKey = 8
 	mwHKF_AltKey = 16
+	
+	def __int__(self):
+		return self.value
 
-class mwStatusItemCategory(IntEnum):
+class mwStatusItemCategory(Enum):
 	"""Constants that define the category of a status item."""
 	mwRIC_Error = 0
 	mwRIC_Warning = 1
 	mwRIC_Info = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwJobStatusType(IntEnum):
+class mwJobStatusType(Enum):
 	"""Constants that define the different types of job status states for JobProcess objects."""
 	mwJS_Unknown = 0
 	mwJS_Rejected = 1
@@ -2486,34 +3233,52 @@ class mwJobStatusType(IntEnum):
 	mwJS_Failed = 12
 	mwJS_Sending = 13
 	mwJS_Receiving = 14
+	
+	def __int__(self):
+		return self.value
 
-class mwScriptModuleSourceType(IntEnum):
+class mwScriptModuleSourceType(Enum):
 	"""Constants that define the different types of script module sources."""
 	mwSMS_Global = 0
 	mwSMS_Project = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwScriptModCreateFlags(IntEnum):
+class mwScriptModCreateFlags(Enum):
 	"""Constants that define the different types of scripting module creation modes."""
 	mwSCF_FailExist = 0
 	mwSCF_Overwrite = 1
 	mwSCF_Append = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwShowFileType(IntEnum):
+class mwShowFileType(Enum):
 	"""Constants that define the different types of files that can be displayed by the file utility ShowFile."""
 	mwSFT_PlainText = 0
 	mwSFT_RichText = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwPageSetupOrientation(IntEnum):
+class mwPageSetupOrientation(Enum):
 	"""Constants that define the different types of page orientations."""
 	mwPSO_Portrait = 0
 	mwPSO_Landscape = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwPageSetupDetailLevel(IntEnum):
+class mwPageSetupDetailLevel(Enum):
 	"""Constants that define the different levels of output detail."""
 	mwPSD_MaximumVisability = 0
 	mwPSD_MinimumComplexity = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwPrintPaperSize(IntEnum):
+class mwPrintPaperSize(Enum):
 	"""Constants that define the different sizes of paper for printing."""
 	mwPPS_Letter = 0
 	mwPPS_LetterSmall = 1
@@ -2631,8 +3396,11 @@ class mwPrintPaperSize(IntEnum):
 	mwPPS_PEnv_8_Rotated = 113
 	mwPPS_PEnv_9_Rotated = 114
 	mwPPS_PEnv_10_Rotated = 115
+	
+	def __int__(self):
+		return self.value
 
-class mwPrintPaperSource(IntEnum):
+class mwPrintPaperSource(Enum):
 	"""Constants that define the different sources of paper for printing"""
 	mwPSR_Upper = 0
 	mwPSR_OnlyOne = 1
@@ -2648,8 +3416,11 @@ class mwPrintPaperSource(IntEnum):
 	mwPSR_LargeCapacity = 11
 	mwPSR_FormSource = 12
 	mwPSR_User = 13
+	
+	def __int__(self):
+		return self.value
 
-class mwSimulatorTypeFlags(IntEnum):
+class mwSimulatorTypeFlags(Enum):
 	"""Constants that define the different types of simulator type flags."""
 	mwSTF_DefaultSimulator = 1
 	mwSTF_CycledSimulator = 2
@@ -2674,27 +3445,39 @@ class mwSimulatorTypeFlags(IntEnum):
 	mwSTF_DontCreateElectModels = 1048576
 	mwSTF_LvsSimulator = 2097152
 	mwSTF_ElectNetsAsElements = 4194304
+	
+	def __int__(self):
+		return self.value
 
-class mwSystemSimulatorState(IntEnum):
+class mwSystemSimulatorState(Enum):
 	"""Constants that define different types of simulator run states"""
 	mwSSS_Stopped = 0
 	mwSSS_Running = 1
 	mwSSS_Paused = 2
 	mwSSS_Starting = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwAnalyzeStateType(IntEnum):
+class mwAnalyzeStateType(Enum):
 	"""Constants that define the different types of simulator analysis state."""
 	mwAST_BeforeSimulate = 1
 	mwAST_Simulating = 2
 	mwAST_SimulationEnded = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwProjectVersionType(IntEnum):
+class mwProjectVersionType(Enum):
 	"""Constants that define different types of project version values."""
 	mwPV_Latest = 1
 	mwPV_Previous = 2
 	mwPV_VersionNumber = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwProjectItemType(IntEnum):
+class mwProjectItemType(Enum):
 	"""Constants that define the different types of project items."""
 	mwPIT_Schematic = 0
 	mwPIT_SystemDiagram = 1
@@ -2716,32 +3499,50 @@ class mwProjectItemType(IntEnum):
 	mwPIT_SampleProjectItem = 17
 	mwPIT_DataSetFolder = 18
 	mwPIT_DataSet = 19
+	
+	def __int__(self):
+		return self.value
 
-class mwProjectTemplateType(IntEnum):
+class mwProjectTemplateType(Enum):
 	"""Constants that define different types of project template type values."""
 	mwPT_NormalTemplate = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwGlobalDefExportFormat(IntEnum):
+class mwGlobalDefExportFormat(Enum):
 	"""Constants that define different types of global definition document export formats."""
 	mwGEF_MWOGlobalDefFile = 0
 	mwGEF_JsonFile = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwMergeConflictResolutionType(IntEnum):
+class mwMergeConflictResolutionType(Enum):
 	"""Constants that define the different types of conflict resolution modes."""
 	mwMCR_Overwrite = 0
 	mwMCR_Rename = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwImportProjectRenameItems(IntEnum):
+class mwImportProjectRenameItems(Enum):
 	"""Constants that define the different types of conflicted import project items to be renamed"""
 	mwIPRI_All = 0
 	mwIPRI_Conflicted = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwImportProjectRenameStyle(IntEnum):
+class mwImportProjectRenameStyle(Enum):
 	"""Constants that define the types of rename styles that can be applied to conflicted import project items"""
 	mwIPI_AddPrefix = 0
 	mwIPI_AddSuffix = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwDataSetFlags(IntEnum):
+class mwDataSetFlags(Enum):
 	"""Constants that define flag types associated with data sets."""
 	mwDSF_Default = 0
 	mwDSF_IsPartialDataSet = 1
@@ -2765,18 +3566,27 @@ class mwDataSetFlags(IntEnum):
 	mwDSF_ClockStringReset = 262144
 	mwDSF_DistSimResult = 524288
 	mwDSF_InMemoryDataSet = 1048576
+	
+	def __int__(self):
+		return self.value
 
-class mwExternalEditorType(IntEnum):
+class mwExternalEditorType(Enum):
 	"""Constants that define the different types of external editors for EM3DStructure objects."""
 	mwEET_SpaceClaimEditor = 1
 	mwEET_OrionEditor = 2
+	
+	def __int__(self):
+		return self.value
 
-class mwEECmdShow(IntEnum):
+class mwEECmdShow(Enum):
 	"""Constants that define the different types of external editor show states."""
 	mwEECS_Hide = 0
 	mwEECS_Show = 1
+	
+	def __int__(self):
+		return self.value
 
-class mwVersionControlStatus(IntEnum):
+class mwVersionControlStatus(Enum):
 	"""Constants that define the different types of version control status types"""
 	mwVCF_Normal = 0
 	mwVCF_Added = 1
@@ -2794,15 +3604,21 @@ class mwVersionControlStatus(IntEnum):
 	mwVCF_UnLocked = 13
 	mwVCF_Owned = 14
 	mwVCF_Unowned = 15
+	
+	def __int__(self):
+		return self.value
 
-class mwPDE_DataTables(IntEnum):
+class mwPDE_DataTables(Enum):
 	"""Constants that define the different types of process definition editor tables"""
 	mwPDE_DT_MaterialStack = 0
 	mwPDE_DT_LayerDisplay = 1
 	mwPDE_DT_LayerDisplay3D = 2
 	mwPDE_DT_ViasDrills = 3
+	
+	def __int__(self):
+		return self.value
 
-class mwNetSynthCompTypes(IntEnum):
+class mwNetSynthCompTypes(Enum):
 	"""Constants that define the types of components used in network synthesis."""
 	mwNSC_Invalid = -1
 	mwNSC_SE_Ind = 0
@@ -2829,20 +3645,29 @@ class mwNetSynthCompTypes(IntEnum):
 	mwNSC_SH_LibInd = 21
 	mwNSC_SH_LibCap = 22
 	mwNSC_SH_LibRes = 23
+	
+	def __int__(self):
+		return self.value
 
-class mwNetSynthDiscrValModes(IntEnum):
+class mwNetSynthDiscrValModes(Enum):
 	"""Constants that define the types of discrete value constraints for component parameters in network synthesis."""
 	mwNSD_Continuous = 0
 	mwNSD_RoundAbs = 1
 	mwNSD_RoundSigFigs = 2
 	mwNSD_SigDigTable = 3
 	mwNSD_ValueList = 4
+	
+	def __int__(self):
+		return self.value
 
-class mwNetSynthVendorLibCompTypes(IntEnum):
+class mwNetSynthVendorLibCompTypes(Enum):
 	"""Constants that define the types of vendor library components used in network synthesis."""
 	mwNSV_Ind = 0
 	mwNSV_Cap = 1
 	mwNSV_Res = 2
+	
+	def __int__(self):
+		return self.value
 
 
 # MWOffice
@@ -3286,6 +4111,29 @@ class CMWOffice:
 		return self.__IMWOffice.hWnd
 
 
+	def __str__(self):
+		return '{}'.format(type(self).__name__)
+
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Application
 class CApplication:
@@ -3295,7 +4143,6 @@ class CApplication:
 
 	def __get_inner(self):
 		return self.__IMWOffice
-
 
 
 	def New(self, Name: str) -> bool:
@@ -3732,6 +4579,26 @@ class CApplication:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Project
 class CProject:
@@ -3741,7 +4608,6 @@ class CProject:
 
 	def __get_inner(self):
 		return self.__IProject
-
 
 
 	def Save(self) -> bool:
@@ -4164,6 +5030,26 @@ class CProject:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProjectFile
 class CProjectFile:
@@ -4173,7 +5059,6 @@ class CProjectFile:
 
 	def __get_inner(self):
 		return self.__IProjectFile
-
 
 
 
@@ -4204,6 +5089,26 @@ class CProjectFile:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProjectFiles
 class CProjectFiles:
@@ -4213,7 +5118,6 @@ class CProjectFiles:
 
 	def __get_inner(self):
 		return self.__IProjectFiles
-
 
 
 
@@ -4267,6 +5171,26 @@ class CProjectFiles:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ControlBar
 class CControlBar:
@@ -4276,7 +5200,6 @@ class CControlBar:
 
 	def __get_inner(self):
 		return self.__IControlBar
-
 
 
 	def Dock(self) -> None:
@@ -4399,6 +5322,26 @@ class CControlBar:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ControlBars
 class CControlBars:
@@ -4408,7 +5351,6 @@ class CControlBars:
 
 	def __get_inner(self):
 		return self.__IControlBars
-
 
 
 
@@ -4457,6 +5399,26 @@ class CControlBars:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DataFile
 class CDataFile:
@@ -4466,7 +5428,6 @@ class CDataFile:
 
 	def __get_inner(self):
 		return self.__IDataFile
-
 
 
 	def Activate(self) -> None:
@@ -4638,6 +5599,26 @@ class CDataFile:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DataFiles
 class CDataFiles:
@@ -4647,7 +5628,6 @@ class CDataFiles:
 
 	def __get_inner(self):
 		return self.__IDataFiles
-
 
 
 	def Add(self, Name: str, Filename: str, Embedded: bool, Type: mwDataFileType) -> CDataFile:
@@ -4742,6 +5722,26 @@ class CDataFiles:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SampleProjectItem
 class CSampleProjectItem:
@@ -4751,7 +5751,6 @@ class CSampleProjectItem:
 
 	def __get_inner(self):
 		return self.__ISampleProjectItem
-
 
 
 
@@ -4776,6 +5775,26 @@ class CSampleProjectItem:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SampleProjectItems
 class CSampleProjectItems:
@@ -4785,7 +5804,6 @@ class CSampleProjectItems:
 
 	def __get_inner(self):
 		return self.__ISampleProjectItems
-
 
 
 	def Add(self, Name: str) -> CSampleProjectItem:
@@ -4854,6 +5872,26 @@ class CSampleProjectItems:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DataSetProperty
 class CDataSetProperty:
@@ -4863,7 +5901,6 @@ class CDataSetProperty:
 
 	def __get_inner(self):
 		return self.__IDataSetProperty
-
 
 
 
@@ -4900,6 +5937,26 @@ class CDataSetProperty:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DataSetProperties
 class CDataSetProperties:
@@ -4909,7 +5966,6 @@ class CDataSetProperties:
 
 	def __get_inner(self):
 		return self.__IDataSetProperties
-
 
 
 
@@ -4963,6 +6019,26 @@ class CDataSetProperties:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DataSet
 class CDataSet:
@@ -4972,7 +6048,6 @@ class CDataSet:
 
 	def __get_inner(self):
 		return self.__IDataSet
-
 
 
 	def UpdateResults(self, vbEnableMeasurements: bool = -1, vbAddMissingMeasurements: bool = -1) -> None:
@@ -5090,6 +6165,26 @@ class CDataSet:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DataSets
 class CDataSets:
@@ -5099,7 +6194,6 @@ class CDataSets:
 
 	def __get_inner(self):
 		return self.__IDataSets
-
 
 
 	def Remove(self, Index) -> bool:
@@ -5163,6 +6257,26 @@ class CDataSets:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DataSetFolder
 class CDataSetFolder:
@@ -5172,7 +6286,6 @@ class CDataSetFolder:
 
 	def __get_inner(self):
 		return self.__IDataSetFolder
-
 
 
 
@@ -5197,6 +6310,26 @@ class CDataSetFolder:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DataSetFolders
 class CDataSetFolders:
@@ -5206,7 +6339,6 @@ class CDataSetFolders:
 
 	def __get_inner(self):
 		return self.__IDataSetFolders
-
 
 
 	def AddGraphDataSet(self, Name: str) -> CDataSet:
@@ -5303,6 +6435,26 @@ class CDataSetFolders:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # OutputFile
 class COutputFile:
@@ -5312,7 +6464,6 @@ class COutputFile:
 
 	def __get_inner(self):
 		return self.__IOutputFile
-
 
 
 
@@ -5343,6 +6494,26 @@ class COutputFile:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # OutputFiles
 class COutputFiles:
@@ -5352,7 +6523,6 @@ class COutputFiles:
 
 	def __get_inner(self):
 		return self.__IOutputFiles
-
 
 
 	def Remove(self, Index) -> bool:
@@ -5426,6 +6596,26 @@ class COutputFiles:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Frequency
 class CFrequency:
@@ -5435,7 +6625,6 @@ class CFrequency:
 
 	def __get_inner(self):
 		return self.__IFrequency
-
 
 
 
@@ -5454,6 +6643,26 @@ class CFrequency:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Frequencies
 class CFrequencies:
@@ -5463,7 +6672,6 @@ class CFrequencies:
 
 	def __get_inner(self):
 		return self.__IFrequencies
-
 
 
 	def Add(self, Value: float) -> CFrequency:
@@ -5532,6 +6740,26 @@ class CFrequencies:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Element
 class CElement:
@@ -5541,7 +6769,6 @@ class CElement:
 
 	def __get_inner(self):
 		return self.__IElement
-
 
 
 	def Delete(self) -> bool:
@@ -5903,6 +7130,26 @@ class CElement:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Elements
 class CElements:
@@ -5912,7 +7159,6 @@ class CElements:
 
 	def __get_inner(self):
 		return self.__IElements
-
 
 
 	def Add(self, Name: str, x: int, y: int, RotationAngle: int = 0, Flipped: bool = 0, Symbol: str = "") -> CElement:
@@ -6006,6 +7252,26 @@ class CElements:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SelectedElements
 class CSelectedElements:
@@ -6015,7 +7281,6 @@ class CSelectedElements:
 
 	def __get_inner(self):
 		return self.__ISelectedElements
-
 
 
 	def Add(self, Element: CElement) -> bool:
@@ -6094,6 +7359,26 @@ class CSelectedElements:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EquationExpression
 class CEquationExpression:
@@ -6103,7 +7388,6 @@ class CEquationExpression:
 
 	def __get_inner(self):
 		return self.__IEquationExpression
-
 
 
 
@@ -6410,6 +7694,26 @@ class CEquationExpression:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EquationExpressions
 class CEquationExpressions:
@@ -6419,7 +7723,6 @@ class CEquationExpressions:
 
 	def __get_inner(self):
 		return self.__IEquationExpressions
-
 
 
 	def Add(self, Expression: str) -> CEquationExpression:
@@ -6483,6 +7786,26 @@ class CEquationExpressions:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Equation
 class CEquation:
@@ -6492,7 +7815,6 @@ class CEquation:
 
 	def __get_inner(self):
 		return self.__IEquation
-
 
 
 	def AddSubexpression(self, newExp: str) -> bool:
@@ -6873,6 +8195,26 @@ class CEquation:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Equations
 class CEquations:
@@ -6882,7 +8224,6 @@ class CEquations:
 
 	def __get_inner(self):
 		return self.__IEquations
-
 
 
 	def Add(self, Expression: str, x: int, y: int) -> CEquation:
@@ -6967,6 +8308,26 @@ class CEquations:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # GlobalDefinitionDocument
 class CGlobalDefinitionDocument:
@@ -6976,7 +8337,6 @@ class CGlobalDefinitionDocument:
 
 	def __get_inner(self):
 		return self.__IGlobalDefinitionDocument
-
 
 
 	def Activate(self) -> None:
@@ -7186,6 +8546,26 @@ class CGlobalDefinitionDocument:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # GlobalDefinitionDocuments
 class CGlobalDefinitionDocuments:
@@ -7195,7 +8575,6 @@ class CGlobalDefinitionDocuments:
 
 	def __get_inner(self):
 		return self.__IGlobalDefinitionDocuments
-
 
 
 	def Add(self, Name: str, ParentName: str = "") -> CGlobalDefinitionDocument:
@@ -7284,6 +8663,26 @@ class CGlobalDefinitionDocuments:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # OutputEquationDocument
 class COutputEquationDocument:
@@ -7293,7 +8692,6 @@ class COutputEquationDocument:
 
 	def __get_inner(self):
 		return self.__IOutputEquationDocument
-
 
 
 	def Activate(self) -> None:
@@ -7430,6 +8828,26 @@ class COutputEquationDocument:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # OutputEquationDocuments
 class COutputEquationDocuments:
@@ -7439,7 +8857,6 @@ class COutputEquationDocuments:
 
 	def __get_inner(self):
 		return self.__IOutputEquationDocuments
-
 
 
 	def Add(self, Name: str) -> COutputEquationDocument:
@@ -7513,6 +8930,26 @@ class COutputEquationDocuments:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Goal
 class CGoal:
@@ -7522,7 +8959,6 @@ class CGoal:
 
 	def __get_inner(self):
 		return self.__IGoal
-
 
 
 
@@ -7673,6 +9109,26 @@ class CGoal:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DisplayPrecision
 class CDisplayPrecision:
@@ -7682,7 +9138,6 @@ class CDisplayPrecision:
 
 	def __get_inner(self):
 		return self.__IDisplayPrecision
-
 
 
 
@@ -7725,6 +9180,26 @@ class CDisplayPrecision:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Graph
 class CGraph:
@@ -7734,7 +9209,6 @@ class CGraph:
 
 	def __get_inner(self):
 		return self.__IGraph
-
 
 
 	def CopyToClipboard(self) -> None:
@@ -8097,6 +9571,26 @@ class CGraph:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Graphs
 class CGraphs:
@@ -8106,7 +9600,6 @@ class CGraphs:
 
 	def __get_inner(self):
 		return self.__IGraphs
-
 
 
 	def Add(self, Name: str, Type: mwGraphType) -> CGraph:
@@ -8190,6 +9683,26 @@ class CGraphs:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Axis
 class CAxis:
@@ -8199,7 +9712,6 @@ class CAxis:
 
 	def __get_inner(self):
 		return self.__IAxis
-
 
 
 
@@ -8524,6 +10036,26 @@ class CAxis:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Axes
 class CAxes:
@@ -8533,7 +10065,6 @@ class CAxes:
 
 	def __get_inner(self):
 		return self.__IAxes
-
 
 
 	def Add(self) -> CAxes:
@@ -8597,6 +10128,26 @@ class CAxes:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # TraceFormatOption
 class CTraceFormatOption:
@@ -8606,7 +10157,6 @@ class CTraceFormatOption:
 
 	def __get_inner(self):
 		return self.__ITraceFormatOption
-
 
 
 
@@ -8661,6 +10211,26 @@ class CTraceFormatOption:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # TraceFormatOptions
 class CTraceFormatOptions:
@@ -8670,7 +10240,6 @@ class CTraceFormatOptions:
 
 	def __get_inner(self):
 		return self.__ITraceFormatOptions
-
 
 
 
@@ -8724,6 +10293,26 @@ class CTraceFormatOptions:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Trace
 class CTrace:
@@ -8733,7 +10322,6 @@ class CTrace:
 
 	def __get_inner(self):
 		return self.__ITrace
-
 
 
 
@@ -8979,6 +10567,26 @@ class CTrace:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Traces
 class CTraces:
@@ -8988,7 +10596,6 @@ class CTraces:
 
 	def __get_inner(self):
 		return self.__ITraces
-
 
 
 
@@ -9042,6 +10649,26 @@ class CTraces:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Legend
 class CLegend:
@@ -9051,7 +10678,6 @@ class CLegend:
 
 	def __get_inner(self):
 		return self.__ILegend
-
 
 
 
@@ -9226,6 +10852,26 @@ class CLegend:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # MarkerOptions
 class CMarkerOptions:
@@ -9235,7 +10881,6 @@ class CMarkerOptions:
 
 	def __get_inner(self):
 		return self.__IMarkerOptions
-
 
 
 
@@ -9488,6 +11133,26 @@ class CMarkerOptions:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # MarkerDisplay
 class CMarkerDisplay:
@@ -9497,7 +11162,6 @@ class CMarkerDisplay:
 
 	def __get_inner(self):
 		return self.__IMarkerDisplay
-
 
 
 
@@ -9557,6 +11221,26 @@ class CMarkerDisplay:
 
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
+
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
 
 
 # MarkerLegend
@@ -9570,7 +11254,6 @@ class CMarkerLegend:
 
 
 
-
 	@property
 	def DisplayText(self) -> str:
 		"""Returns the text associated with the MWOffice MarkerDisplay object."""
@@ -9628,6 +11311,26 @@ class CMarkerLegend:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # AutoSearchMarker
 class CAutoSearchMarker:
@@ -9637,7 +11340,6 @@ class CAutoSearchMarker:
 
 	def __get_inner(self):
 		return self.__IAutoSearchMarker
-
 
 
 
@@ -9704,6 +11406,26 @@ class CAutoSearchMarker:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # OffsetMarker
 class COffsetMarker:
@@ -9713,7 +11435,6 @@ class COffsetMarker:
 
 	def __get_inner(self):
 		return self.__IOffsetMarker
-
 
 
 
@@ -9768,6 +11489,26 @@ class COffsetMarker:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Marker
 class CMarker:
@@ -9777,7 +11518,6 @@ class CMarker:
 
 	def __get_inner(self):
 		return self.__IMarker
-
 
 
 	def Delete(self) -> bool:
@@ -9923,6 +11663,26 @@ class CMarker:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Markers
 class CMarkers:
@@ -9932,7 +11692,6 @@ class CMarkers:
 
 	def __get_inner(self):
 		return self.__IMarkers
-
 
 
 	def Add(self, MeasurementIndex, DataIndex, SweepPoint: float) -> CMarker:
@@ -10035,6 +11794,26 @@ class CMarkers:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LineMarker
 class CLineMarker:
@@ -10044,7 +11823,6 @@ class CLineMarker:
 
 	def __get_inner(self):
 		return self.__ILineMarker
-
 
 
 
@@ -10128,6 +11906,26 @@ class CLineMarker:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LineMarkers
 class CLineMarkers:
@@ -10137,7 +11935,6 @@ class CLineMarkers:
 
 	def __get_inner(self):
 		return self.__ILineMarkers
-
 
 
 	def Add(self, Type: mwLineMarkerType, Value: float, AxisIndex) -> CLineMarker:
@@ -10206,6 +12003,26 @@ class CLineMarkers:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Measurement
 class CMeasurement:
@@ -10215,7 +12032,6 @@ class CMeasurement:
 
 	def __get_inner(self):
 		return self.__IMeasurement
-
 
 
 	def ResizeFor2D(self, xCount: int, DataDimension: int) -> None:
@@ -10487,6 +12303,26 @@ class CMeasurement:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Measurements
 class CMeasurements:
@@ -10496,7 +12332,6 @@ class CMeasurements:
 
 	def __get_inner(self):
 		return self.__IMeasurements
-
 
 
 	def Add(self, SourceDoc: str, Measurement: str) -> CMeasurement:
@@ -10565,6 +12400,26 @@ class CMeasurements:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Netlist
 class CNetlist:
@@ -10574,7 +12429,6 @@ class CNetlist:
 
 	def __get_inner(self):
 		return self.__INetlist
-
 
 
 	def Activate(self) -> None:
@@ -10697,6 +12551,26 @@ class CNetlist:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Netlists
 class CNetlists:
@@ -10706,7 +12580,6 @@ class CNetlists:
 
 	def __get_inner(self):
 		return self.__INetlists
-
 
 
 	def Add(self, Name: str) -> CNetlist:
@@ -10790,6 +12663,26 @@ class CNetlists:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Node
 class CNode:
@@ -10799,7 +12692,6 @@ class CNode:
 
 	def __get_inner(self):
 		return self.__INode
-
 
 
 
@@ -10865,6 +12757,26 @@ class CNode:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Nodes
 class CNodes:
@@ -10874,7 +12786,6 @@ class CNodes:
 
 	def __get_inner(self):
 		return self.__INodes
-
 
 
 
@@ -10928,6 +12839,26 @@ class CNodes:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # OptGoals
 class COptGoals:
@@ -10937,7 +12868,6 @@ class COptGoals:
 
 	def __get_inner(self):
 		return self.__IOptGoals
-
 
 
 	def Remove(self, Index) -> bool:
@@ -11012,6 +12942,26 @@ class COptGoals:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Parameter
 class CParameter:
@@ -11021,7 +12971,6 @@ class CParameter:
 
 	def __get_inner(self):
 		return self.__IParameter
-
 
 
 
@@ -11290,6 +13239,26 @@ class CParameter:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Parameters
 class CParameters:
@@ -11299,7 +13268,6 @@ class CParameters:
 
 	def __get_inner(self):
 		return self.__IParameters
-
 
 
 
@@ -11353,6 +13321,26 @@ class CParameters:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ParameterDefinition
 class CParameterDefinition:
@@ -11362,7 +13350,6 @@ class CParameterDefinition:
 
 	def __get_inner(self):
 		return self.__IParameterDefinition
-
 
 
 
@@ -11410,6 +13397,26 @@ class CParameterDefinition:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ParameterDefinitions
 class CParameterDefinitions:
@@ -11419,7 +13426,6 @@ class CParameterDefinitions:
 
 	def __get_inner(self):
 		return self.__IParameterDefinitions
-
 
 
 
@@ -11473,6 +13479,26 @@ class CParameterDefinitions:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ParameterFrame
 class CParameterFrame:
@@ -11482,7 +13508,6 @@ class CParameterFrame:
 
 	def __get_inner(self):
 		return self.__IParameterFrame
-
 
 
 	def UpdateSize(self) -> None:
@@ -11564,6 +13589,26 @@ class CParameterFrame:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayoutParameterFrame
 class CLayoutParameterFrame:
@@ -11573,7 +13618,6 @@ class CLayoutParameterFrame:
 
 	def __get_inner(self):
 		return self.__ILayoutParameterFrame
-
 
 
 	def UpdateSize(self) -> None:
@@ -11667,6 +13711,26 @@ class CLayoutParameterFrame:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessLibrary
 class CProcessLibrary:
@@ -11676,7 +13740,6 @@ class CProcessLibrary:
 
 	def __get_inner(self):
 		return self.__IProcessLibrary
-
 
 
 	def ReloadXml(self, NewXmlFile: str = "") -> bool:
@@ -11734,6 +13797,26 @@ class CProcessLibrary:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessLibraries
 class CProcessLibraries:
@@ -11743,7 +13826,6 @@ class CProcessLibraries:
 
 	def __get_inner(self):
 		return self.__IProcessLibraries
-
 
 
 	def AddLibrary(self, Name: str, IniFilePath: str) -> bool:
@@ -11812,6 +13894,26 @@ class CProcessLibraries:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessLibraryInfo
 class CProcessLibraryInfo:
@@ -11821,7 +13923,6 @@ class CProcessLibraryInfo:
 
 	def __get_inner(self):
 		return self.__IProcessLibraryInfo
-
 
 
 
@@ -11846,6 +13947,26 @@ class CProcessLibraryInfo:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessLibraryInfos
 class CProcessLibraryInfos:
@@ -11855,7 +13976,6 @@ class CProcessLibraryInfos:
 
 	def __get_inner(self):
 		return self.__IProcessLibraryInfos
-
 
 
 
@@ -11909,6 +14029,26 @@ class CProcessLibraryInfos:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Property
 class CProperty:
@@ -11918,7 +14058,6 @@ class CProperty:
 
 	def __get_inner(self):
 		return self.__IProperty
-
 
 
 
@@ -11961,6 +14100,26 @@ class CProperty:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Properties
 class CProperties:
@@ -11970,7 +14129,6 @@ class CProperties:
 
 	def __get_inner(self):
 		return self.__IProperties
-
 
 
 	def Add(self, Name: str, Value, Attributes: int = 0) -> CProperty:
@@ -12039,6 +14197,26 @@ class CProperties:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # TestPoint
 class CTestPoint:
@@ -12048,7 +14226,6 @@ class CTestPoint:
 
 	def __get_inner(self):
 		return self.__ITestPoint
-
 
 
 	def IsFlagSet(self, flag: mwTestPointFlags) -> bool:
@@ -12096,6 +14273,26 @@ class CTestPoint:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # TestPoints
 class CTestPoints:
@@ -12105,7 +14302,6 @@ class CTestPoints:
 
 	def __get_inner(self):
 		return self.__ITestPoints
-
 
 
 
@@ -12159,6 +14355,26 @@ class CTestPoints:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Schematic
 class CSchematic:
@@ -12168,7 +14384,6 @@ class CSchematic:
 
 	def __get_inner(self):
 		return self.__ISchematic
-
 
 
 	def CopyToClipboard(self) -> None:
@@ -12579,6 +14794,26 @@ class CSchematic:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Schematics
 class CSchematics:
@@ -12588,7 +14823,6 @@ class CSchematics:
 
 	def __get_inner(self):
 		return self.__ISchematics
-
 
 
 	def Add(self, Name: str) -> CSchematic:
@@ -12684,6 +14918,26 @@ class CSchematics:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Subcircuits
 class CSubcircuits:
@@ -12693,7 +14947,6 @@ class CSubcircuits:
 
 	def __get_inner(self):
 		return self.__ISubcircuits
-
 
 
 	def Add(self, SubcircuitName: str, x: int, y: int, RotationAngle: int = 0, Flipped: bool = 0, Symbol: str = "", GndType: mwSubcktGroundType = 0) -> CElement:
@@ -12757,6 +15010,26 @@ class CSubcircuits:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Ports
 class CPorts:
@@ -12766,7 +15039,6 @@ class CPorts:
 
 	def __get_inner(self):
 		return self.__IPorts
-
 
 
 
@@ -12820,6 +15092,26 @@ class CPorts:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ElectricalNets
 class CElectricalNets:
@@ -12829,7 +15121,6 @@ class CElectricalNets:
 
 	def __get_inner(self):
 		return self.__IElectricalNets
-
 
 
 
@@ -12883,6 +15174,26 @@ class CElectricalNets:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # NamedConnectors
 class CNamedConnectors:
@@ -12892,7 +15203,6 @@ class CNamedConnectors:
 
 	def __get_inner(self):
 		return self.__INamedConnectors
-
 
 
 
@@ -12946,6 +15256,26 @@ class CNamedConnectors:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SymbolFile
 class CSymbolFile:
@@ -12955,7 +15285,6 @@ class CSymbolFile:
 
 	def __get_inner(self):
 		return self.__ISymbolFile
-
 
 
 	def Reload(self) -> None:
@@ -12989,6 +15318,26 @@ class CSymbolFile:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SymbolFiles
 class CSymbolFiles:
@@ -12998,7 +15347,6 @@ class CSymbolFiles:
 
 	def __get_inner(self):
 		return self.__ISymbolFiles
-
 
 
 	def Remove(self, Index) -> bool:
@@ -13062,6 +15410,26 @@ class CSymbolFiles:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SymbolNode
 class CSymbolNode:
@@ -13071,7 +15439,6 @@ class CSymbolNode:
 
 	def __get_inner(self):
 		return self.__ISymbolNode
-
 
 
 
@@ -13132,6 +15499,26 @@ class CSymbolNode:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SymbolNodes
 class CSymbolNodes:
@@ -13141,7 +15528,6 @@ class CSymbolNodes:
 
 	def __get_inner(self):
 		return self.__ISymbolNodes
-
 
 
 
@@ -13195,6 +15581,26 @@ class CSymbolNodes:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SymbolShape
 class CSymbolShape:
@@ -13204,7 +15610,6 @@ class CSymbolShape:
 
 	def __get_inner(self):
 		return self.__ISymbolShape
-
 
 
 
@@ -13235,6 +15640,26 @@ class CSymbolShape:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SymbolShapes
 class CSymbolShapes:
@@ -13244,7 +15669,6 @@ class CSymbolShapes:
 
 	def __get_inner(self):
 		return self.__ISymbolShapes
-
 
 
 
@@ -13298,6 +15722,26 @@ class CSymbolShapes:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SymbolRecord
 class CSymbolRecord:
@@ -13307,7 +15751,6 @@ class CSymbolRecord:
 
 	def __get_inner(self):
 		return self.__ISymbolRecord
-
 
 
 	def AddArc(self, Left: int, Top: int, Right: int, Bottom: int, xStart: int, yStart: int, xEnd: int, yEnd: int) -> CSymbolShape:
@@ -13422,6 +15865,26 @@ class CSymbolRecord:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Symbol
 class CSymbol:
@@ -13431,7 +15894,6 @@ class CSymbol:
 
 	def __get_inner(self):
 		return self.__ISymbol
-
 
 
 	def Delete(self) -> bool:
@@ -13533,6 +15995,26 @@ class CSymbol:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Symbols
 class CSymbols:
@@ -13542,7 +16024,6 @@ class CSymbols:
 
 	def __get_inner(self):
 		return self.__ISymbols
-
 
 
 	def SaveToFile(self, Filename: str) -> None:
@@ -13600,6 +16081,11 @@ class CSymbols:
 		return CSymbol(self.__ISymbols.Copy(Index, SymbolName))
 
 
+	def Reload(self, SymbolFilePath: str) -> bool:
+		"""Reloads the object from its original source."""
+		return self.__ISymbols.Reload(SymbolFilePath)
+
+
 
 	@property
 	def Count(self) -> int:
@@ -13651,6 +16137,26 @@ class CSymbols:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DefaultValue
 class CDefaultValue:
@@ -13660,7 +16166,6 @@ class CDefaultValue:
 
 	def __get_inner(self):
 		return self.__IDefaultValue
-
 
 
 
@@ -13697,6 +16202,26 @@ class CDefaultValue:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DefaultValues
 class CDefaultValues:
@@ -13706,7 +16231,6 @@ class CDefaultValues:
 
 	def __get_inner(self):
 		return self.__IDefaultValues
-
 
 
 
@@ -13766,6 +16290,26 @@ class CDefaultValues:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Unit
 class CUnit:
@@ -13775,7 +16319,6 @@ class CUnit:
 
 	def __get_inner(self):
 		return self.__IUnit
-
 
 
 
@@ -13824,6 +16367,26 @@ class CUnit:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Units
 class CUnits:
@@ -13833,7 +16396,6 @@ class CUnits:
 
 	def __get_inner(self):
 		return self.__IUnits
-
 
 
 	def SetAllToBaseUnits(self) -> bool:
@@ -13904,6 +16466,26 @@ class CUnits:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SweepValue
 class CSweepValue:
@@ -13913,7 +16495,6 @@ class CSweepValue:
 
 	def __get_inner(self):
 		return self.__ISweepValue
-
 
 
 
@@ -13932,6 +16513,26 @@ class CSweepValue:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SweepValues
 class CSweepValues:
@@ -13941,7 +16542,6 @@ class CSweepValues:
 
 	def __get_inner(self):
 		return self.__ISweepValues
-
 
 
 
@@ -13995,6 +16595,26 @@ class CSweepValues:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SweepVariable
 class CSweepVariable:
@@ -14004,7 +16624,6 @@ class CSweepVariable:
 
 	def __get_inner(self):
 		return self.__ISweepVariable
-
 
 
 
@@ -14029,6 +16648,26 @@ class CSweepVariable:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SweepVariables
 class CSweepVariables:
@@ -14038,7 +16677,6 @@ class CSweepVariables:
 
 	def __get_inner(self):
 		return self.__ISweepVariables
-
 
 
 
@@ -14092,6 +16730,26 @@ class CSweepVariables:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Window
 class CWindow:
@@ -14101,7 +16759,6 @@ class CWindow:
 
 	def __get_inner(self):
 		return self.__IWindow
-
 
 
 	def Close(self) -> None:
@@ -14230,6 +16887,26 @@ class CWindow:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Windows
 class CWindows:
@@ -14239,7 +16916,6 @@ class CWindows:
 
 	def __get_inner(self):
 		return self.__IWindows
-
 
 
 	def Add(self, hWnd: int) -> CWindow:
@@ -14313,6 +16989,26 @@ class CWindows:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # WireNet
 class CWireNet:
@@ -14322,7 +17018,6 @@ class CWireNet:
 
 	def __get_inner(self):
 		return self.__IWireNet
-
 
 
 	def HighlightNet(self, bHighlightOn: bool, Color: int = 255) -> bool:
@@ -14358,6 +17053,26 @@ class CWireNet:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # WireSegment
 class CWireSegment:
@@ -14367,7 +17082,6 @@ class CWireSegment:
 
 	def __get_inner(self):
 		return self.__IWireSegment
-
 
 
 	def AddBusNetName(self, Name: str, x: int, y: int, Priority: int = 0, Flags: int = 0) -> CBusNetName:
@@ -14485,6 +17199,26 @@ class CWireSegment:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Wires
 class CWires:
@@ -14494,7 +17228,6 @@ class CWires:
 
 	def __get_inner(self):
 		return self.__IWires
-
 
 
 	def Add(self, x1: int, y1: int, x2: int, y2: int) -> CWireSegment:
@@ -14573,6 +17306,26 @@ class CWires:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SelectedWires
 class CSelectedWires:
@@ -14582,7 +17335,6 @@ class CSelectedWires:
 
 	def __get_inner(self):
 		return self.__ISelectedWires
-
 
 
 	def Add(self, WireSegment: CWireSegment) -> bool:
@@ -14656,6 +17408,26 @@ class CSelectedWires:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # YieldGoals
 class CYieldGoals:
@@ -14665,7 +17437,6 @@ class CYieldGoals:
 
 	def __get_inner(self):
 		return self.__IYieldGoals
-
 
 
 	def Add(self, CircuitName: str, MeasName: str, GoalType: mwYieldGoalType, xStart: float, xStop: float, xUnit: mwUnitType, yStart: float, yStop: float, yUnit: mwUnitType) -> CGoal:
@@ -14740,6 +17511,26 @@ class CYieldGoals:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Option
 class COption:
@@ -14749,7 +17540,6 @@ class COption:
 
 	def __get_inner(self):
 		return self.__IOption
-
 
 
 
@@ -14804,6 +17594,26 @@ class COption:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Options
 class COptions:
@@ -14813,7 +17623,6 @@ class COptions:
 
 	def __get_inner(self):
 		return self.__IOptions
-
 
 
 
@@ -14867,6 +17676,26 @@ class COptions:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # OptionSubSet
 class COptionSubSet:
@@ -14876,7 +17705,6 @@ class COptionSubSet:
 
 	def __get_inner(self):
 		return self.__IOptionSubSet
-
 
 
 
@@ -14907,6 +17735,26 @@ class COptionSubSet:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # OptionSubSets
 class COptionSubSets:
@@ -14916,7 +17764,6 @@ class COptionSubSets:
 
 	def __get_inner(self):
 		return self.__IOptionSubSets
-
 
 
 
@@ -14970,6 +17817,26 @@ class COptionSubSets:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # OptionSet
 class COptionSet:
@@ -14979,7 +17846,6 @@ class COptionSet:
 
 	def __get_inner(self):
 		return self.__IOptionSet
-
 
 
 
@@ -15016,6 +17882,26 @@ class COptionSet:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # OptionSets
 class COptionSets:
@@ -15025,7 +17911,6 @@ class COptionSets:
 
 	def __get_inner(self):
 		return self.__IOptionSets
-
 
 
 
@@ -15079,6 +17964,26 @@ class COptionSets:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SystemDiagram
 class CSystemDiagram:
@@ -15088,7 +17993,6 @@ class CSystemDiagram:
 
 	def __get_inner(self):
 		return self.__ISystemDiagram
-
 
 
 	def CopyToClipboard(self) -> None:
@@ -15453,6 +18357,26 @@ class CSystemDiagram:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SystemDiagrams
 class CSystemDiagrams:
@@ -15462,7 +18386,6 @@ class CSystemDiagrams:
 
 	def __get_inner(self):
 		return self.__ISystemDiagrams
-
 
 
 	def Add(self, Name: str) -> CSystemDiagram:
@@ -15564,6 +18487,26 @@ class CSystemDiagrams:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DesignNote
 class CDesignNote:
@@ -15573,7 +18516,6 @@ class CDesignNote:
 
 	def __get_inner(self):
 		return self.__IDesignNote
-
 
 
 	def CopyToClipboard(self) -> None:
@@ -15669,6 +18611,26 @@ class CDesignNote:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DesignNotes
 class CDesignNotes:
@@ -15678,7 +18640,6 @@ class CDesignNotes:
 
 	def __get_inner(self):
 		return self.__IDesignNotes
-
 
 
 
@@ -15732,6 +18693,26 @@ class CDesignNotes:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Simulator
 class CSimulator:
@@ -15741,7 +18722,6 @@ class CSimulator:
 
 	def __get_inner(self):
 		return self.__ISimulator
-
 
 
 	def Analyze(self) -> None:
@@ -15800,6 +18780,26 @@ class CSimulator:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Attribute
 class CAttribute:
@@ -15809,7 +18809,6 @@ class CAttribute:
 
 	def __get_inner(self):
 		return self.__IAttribute
-
 
 
 
@@ -15852,6 +18851,26 @@ class CAttribute:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Attributes
 class CAttributes:
@@ -15861,7 +18880,6 @@ class CAttributes:
 
 	def __get_inner(self):
 		return self.__IAttributes
-
 
 
 
@@ -15915,6 +18933,26 @@ class CAttributes:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Conductor
 class CConductor:
@@ -15927,9 +18965,28 @@ class CConductor:
 
 
 
-
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
+
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
 
 
 # Conductors
@@ -15942,7 +18999,6 @@ class CConductors:
 		return self.__IConductors
 
 
-
 	def GetUniqueName(self, baseName: str) -> str:
 		"""Returns a unique name to be used when adding objects to the collection."""
 		return self.__IConductors.GetUniqueName(baseName)
@@ -15951,6 +19007,26 @@ class CConductors:
 
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
+
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
 
 
 # BoundaryModel
@@ -15961,7 +19037,6 @@ class CBoundaryModel:
 
 	def __get_inner(self):
 		return self.__IBoundaryModel
-
 
 
 
@@ -15980,6 +19055,26 @@ class CBoundaryModel:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Boundary
 class CBoundary:
@@ -15989,7 +19084,6 @@ class CBoundary:
 
 	def __get_inner(self):
 		return self.__IBoundary
-
 
 
 
@@ -16020,6 +19114,26 @@ class CBoundary:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayoutParameter
 class CLayoutParameter:
@@ -16029,7 +19143,6 @@ class CLayoutParameter:
 
 	def __get_inner(self):
 		return self.__ILayoutParameter
-
 
 
 
@@ -16114,6 +19227,26 @@ class CLayoutParameter:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayoutParameters
 class CLayoutParameters:
@@ -16123,7 +19256,6 @@ class CLayoutParameters:
 
 	def __get_inner(self):
 		return self.__ILayoutParameters
-
 
 
 	def Add(self, Name: str, Value: float, UnitType: mwUnitType = 17) -> CLayoutParameter:
@@ -16208,6 +19340,26 @@ class CLayoutParameters:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ObjectName
 class CObjectName:
@@ -16217,7 +19369,6 @@ class CObjectName:
 
 	def __get_inner(self):
 		return self.__IObjectName
-
 
 
 
@@ -16236,6 +19387,26 @@ class CObjectName:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ObjectNames
 class CObjectNames:
@@ -16245,7 +19416,6 @@ class CObjectNames:
 
 	def __get_inner(self):
 		return self.__IObjectNames
-
 
 
 
@@ -16299,6 +19469,26 @@ class CObjectNames:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ObjectNameMapping
 class CObjectNameMapping:
@@ -16308,7 +19498,6 @@ class CObjectNameMapping:
 
 	def __get_inner(self):
 		return self.__IObjectNameMapping
-
 
 
 
@@ -16339,6 +19528,26 @@ class CObjectNameMapping:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ObjectNameMappings
 class CObjectNameMappings:
@@ -16348,7 +19557,6 @@ class CObjectNameMappings:
 
 	def __get_inner(self):
 		return self.__IObjectNameMappings
-
 
 
 	def Add(self, FromName: str, ToName: str) -> CObjectNameMapping:
@@ -16417,6 +19625,26 @@ class CObjectNameMappings:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ComplexNumber
 class CComplexNumber:
@@ -16426,7 +19654,6 @@ class CComplexNumber:
 
 	def __get_inner(self):
 		return self.__IComplexNumber
-
 
 
 
@@ -16469,6 +19696,26 @@ class CComplexNumber:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ComplexNumbers
 class CComplexNumbers:
@@ -16478,7 +19725,6 @@ class CComplexNumbers:
 
 	def __get_inner(self):
 		return self.__IComplexNumbers
-
 
 
 	def Add(self, realPart: float, imagPart: float) -> CComplexNumber:
@@ -16547,6 +19793,26 @@ class CComplexNumbers:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Offset
 class COffset:
@@ -16556,7 +19822,6 @@ class COffset:
 
 	def __get_inner(self):
 		return self.__IOffset
-
 
 
 
@@ -16587,6 +19852,26 @@ class COffset:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Offsets
 class COffsets:
@@ -16596,7 +19881,6 @@ class COffsets:
 
 	def __get_inner(self):
 		return self.__IOffsets
-
 
 
 
@@ -16650,6 +19934,26 @@ class COffsets:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # point
 class Cpoint:
@@ -16659,7 +19963,6 @@ class Cpoint:
 
 	def __get_inner(self):
 		return self.__IPoint
-
 
 
 
@@ -16690,6 +19993,26 @@ class Cpoint:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Points
 class CPoints:
@@ -16699,7 +20022,6 @@ class CPoints:
 
 	def __get_inner(self):
 		return self.__IPoints
-
 
 
 
@@ -16753,6 +20075,26 @@ class CPoints:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Size
 class CSize:
@@ -16762,7 +20104,6 @@ class CSize:
 
 	def __get_inner(self):
 		return self.__ISize
-
 
 
 
@@ -16793,6 +20134,26 @@ class CSize:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Sizes
 class CSizes:
@@ -16802,7 +20163,6 @@ class CSizes:
 
 	def __get_inner(self):
 		return self.__ISizes
-
 
 
 
@@ -16856,6 +20216,26 @@ class CSizes:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Vertex
 class CVertex:
@@ -16865,7 +20245,6 @@ class CVertex:
 
 	def __get_inner(self):
 		return self.__IVertex
-
 
 
 
@@ -16896,6 +20275,26 @@ class CVertex:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Vertices
 class CVertices:
@@ -16905,7 +20304,6 @@ class CVertices:
 
 	def __get_inner(self):
 		return self.__IVertices
-
 
 
 	def Add(self, x: float, y: float) -> CVertex:
@@ -16986,6 +20384,26 @@ class CVertices:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Vertex3D
 class CVertex3D:
@@ -16995,7 +20413,6 @@ class CVertex3D:
 
 	def __get_inner(self):
 		return self.__IVertex3D
-
 
 
 
@@ -17038,6 +20455,26 @@ class CVertex3D:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Vector
 class CVector:
@@ -17047,7 +20484,6 @@ class CVector:
 
 	def __get_inner(self):
 		return self.__IVector
-
 
 
 
@@ -17078,6 +20514,26 @@ class CVector:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Vectors
 class CVectors:
@@ -17087,7 +20543,6 @@ class CVectors:
 
 	def __get_inner(self):
 		return self.__IVectors
-
 
 
 
@@ -17141,6 +20596,26 @@ class CVectors:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LineSegment
 class CLineSegment:
@@ -17150,7 +20625,6 @@ class CLineSegment:
 
 	def __get_inner(self):
 		return self.__ILineSegment
-
 
 
 
@@ -17169,6 +20643,26 @@ class CLineSegment:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LineSegments
 class CLineSegments:
@@ -17178,7 +20672,6 @@ class CLineSegments:
 
 	def __get_inner(self):
 		return self.__ILineSegments
-
 
 
 	def Add(self, x1: float, y1: float, x2: float, y2: float) -> CLineSegment:
@@ -17247,6 +20740,26 @@ class CLineSegments:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # CellInstance
 class CCellInstance:
@@ -17256,7 +20769,6 @@ class CCellInstance:
 
 	def __get_inner(self):
 		return self.__ICellInstance
-
 
 
 	def Delete(self) -> bool:
@@ -17328,6 +20840,26 @@ class CCellInstance:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # CellInstances
 class CCellInstances:
@@ -17337,7 +20869,6 @@ class CCellInstances:
 
 	def __get_inner(self):
 		return self.__ICellInstances
-
 
 
 	def Add(self, LibraryName: str, CellName: str, x: float, y: float, CCWRotation: float = 0, Flipped: bool = 0) -> CCellInstance:
@@ -17401,6 +20932,26 @@ class CCellInstances:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Cell
 class CCell:
@@ -17410,7 +20961,6 @@ class CCell:
 
 	def __get_inner(self):
 		return self.__ICell
-
 
 
 	def Activate(self) -> None:
@@ -17517,6 +21067,26 @@ class CCell:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Cells
 class CCells:
@@ -17526,7 +21096,6 @@ class CCells:
 
 	def __get_inner(self):
 		return self.__ICells
-
 
 
 	def Add(self, CellName: str) -> CCell:
@@ -17600,6 +21169,26 @@ class CCells:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # CellLibrary
 class CCellLibrary:
@@ -17609,7 +21198,6 @@ class CCellLibrary:
 
 	def __get_inner(self):
 		return self.__ICellLibrary
-
 
 
 	def SaveAs(self, Filename: str) -> None:
@@ -17831,6 +21419,26 @@ class CCellLibrary:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # CellLibraries
 class CCellLibraries:
@@ -17840,7 +21448,6 @@ class CCellLibraries:
 
 	def __get_inner(self):
 		return self.__ICellLibraries
-
 
 
 	def Add(self, CellLibraryName: str, Type: mwCellLibraryType) -> CCellLibrary:
@@ -17924,6 +21531,26 @@ class CCellLibraries:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EMLayerMapEntry
 class CEMLayerMapEntry:
@@ -17933,7 +21560,6 @@ class CEMLayerMapEntry:
 
 	def __get_inner(self):
 		return self.__IEMLayerMapEntry
-
 
 
 
@@ -17994,6 +21620,26 @@ class CEMLayerMapEntry:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EMLayerMapEntries
 class CEMLayerMapEntries:
@@ -18003,7 +21649,6 @@ class CEMLayerMapEntries:
 
 	def __get_inner(self):
 		return self.__IEMLayerMapEntries
-
 
 
 
@@ -18057,6 +21702,26 @@ class CEMLayerMapEntries:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EMLayerMapping
 class CEMLayerMapping:
@@ -18066,7 +21731,6 @@ class CEMLayerMapping:
 
 	def __get_inner(self):
 		return self.__IEMLayerMapping
-
 
 
 
@@ -18097,6 +21761,26 @@ class CEMLayerMapping:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EMLayerMappings
 class CEMLayerMappings:
@@ -18106,7 +21790,6 @@ class CEMLayerMappings:
 
 	def __get_inner(self):
 		return self.__IEMLayerMappings
-
 
 
 	def Add(self, Name: str) -> CEMLayerMapping:
@@ -18185,6 +21868,26 @@ class CEMLayerMappings:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayerMapEntry
 class CLayerMapEntry:
@@ -18194,7 +21897,6 @@ class CLayerMapEntry:
 
 	def __get_inner(self):
 		return self.__ILayerMapEntry
-
 
 
 
@@ -18219,6 +21921,26 @@ class CLayerMapEntry:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayerMapEntries
 class CLayerMapEntries:
@@ -18228,7 +21950,6 @@ class CLayerMapEntries:
 
 	def __get_inner(self):
 		return self.__ILayerMapEntries
-
 
 
 	def Add(self, ModelLayer: str, DrawingLayer: str) -> CLayerMapEntry:
@@ -18297,6 +22018,26 @@ class CLayerMapEntries:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayerMapping
 class CLayerMapping:
@@ -18306,7 +22047,6 @@ class CLayerMapping:
 
 	def __get_inner(self):
 		return self.__ILayerMapping
-
 
 
 
@@ -18331,6 +22071,26 @@ class CLayerMapping:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayerMappings
 class CLayerMappings:
@@ -18340,7 +22100,6 @@ class CLayerMappings:
 
 	def __get_inner(self):
 		return self.__ILayerMappings
-
 
 
 	def Add(self, Name: str) -> CLayerMapping:
@@ -18414,6 +22173,26 @@ class CLayerMappings:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayerExportEntry
 class CLayerExportEntry:
@@ -18423,7 +22202,6 @@ class CLayerExportEntry:
 
 	def __get_inner(self):
 		return self.__ILayerExportEntry
-
 
 
 
@@ -18490,6 +22268,26 @@ class CLayerExportEntry:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayerExportEntries
 class CLayerExportEntries:
@@ -18499,7 +22297,6 @@ class CLayerExportEntries:
 
 	def __get_inner(self):
 		return self.__ILayerExportEntries
-
 
 
 
@@ -18553,6 +22350,26 @@ class CLayerExportEntries:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayerExportMapping
 class CLayerExportMapping:
@@ -18562,7 +22379,6 @@ class CLayerExportMapping:
 
 	def __get_inner(self):
 		return self.__ILayerExportMapping
-
 
 
 
@@ -18599,6 +22415,26 @@ class CLayerExportMapping:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayerExportMappings
 class CLayerExportMappings:
@@ -18608,7 +22444,6 @@ class CLayerExportMappings:
 
 	def __get_inner(self):
 		return self.__ILayerExportMappings
-
 
 
 	def Add(self, Name: str, Type: mwLayoutExportFormat) -> CLayerExportMapping:
@@ -18687,6 +22522,26 @@ class CLayerExportMappings:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayerConfiguration
 class CLayerConfiguration:
@@ -18696,7 +22551,6 @@ class CLayerConfiguration:
 
 	def __get_inner(self):
 		return self.__ILayerConfiguration
-
 
 
 
@@ -18715,6 +22569,26 @@ class CLayerConfiguration:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayerConfigurations
 class CLayerConfigurations:
@@ -18724,7 +22598,6 @@ class CLayerConfigurations:
 
 	def __get_inner(self):
 		return self.__ILayerConfigurations
-
 
 
 	def Add(self, Name: str) -> CLayerConfiguration:
@@ -18803,6 +22676,26 @@ class CLayerConfigurations:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DrawingLayer
 class CDrawingLayer:
@@ -18812,7 +22705,6 @@ class CDrawingLayer:
 
 	def __get_inner(self):
 		return self.__IDrawingLayer
-
 
 
 	def IsFlagSet(self, __MIDL__IDrawingLayer0000: mwDrawLayerFlags) -> bool:
@@ -19076,6 +22968,26 @@ class CDrawingLayer:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DrawingLayers
 class CDrawingLayers:
@@ -19085,7 +22997,6 @@ class CDrawingLayers:
 
 	def __get_inner(self):
 		return self.__IDrawingLayers
-
 
 
 	def Remove(self, Name: str) -> bool:
@@ -19231,6 +23142,26 @@ class CDrawingLayers:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # FillPattern
 class CFillPattern:
@@ -19240,7 +23171,6 @@ class CFillPattern:
 
 	def __get_inner(self):
 		return self.__IFillPattern
-
 
 
 	def SetPattern(self, Width: int, Height: int, bitString: str) -> bool:
@@ -19288,6 +23218,26 @@ class CFillPattern:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # FillPatterns
 class CFillPatterns:
@@ -19297,7 +23247,6 @@ class CFillPatterns:
 
 	def __get_inner(self):
 		return self.__IFillPatterns
-
 
 
 	def Add(self, Name: str, Width: int, Height: int, bitString: str) -> CFillPattern:
@@ -19313,6 +23262,11 @@ class CFillPatterns:
 	def Clear(self) -> bool:
 		"""Removes all objects in a collection."""
 		return self.__IFillPatterns.Clear()
+
+
+	def Copy(self, Index, Name: str) -> CFillPattern:
+		"""Copies the object to the system clipboard."""
+		return CFillPattern(self.__IFillPatterns.Copy(Index, Name))
 
 
 
@@ -19366,6 +23320,26 @@ class CFillPatterns:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayerSetup
 class CLayerSetup:
@@ -19375,7 +23349,6 @@ class CLayerSetup:
 
 	def __get_inner(self):
 		return self.__ILayerSetup
-
 
 
 
@@ -19424,6 +23397,26 @@ class CLayerSetup:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DrillTool
 class CDrillTool:
@@ -19433,7 +23426,6 @@ class CDrillTool:
 
 	def __get_inner(self):
 		return self.__IDrillTool
-
 
 
 
@@ -19476,6 +23468,26 @@ class CDrillTool:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DrillTools
 class CDrillTools:
@@ -19485,7 +23497,6 @@ class CDrillTools:
 
 	def __get_inner(self):
 		return self.__IDrillTools
-
 
 
 	def Add(self, Name: str, Number: int = 1, Radius: float = 9.99999974737875E-05) -> CDrillTool:
@@ -19554,6 +23565,26 @@ class CDrillTools:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ModifierDefDrawingObjects
 class CModifierDefDrawingObjects:
@@ -19563,7 +23594,6 @@ class CModifierDefDrawingObjects:
 
 	def __get_inner(self):
 		return self.__IModifierDefDrawingObjects
-
 
 
 	def Add(self, pObj: CDrawingObject) -> bool:
@@ -19632,6 +23662,26 @@ class CModifierDefDrawingObjects:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ModifierDefRecord
 class CModifierDefRecord:
@@ -19641,7 +23691,6 @@ class CModifierDefRecord:
 
 	def __get_inner(self):
 		return self.__IModifierDefRecord
-
 
 
 
@@ -19702,6 +23751,26 @@ class CModifierDefRecord:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ModifierDefRecords
 class CModifierDefRecords:
@@ -19711,7 +23780,6 @@ class CModifierDefRecords:
 
 	def __get_inner(self):
 		return self.__IModifierDefRecords
-
 
 
 
@@ -19765,6 +23833,26 @@ class CModifierDefRecords:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ShapeModifierRecord
 class CShapeModifierRecord:
@@ -19774,7 +23862,6 @@ class CShapeModifierRecord:
 
 	def __get_inner(self):
 		return self.__IShapeModifierRecord
-
 
 
 
@@ -19805,6 +23892,26 @@ class CShapeModifierRecord:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ShapeModifierRecords
 class CShapeModifierRecords:
@@ -19814,7 +23921,6 @@ class CShapeModifierRecords:
 
 	def __get_inner(self):
 		return self.__IShapeModifierRecords
-
 
 
 
@@ -19868,6 +23974,26 @@ class CShapeModifierRecords:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ShapeModifier
 class CShapeModifier:
@@ -19877,7 +24003,6 @@ class CShapeModifier:
 
 	def __get_inner(self):
 		return self.__IShapeModifier
-
 
 
 
@@ -20026,6 +24151,26 @@ class CShapeModifier:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ShapeModifiers
 class CShapeModifiers:
@@ -20035,7 +24180,6 @@ class CShapeModifiers:
 
 	def __get_inner(self):
 		return self.__IShapeModifiers
-
 
 
 	def CreateModifierDefRecord(self, Type: str) -> CModifierDefRecord:
@@ -20109,6 +24253,26 @@ class CShapeModifiers:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DesignRule
 class CDesignRule:
@@ -20118,7 +24282,6 @@ class CDesignRule:
 
 	def __get_inner(self):
 		return self.__IDesignRule
-
 
 
 
@@ -20155,6 +24318,26 @@ class CDesignRule:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DesignRules
 class CDesignRules:
@@ -20164,7 +24347,6 @@ class CDesignRules:
 
 	def __get_inner(self):
 		return self.__IDesignRules
-
 
 
 	def Add(self, Rule: str, Enable: bool = -1) -> CDesignRule:
@@ -20253,6 +24435,26 @@ class CDesignRules:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DesignRuleError
 class CDesignRuleError:
@@ -20265,11 +24467,16 @@ class CDesignRuleError:
 
 
 
-
 	@property
 	def Boundary(self) -> CBoundary:
 		"""Returns a reference to a Boundary object."""
 		return CBoundary(self.__IDesignRuleError.Boundary)
+
+
+	@property
+	def CategoryText(self) -> str:
+		"""Returns the category string associated with the DesignRuleError object."""
+		return self.__IDesignRuleError.CategoryText
 
 
 	@property
@@ -20291,9 +24498,9 @@ class CDesignRuleError:
 
 
 	@property
-	def Message(self) -> str:
+	def MessageText(self) -> str:
 		"""Returns the message string associated with the DesignRuleError object."""
-		return self.__IDesignRuleError.Message
+		return self.__IDesignRuleError.MessageText
 
 
 	@property
@@ -20323,6 +24530,26 @@ class CDesignRuleError:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DesignRuleErrors
 class CDesignRuleErrors:
@@ -20332,7 +24559,6 @@ class CDesignRuleErrors:
 
 	def __get_inner(self):
 		return self.__IDesignRuleErrors
-
 
 
 	def Add(self, ErrorCategory: str, ErrorMessage: str, ErrorType: mwDesignRuleType, ErrorState: mwDesignRuleState, XYPoints) -> CDesignRuleError:
@@ -20411,6 +24637,26 @@ class CDesignRuleErrors:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LVSError
 class CLVSError:
@@ -20420,7 +24666,6 @@ class CLVSError:
 
 	def __get_inner(self):
 		return self.__ILVSError
-
 
 
 
@@ -20481,6 +24726,26 @@ class CLVSError:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LVSErrors
 class CLVSErrors:
@@ -20490,7 +24755,6 @@ class CLVSErrors:
 
 	def __get_inner(self):
 		return self.__ILVSErrors
-
 
 
 	def Add(self, ErrorCategory: str, ErrorMessage: str, ErrorState: mwDesignRuleState) -> CLVSError:
@@ -20569,6 +24833,26 @@ class CLVSErrors:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LVSSchemHighlight
 class CLVSSchemHighlight:
@@ -20578,7 +24862,6 @@ class CLVSSchemHighlight:
 
 	def __get_inner(self):
 		return self.__ILVSSchemHighlight
-
 
 
 
@@ -20609,6 +24892,26 @@ class CLVSSchemHighlight:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LVSSchemHighlights
 class CLVSSchemHighlights:
@@ -20618,7 +24921,6 @@ class CLVSSchemHighlights:
 
 	def __get_inner(self):
 		return self.__ILVSSchemHighlights
-
 
 
 	def Add(self, ItemID: str, HighlightLocation: mwLVSHighlightLoc) -> CLVSSchemHighlight:
@@ -20687,6 +24989,26 @@ class CLVSSchemHighlights:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LVSNetHighlight
 class CLVSNetHighlight:
@@ -20696,7 +25018,6 @@ class CLVSNetHighlight:
 
 	def __get_inner(self):
 		return self.__ILVSNetHighlight
-
 
 
 
@@ -20739,6 +25060,26 @@ class CLVSNetHighlight:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LVSNetHighlights
 class CLVSNetHighlights:
@@ -20748,7 +25089,6 @@ class CLVSNetHighlights:
 
 	def __get_inner(self):
 		return self.__ILVSNetHighlights
-
 
 
 	def Add(self, NetlistPath: str, NetlistDisplayName: str, HighlightString: str) -> CLVSNetHighlight:
@@ -20817,6 +25157,26 @@ class CLVSNetHighlights:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DesignRuleChecker
 class CDesignRuleChecker:
@@ -20826,7 +25186,6 @@ class CDesignRuleChecker:
 
 	def __get_inner(self):
 		return self.__IDesignRuleChecker
-
 
 
 	def CreateRuleSet(self) -> CDesignRules:
@@ -20901,6 +25260,26 @@ class CDesignRuleChecker:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayoutVsSchematicChecker
 class CLayoutVsSchematicChecker:
@@ -20910,7 +25289,6 @@ class CLayoutVsSchematicChecker:
 
 	def __get_inner(self):
 		return self.__ILayoutVsSchematicChecker
-
 
 
 	def RunConnectivityCheck(self) -> bool:
@@ -20982,6 +25360,26 @@ class CLayoutVsSchematicChecker:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DRCErrorsWindow
 class CDRCErrorsWindow:
@@ -20991,7 +25389,6 @@ class CDRCErrorsWindow:
 
 	def __get_inner(self):
 		return self.__IDRCErrorsWindow
-
 
 
 
@@ -21010,6 +25407,26 @@ class CDRCErrorsWindow:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LVSErrorsWindow
 class CLVSErrorsWindow:
@@ -21019,7 +25436,6 @@ class CLVSErrorsWindow:
 
 	def __get_inner(self):
 		return self.__ILVSErrorsWindow
-
 
 
 
@@ -21038,6 +25454,26 @@ class CLVSErrorsWindow:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DRCErrorShape
 class CDRCErrorShape:
@@ -21050,7 +25486,6 @@ class CDRCErrorShape:
 
 
 
-
 	@property
 	def Vertices(self) -> CVertices:
 		"""Returns a reference to a collection of Vertex objects."""
@@ -21059,6 +25494,26 @@ class CDRCErrorShape:
 
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
+
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
 
 
 # DRCErrorShapes
@@ -21069,7 +25524,6 @@ class CDRCErrorShapes:
 
 	def __get_inner(self):
 		return self.__IDRCErrorShapes
-
 
 
 	def AddPolygon(self, XYPoints) -> CDRCErrorShape:
@@ -21138,6 +25592,26 @@ class CDRCErrorShapes:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ConnectivityHighlighter
 class CConnectivityHighlighter:
@@ -21147,7 +25621,6 @@ class CConnectivityHighlighter:
 
 	def __get_inner(self):
 		return self.__IConnectivityHighlighter
-
 
 
 	def HighlightAll(self) -> bool:
@@ -21179,6 +25652,26 @@ class CConnectivityHighlighter:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DrawingObject
 class CDrawingObject:
@@ -21188,7 +25681,6 @@ class CDrawingObject:
 
 	def __get_inner(self):
 		return self.__IDrawingObject
-
 
 
 	def Move(self, dx: float, dy: float, CCWRotation: float = 0, Flip: bool = 0, FlipHorizontal: bool = 0, xOrigin: float = 0, yOrigin: float = 0) -> bool:
@@ -21493,6 +25985,26 @@ class CDrawingObject:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DrawingObjects
 class CDrawingObjects:
@@ -21502,7 +26014,6 @@ class CDrawingObjects:
 
 	def __get_inner(self):
 		return self.__IDrawingObjects
-
 
 
 	def AddRectangle(self, x: float, y: float, dx: float, dy: float, LayerName: str = "", UseProcessLayers: bool = 0, LayerMapping: str = "") -> CDrawingObject:
@@ -21709,6 +26220,26 @@ class CDrawingObjects:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # PolygonRecord
 class CPolygonRecord:
@@ -21718,7 +26249,6 @@ class CPolygonRecord:
 
 	def __get_inner(self):
 		return self.__IPolygonRecord
-
 
 
 	def PolygonBegin(self, x1: float, y1: float) -> None:
@@ -21829,6 +26359,26 @@ class CPolygonRecord:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # PolygonRecords
 class CPolygonRecords:
@@ -21838,7 +26388,6 @@ class CPolygonRecords:
 
 	def __get_inner(self):
 		return self.__IPolygonRecords
-
 
 
 	def Add(self, Record: CPolygonRecord) -> bool:
@@ -21907,6 +26456,26 @@ class CPolygonRecords:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # PolygonWriter
 class CPolygonWriter:
@@ -21916,7 +26485,6 @@ class CPolygonWriter:
 
 	def __get_inner(self):
 		return self.__IPolygonWriter
-
 
 
 	def CreatePolygonRecord(self) -> CPolygonRecord:
@@ -22028,6 +26596,26 @@ class CPolygonWriter:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # PathRecord
 class CPathRecord:
@@ -22037,7 +26625,6 @@ class CPathRecord:
 
 	def __get_inner(self):
 		return self.__IPathRecord
-
 
 
 	def PathBegin(self, x1: float, y1: float) -> None:
@@ -22113,6 +26700,26 @@ class CPathRecord:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # PathWriter
 class CPathWriter:
@@ -22122,7 +26729,6 @@ class CPathWriter:
 
 	def __get_inner(self):
 		return self.__IPathWriter
-
 
 
 	def CreatePathRecord(self) -> CPathRecord:
@@ -22267,6 +26873,26 @@ class CPathWriter:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SelectedDrawingObjects
 class CSelectedDrawingObjects:
@@ -22276,7 +26902,6 @@ class CSelectedDrawingObjects:
 
 	def __get_inner(self):
 		return self.__ISelectedDrawingObjects
-
 
 
 	def Add(self, DrawingObject: CDrawingObject) -> bool:
@@ -22386,6 +27011,26 @@ class CSelectedDrawingObjects:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # GroupDrawingObjects
 class CGroupDrawingObjects:
@@ -22395,7 +27040,6 @@ class CGroupDrawingObjects:
 
 	def __get_inner(self):
 		return self.__IGroupDrawingObjects
-
 
 
 	def Add(self, DrawingObject: CDrawingObject) -> bool:
@@ -22459,6 +27103,26 @@ class CGroupDrawingObjects:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ResultDrawingObjects
 class CResultDrawingObjects:
@@ -22468,7 +27132,6 @@ class CResultDrawingObjects:
 
 	def __get_inner(self):
 		return self.__IResultDrawingObjects
-
 
 
 
@@ -22522,6 +27185,26 @@ class CResultDrawingObjects:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ContainerDrawingObjects
 class CContainerDrawingObjects:
@@ -22531,7 +27214,6 @@ class CContainerDrawingObjects:
 
 	def __get_inner(self):
 		return self.__IContainerDrawingObjects
-
 
 
 	def Add(self, DrawingObject: CDrawingObject) -> bool:
@@ -22595,6 +27277,26 @@ class CContainerDrawingObjects:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EMStructureInfo
 class CEMStructureInfo:
@@ -22604,7 +27306,6 @@ class CEMStructureInfo:
 
 	def __get_inner(self):
 		return self.__IEMStructureInfo
-
 
 
 
@@ -22647,6 +27348,26 @@ class CEMStructureInfo:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EMInitializationRecord
 class CEMInitializationRecord:
@@ -22656,7 +27377,6 @@ class CEMInitializationRecord:
 
 	def __get_inner(self):
 		return self.__IEMInitializationRecord
-
 
 
 
@@ -22723,6 +27443,26 @@ class CEMInitializationRecord:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EMStructure
 class CEMStructure:
@@ -22732,7 +27472,6 @@ class CEMStructure:
 
 	def __get_inner(self):
 		return self.__IEMStructure
-
 
 
 	def Export(self, Filename: str) -> None:
@@ -23189,6 +27928,26 @@ class CEMStructure:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EMStructures
 class CEMStructures:
@@ -23198,7 +27957,6 @@ class CEMStructures:
 
 	def __get_inner(self):
 		return self.__IEMStructures
-
 
 
 	def Add(self, StructureName: str) -> CEMStructure:
@@ -23303,6 +28061,26 @@ class CEMStructures:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ExternalEditor
 class CExternalEditor:
@@ -23312,7 +28090,6 @@ class CExternalEditor:
 
 	def __get_inner(self):
 		return self.__IExternalEditor
-
 
 
 	def Update(self) -> bool:
@@ -23368,6 +28145,26 @@ class CExternalEditor:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EM3DStructure
 class CEM3DStructure:
@@ -23377,7 +28174,6 @@ class CEM3DStructure:
 
 	def __get_inner(self):
 		return self.__IEM3DStructure
-
 
 
 	def OpenExternalEditor(self, Type: mwExternalEditorType, cmdShow: mwEECmdShow = 0) -> CExternalEditor:
@@ -23545,6 +28341,26 @@ class CEM3DStructure:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EM3DStructures
 class CEM3DStructures:
@@ -23554,7 +28370,6 @@ class CEM3DStructures:
 
 	def __get_inner(self):
 		return self.__IEM3DStructures
-
 
 
 	def Add(self, StructureName: str) -> CEM3DStructure:
@@ -23644,6 +28459,26 @@ class CEM3DStructures:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Face
 class CFace:
@@ -23653,7 +28488,6 @@ class CFace:
 
 	def __get_inner(self):
 		return self.__IFace
-
 
 
 
@@ -23870,6 +28704,26 @@ class CFace:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Faces
 class CFaces:
@@ -23879,7 +28733,6 @@ class CFaces:
 
 	def __get_inner(self):
 		return self.__IFaces
-
 
 
 
@@ -23933,6 +28786,26 @@ class CFaces:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # CoordinateEntry
 class CCoordinateEntry:
@@ -23942,7 +28815,6 @@ class CCoordinateEntry:
 
 	def __get_inner(self):
 		return self.__ICoordinateEntry
-
 
 
 	def EnterAbsolute(self, x: float, y: float) -> bool:
@@ -23979,6 +28851,26 @@ class CCoordinateEntry:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Layout
 class CLayout:
@@ -23988,7 +28880,6 @@ class CLayout:
 
 	def __get_inner(self):
 		return self.__ILayout
-
 
 
 	def CopyToClipboard(self) -> None:
@@ -24305,6 +29196,26 @@ class CLayout:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # CellEditorInfo
 class CCellEditorInfo:
@@ -24314,7 +29225,6 @@ class CCellEditorInfo:
 
 	def __get_inner(self):
 		return self.__ICellEditorInfo
-
 
 
 
@@ -24339,6 +29249,26 @@ class CCellEditorInfo:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # CellEditor
 class CCellEditor:
@@ -24348,7 +29278,6 @@ class CCellEditor:
 
 	def __get_inner(self):
 		return self.__ICellEditor
-
 
 
 	def CopyToClipboard(self) -> None:
@@ -24581,6 +29510,26 @@ class CCellEditor:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # CellEditors
 class CCellEditors:
@@ -24590,7 +29539,6 @@ class CCellEditors:
 
 	def __get_inner(self):
 		return self.__ICellEditors
-
 
 
 
@@ -24644,6 +29592,26 @@ class CCellEditors:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Enclosure
 class CEnclosure:
@@ -24653,7 +29621,6 @@ class CEnclosure:
 
 	def __get_inner(self):
 		return self.__IEnclosure
-
 
 
 
@@ -24738,6 +29705,26 @@ class CEnclosure:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Material
 class CMaterial:
@@ -24747,7 +29734,6 @@ class CMaterial:
 
 	def __get_inner(self):
 		return self.__IMaterial
-
 
 
 	def GetMaterialProperty(self, propetyType: mwMaterialProperties, frequencyHz: float = -1) -> float:
@@ -24783,6 +29769,26 @@ class CMaterial:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Materials
 class CMaterials:
@@ -24792,7 +29798,6 @@ class CMaterials:
 
 	def __get_inner(self):
 		return self.__IMaterials
-
 
 
 
@@ -24846,6 +29851,26 @@ class CMaterials:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # MaterialLayer
 class CMaterialLayer:
@@ -24855,7 +29880,6 @@ class CMaterialLayer:
 
 	def __get_inner(self):
 		return self.__IMaterialLayer
-
 
 
 
@@ -24964,6 +29988,26 @@ class CMaterialLayer:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # MaterialLayers
 class CMaterialLayers:
@@ -24973,7 +30017,6 @@ class CMaterialLayers:
 
 	def __get_inner(self):
 		return self.__IMaterialLayers
-
 
 
 	def Add(self, Layer: int = 1, Hatch: mwHatchStyle = 5, ViaHatch: mwHatchStyle = 4, Thickness: float = 9.99999974737875E-05, DielectricConstant: float = 1, LossTangent: float = 0, BulkConductivity: float = 0, ViewScale: float = 1) -> CMaterialLayer:
@@ -25037,6 +30080,26 @@ class CMaterialLayers:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ShapeSubObject
 class CShapeSubObject:
@@ -25046,7 +30109,6 @@ class CShapeSubObject:
 
 	def __get_inner(self):
 		return self.__IShapeSubObject
-
 
 
 
@@ -25089,6 +30151,26 @@ class CShapeSubObject:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ShapeSubObjects
 class CShapeSubObjects:
@@ -25098,7 +30180,6 @@ class CShapeSubObjects:
 
 	def __get_inner(self):
 		return self.__IShapeSubObjects
-
 
 
 
@@ -25152,6 +30233,26 @@ class CShapeSubObjects:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ShapeSegment
 class CShapeSegment:
@@ -25161,7 +30262,6 @@ class CShapeSegment:
 
 	def __get_inner(self):
 		return self.__IShapeSegment
-
 
 
 
@@ -25204,6 +30304,26 @@ class CShapeSegment:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ShapeSegments
 class CShapeSegments:
@@ -25213,7 +30333,6 @@ class CShapeSegments:
 
 	def __get_inner(self):
 		return self.__IShapeSegments
-
 
 
 
@@ -25267,6 +30386,26 @@ class CShapeSegments:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ShapeArcSegment
 class CShapeArcSegment:
@@ -25276,7 +30415,6 @@ class CShapeArcSegment:
 
 	def __get_inner(self):
 		return self.__IShapeArcSegment
-
 
 
 
@@ -25307,6 +30445,26 @@ class CShapeArcSegment:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ShapeArcSegments
 class CShapeArcSegments:
@@ -25316,7 +30474,6 @@ class CShapeArcSegments:
 
 	def __get_inner(self):
 		return self.__IShapeArcSegments
-
 
 
 
@@ -25370,6 +30527,26 @@ class CShapeArcSegments:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Shape
 class CShape:
@@ -25379,7 +30556,6 @@ class CShape:
 
 	def __get_inner(self):
 		return self.__IShape
-
 
 
 	def Move(self, dx: float, dy: float, CCWRotatation: float = 0, Flip: bool = 0, HorizontalAxis: bool = 0, OriginX: float = 0, OriginY: float = 0) -> bool:
@@ -25475,6 +30651,26 @@ class CShape:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Shapes
 class CShapes:
@@ -25484,7 +30680,6 @@ class CShapes:
 
 	def __get_inner(self):
 		return self.__IShapes
-
 
 
 	def AddRectangle(self, x: float, y: float, dx: float, dy: float, LayerName: str = "") -> CShape:
@@ -25604,6 +30799,26 @@ class CShapes:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DrawingSubObject
 class CDrawingSubObject:
@@ -25613,7 +30828,6 @@ class CDrawingSubObject:
 
 	def __get_inner(self):
 		return self.__IDrawingSubObject
-
 
 
 	def Move(self, dx: float, dy: float) -> bool:
@@ -25690,6 +30904,26 @@ class CDrawingSubObject:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DrawingSubObjects
 class CDrawingSubObjects:
@@ -25699,7 +30933,6 @@ class CDrawingSubObjects:
 
 	def __get_inner(self):
 		return self.__IDrawingSubObjects
-
 
 
 	def AddRectangle(self, x: float, y: float, dx: float, dy: float) -> CDrawingSubObject:
@@ -25794,6 +31027,26 @@ class CDrawingSubObjects:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DrawingSegment
 class CDrawingSegment:
@@ -25803,7 +31056,6 @@ class CDrawingSegment:
 
 	def __get_inner(self):
 		return self.__IDrawingSegment
-
 
 
 	def MakeArcSegment(self, centerX: float, centerY: float, dir: mwDrawingArcDirection) -> CDrawingArcSegment:
@@ -25880,6 +31132,26 @@ class CDrawingSegment:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DrawingSegments
 class CDrawingSegments:
@@ -25889,7 +31161,6 @@ class CDrawingSegments:
 
 	def __get_inner(self):
 		return self.__IDrawingSegments
-
 
 
 
@@ -25943,6 +31214,26 @@ class CDrawingSegments:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DrawingArcSegment
 class CDrawingArcSegment:
@@ -25952,7 +31243,6 @@ class CDrawingArcSegment:
 
 	def __get_inner(self):
 		return self.__IDrawingArcSegment
-
 
 
 
@@ -25989,6 +31279,26 @@ class CDrawingArcSegment:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DrawingArcSegments
 class CDrawingArcSegments:
@@ -25998,7 +31308,6 @@ class CDrawingArcSegments:
 
 	def __get_inner(self):
 		return self.__IDrawingArcSegments
-
 
 
 
@@ -26052,6 +31361,26 @@ class CDrawingArcSegments:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SnapshotInfo
 class CSnapshotInfo:
@@ -26061,7 +31390,6 @@ class CSnapshotInfo:
 
 	def __get_inner(self):
 		return self.__ISnapshotInfo
-
 
 
 
@@ -26089,6 +31417,26 @@ class CSnapshotInfo:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Snapshot
 class CSnapshot:
@@ -26098,7 +31446,6 @@ class CSnapshot:
 
 	def __get_inner(self):
 		return self.__ISnapshot
-
 
 
 	def Export(self, Filename: str, ExportMap, LibraryName: str = "", CellName: str = "", Flat: bool = 0) -> bool:
@@ -26223,6 +31570,26 @@ class CSnapshot:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LibraryElement
 class CLibraryElement:
@@ -26232,7 +31599,6 @@ class CLibraryElement:
 
 	def __get_inner(self):
 		return self.__ILibraryElement
-
 
 
 
@@ -26275,6 +31641,26 @@ class CLibraryElement:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LibraryElements
 class CLibraryElements:
@@ -26284,7 +31670,6 @@ class CLibraryElements:
 
 	def __get_inner(self):
 		return self.__ILibraryElements
-
 
 
 
@@ -26338,6 +31723,26 @@ class CLibraryElements:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # HiddenLibraryElements
 class CHiddenLibraryElements:
@@ -26347,7 +31752,6 @@ class CHiddenLibraryElements:
 
 	def __get_inner(self):
 		return self.__IHiddenLibraryElements
-
 
 
 
@@ -26401,6 +31805,26 @@ class CHiddenLibraryElements:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Library
 class CLibrary:
@@ -26410,7 +31834,6 @@ class CLibrary:
 
 	def __get_inner(self):
 		return self.__ILibrary
-
 
 
 
@@ -26453,6 +31876,26 @@ class CLibrary:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Libraries
 class CLibraries:
@@ -26462,7 +31905,6 @@ class CLibraries:
 
 	def __get_inner(self):
 		return self.__ILibraries
-
 
 
 
@@ -26516,6 +31958,26 @@ class CLibraries:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # HiddenLibrary
 class CHiddenLibrary:
@@ -26525,7 +31987,6 @@ class CHiddenLibrary:
 
 	def __get_inner(self):
 		return self.__IHiddenLibrary
-
 
 
 
@@ -26544,6 +32005,26 @@ class CHiddenLibrary:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # HiddenLibraries
 class CHiddenLibraries:
@@ -26553,7 +32034,6 @@ class CHiddenLibraries:
 
 	def __get_inner(self):
 		return self.__IHiddenLibraries
-
 
 
 
@@ -26607,6 +32087,26 @@ class CHiddenLibraries:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # MeasurementInfo
 class CMeasurementInfo:
@@ -26616,7 +32116,6 @@ class CMeasurementInfo:
 
 	def __get_inner(self):
 		return self.__IMeasurementInfo
-
 
 
 	def IsFlagSet(self, flag: mwMeasInfoParamFlags) -> bool:
@@ -26676,6 +32175,26 @@ class CMeasurementInfo:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # MeasurementInfos
 class CMeasurementInfos:
@@ -26685,7 +32204,6 @@ class CMeasurementInfos:
 
 	def __get_inner(self):
 		return self.__IMeasurementInfos
-
 
 
 
@@ -26739,6 +32257,26 @@ class CMeasurementInfos:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SimulatorInfo
 class CSimulatorInfo:
@@ -26748,7 +32286,6 @@ class CSimulatorInfo:
 
 	def __get_inner(self):
 		return self.__ISimulatorInfo
-
 
 
 	def IsFlagSet(self, Flags: mwSimulatorTypeFlags) -> bool:
@@ -26790,6 +32327,26 @@ class CSimulatorInfo:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SimulatorInfos
 class CSimulatorInfos:
@@ -26799,7 +32356,6 @@ class CSimulatorInfos:
 
 	def __get_inner(self):
 		return self.__ISimulatorInfos
-
 
 
 
@@ -26853,6 +32409,26 @@ class CSimulatorInfos:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Model
 class CModel:
@@ -26862,7 +32438,6 @@ class CModel:
 
 	def __get_inner(self):
 		return self.__IModel
-
 
 
 	def Simulate(self) -> None:
@@ -26990,6 +32565,26 @@ class CModel:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Models
 class CModels:
@@ -26999,7 +32594,6 @@ class CModels:
 
 	def __get_inner(self):
 		return self.__IModels
-
 
 
 
@@ -27053,6 +32647,26 @@ class CModels:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayoutCell
 class CLayoutCell:
@@ -27062,7 +32676,6 @@ class CLayoutCell:
 
 	def __get_inner(self):
 		return self.__ILayoutCell
-
 
 
 
@@ -27123,6 +32736,26 @@ class CLayoutCell:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayoutCells
 class CLayoutCells:
@@ -27132,7 +32765,6 @@ class CLayoutCells:
 
 	def __get_inner(self):
 		return self.__ILayoutCells
-
 
 
 
@@ -27186,6 +32818,26 @@ class CLayoutCells:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # OptVariable
 class COptVariable:
@@ -27195,7 +32847,6 @@ class COptVariable:
 
 	def __get_inner(self):
 		return self.__IOptVariable
-
 
 
 
@@ -27280,6 +32931,26 @@ class COptVariable:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # OptVariables
 class COptVariables:
@@ -27289,7 +32960,6 @@ class COptVariables:
 
 	def __get_inner(self):
 		return self.__IOptVariables
-
 
 
 
@@ -27343,6 +33013,26 @@ class COptVariables:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Optimizer
 class COptimizer:
@@ -27352,7 +33042,6 @@ class COptimizer:
 
 	def __get_inner(self):
 		return self.__IOptimizer
-
 
 
 	def start(self) -> None:
@@ -27548,6 +33237,26 @@ class COptimizer:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Synthesizer
 class CSynthesizer:
@@ -27557,7 +33266,6 @@ class CSynthesizer:
 
 	def __get_inner(self):
 		return self.__ISynthesizer
-
 
 
 	def SetSynthesizeParameter(self, Index, Guess: float, Lower: float, Upper: float) -> None:
@@ -27646,6 +33354,26 @@ class CSynthesizer:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Sweeper
 class CSweeper:
@@ -27655,7 +33383,6 @@ class CSweeper:
 
 	def __get_inner(self):
 		return self.__ISweeper
-
 
 
 	def AddVariable(self, Key: str, Variable) -> None:
@@ -27687,6 +33414,26 @@ class CSweeper:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # TuneVariable
 class CTuneVariable:
@@ -27696,7 +33443,6 @@ class CTuneVariable:
 
 	def __get_inner(self):
 		return self.__ITuneVariable
-
 
 
 	def TuneUp(self) -> bool:
@@ -27779,6 +33525,26 @@ class CTuneVariable:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # TuneVariables
 class CTuneVariables:
@@ -27788,7 +33554,6 @@ class CTuneVariables:
 
 	def __get_inner(self):
 		return self.__ITuneVariables
-
 
 
 
@@ -27842,6 +33607,26 @@ class CTuneVariables:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Tuner
 class CTuner:
@@ -27851,7 +33636,6 @@ class CTuner:
 
 	def __get_inner(self):
 		return self.__ITuner
-
 
 
 	def Save(self, stateName: str) -> bool:
@@ -27906,6 +33690,26 @@ class CTuner:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ControlBarItem
 class CControlBarItem:
@@ -27915,7 +33719,6 @@ class CControlBarItem:
 
 	def __get_inner(self):
 		return self.__IControlBarItem
-
 
 
 	def Delete(self) -> None:
@@ -27957,6 +33760,26 @@ class CControlBarItem:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ControlBarItems
 class CControlBarItems:
@@ -27966,7 +33789,6 @@ class CControlBarItems:
 
 	def __get_inner(self):
 		return self.__IControlBarItems
-
 
 
 	def Add(self, OnAction, Before, Image: int, Caption: str) -> CControlBarItem:
@@ -28030,6 +33852,26 @@ class CControlBarItems:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # MenuBar
 class CMenuBar:
@@ -28039,7 +33881,6 @@ class CMenuBar:
 
 	def __get_inner(self):
 		return self.__IMenuBar
-
 
 
 	def FreezeUpdates(self) -> None:
@@ -28068,6 +33909,26 @@ class CMenuBar:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # MenuBars
 class CMenuBars:
@@ -28077,7 +33938,6 @@ class CMenuBars:
 
 	def __get_inner(self):
 		return self.__IMenuBars
-
 
 
 
@@ -28131,6 +33991,26 @@ class CMenuBars:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Menu
 class CMenu:
@@ -28140,7 +34020,6 @@ class CMenu:
 
 	def __get_inner(self):
 		return self.__IMenu
-
 
 
 	def Delete(self) -> None:
@@ -28170,6 +34049,26 @@ class CMenu:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Menus
 class CMenus:
@@ -28179,7 +34078,6 @@ class CMenus:
 
 	def __get_inner(self):
 		return self.__IMenus
-
 
 
 	def Add(self, Caption: str, Before) -> CMenu:
@@ -28243,6 +34141,26 @@ class CMenus:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # MenuItem
 class CMenuItem:
@@ -28252,7 +34170,6 @@ class CMenuItem:
 
 	def __get_inner(self):
 		return self.__IMenuItem
-
 
 
 	def Delete(self) -> None:
@@ -28282,6 +34199,26 @@ class CMenuItem:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # MenuItems
 class CMenuItems:
@@ -28291,7 +34228,6 @@ class CMenuItems:
 
 	def __get_inner(self):
 		return self.__IMenuItems
-
 
 
 	def Add(self, OnAction, Before, Caption: str) -> CMenuItem:
@@ -28324,6 +34260,26 @@ class CMenuItems:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # HotkeyTable
 class CHotkeyTable:
@@ -28333,7 +34289,6 @@ class CHotkeyTable:
 
 	def __get_inner(self):
 		return self.__IHotkeyTable
-
 
 
 
@@ -28352,6 +34307,26 @@ class CHotkeyTable:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # HotkeyTables
 class CHotkeyTables:
@@ -28361,7 +34336,6 @@ class CHotkeyTables:
 
 	def __get_inner(self):
 		return self.__IHotkeyTables
-
 
 
 	def Reload(self) -> None:
@@ -28420,6 +34394,26 @@ class CHotkeyTables:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Hotkey
 class CHotkey:
@@ -28429,7 +34423,6 @@ class CHotkey:
 
 	def __get_inner(self):
 		return self.__IHotkey
-
 
 
 	def Delete(self) -> None:
@@ -28470,6 +34463,26 @@ class CHotkey:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Hotkeys
 class CHotkeys:
@@ -28479,7 +34492,6 @@ class CHotkeys:
 
 	def __get_inner(self):
 		return self.__IHotkeys
-
 
 
 	def Add(self, OnAction, Key: int, Flags: int) -> CHotkey:
@@ -28543,6 +34555,26 @@ class CHotkeys:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # CommandTable
 class CCommandTable:
@@ -28552,7 +34584,6 @@ class CCommandTable:
 
 	def __get_inner(self):
 		return self.__ICommandTable
-
 
 
 
@@ -28577,6 +34608,26 @@ class CCommandTable:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # CommandTables
 class CCommandTables:
@@ -28586,7 +34637,6 @@ class CCommandTables:
 
 	def __get_inner(self):
 		return self.__ICommandTables
-
 
 
 	def Add(self, Name: str, Size: int = 1000) -> CCommandTable:
@@ -28655,6 +34705,26 @@ class CCommandTables:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Command
 class CCommand:
@@ -28664,7 +34734,6 @@ class CCommand:
 
 	def __get_inner(self):
 		return self.__ICommand
-
 
 
 	def Delete(self) -> None:
@@ -28724,6 +34793,26 @@ class CCommand:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Commands
 class CCommands:
@@ -28733,7 +34822,6 @@ class CCommands:
 
 	def __get_inner(self):
 		return self.__ICommands
-
 
 
 	def Add(self, Name: str, CmdId: int, Caption: str, Image: int, Tooltip: str, Helpstring: str, HelpFile: str, HelpContextID: int) -> CCommand:
@@ -28802,6 +34890,26 @@ class CCommands:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DrawingShape
 class CDrawingShape:
@@ -28811,7 +34919,6 @@ class CDrawingShape:
 
 	def __get_inner(self):
 		return self.__IDrawingShape
-
 
 
 	def Move(self, dx: int, dy: int, CCWRotation: float = 0, Flip: bool = 0, FlipHorizontal: bool = 0, xOrigin: float = 0, yOrigin: float = 0) -> bool:
@@ -28923,6 +35030,26 @@ class CDrawingShape:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # DrawingShapes
 class CDrawingShapes:
@@ -28932,7 +35059,6 @@ class CDrawingShapes:
 
 	def __get_inner(self):
 		return self.__IDrawingShapes
-
 
 
 	def AddArc(self, Left: int, Top: int, Right: int, Bottom: int, xStart: int, yStart: int, xEnd: int, yEnd: int) -> CDrawingShape:
@@ -29041,6 +35167,26 @@ class CDrawingShapes:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SelectedDrawingShapes
 class CSelectedDrawingShapes:
@@ -29050,7 +35196,6 @@ class CSelectedDrawingShapes:
 
 	def __get_inner(self):
 		return self.__ISelectedDrawingShapes
-
 
 
 	def Add(self, DrawingShape: CDrawingShape) -> bool:
@@ -29124,6 +35269,26 @@ class CSelectedDrawingShapes:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Argument
 class CArgument:
@@ -29136,7 +35301,6 @@ class CArgument:
 
 
 
-
 	@property
 	def Value(self) -> str:
 		"""Returns the argument value as a string."""
@@ -29145,6 +35309,26 @@ class CArgument:
 
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
+
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
 
 
 # Arguments
@@ -29155,7 +35339,6 @@ class CArguments:
 
 	def __get_inner(self):
 		return self.__IArguments
-
 
 
 
@@ -29209,6 +35392,26 @@ class CArguments:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # FlightLine
 class CFlightLine:
@@ -29218,7 +35421,6 @@ class CFlightLine:
 
 	def __get_inner(self):
 		return self.__IFlightLine
-
 
 
 
@@ -29237,6 +35439,26 @@ class CFlightLine:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # FlightLines
 class CFlightLines:
@@ -29246,7 +35468,6 @@ class CFlightLines:
 
 	def __get_inner(self):
 		return self.__IFlightLines
-
 
 
 
@@ -29312,6 +35533,26 @@ class CFlightLines:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # NetShape
 class CNetShape:
@@ -29321,7 +35562,6 @@ class CNetShape:
 
 	def __get_inner(self):
 		return self.__INetShape
-
 
 
 	def Disassociate(self) -> CDrawingObject:
@@ -29417,6 +35657,26 @@ class CNetShape:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # NetShapes
 class CNetShapes:
@@ -29426,7 +35686,6 @@ class CNetShapes:
 
 	def __get_inner(self):
 		return self.__INetShapes
-
 
 
 	def AddRectangle(self, x: float, y: float, dx: float, dy: float, LayerName: str = "", UseProcessLayers: bool = 0, LayerMapping: str = "") -> CNetShape:
@@ -29500,6 +35759,26 @@ class CNetShapes:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # PhysicalNet
 class CPhysicalNet:
@@ -29509,7 +35788,6 @@ class CPhysicalNet:
 
 	def __get_inner(self):
 		return self.__IPhysicalNet
-
 
 
 	def HighlightNet(self, bHighlightOn: bool, Color: int = 255) -> bool:
@@ -29622,6 +35900,26 @@ class CPhysicalNet:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # PhysicalNets
 class CPhysicalNets:
@@ -29631,7 +35929,6 @@ class CPhysicalNets:
 
 	def __get_inner(self):
 		return self.__IPhysicalNets
-
 
 
 
@@ -29685,6 +35982,26 @@ class CPhysicalNets:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # RouteRecord
 class CRouteRecord:
@@ -29694,7 +36011,6 @@ class CRouteRecord:
 
 	def __get_inner(self):
 		return self.__IRouteRecord
-
 
 
 	def AddSegment(self, x1: float, y1: float, x2: float, y2: float, Width: float, LineType: int, BeginStyle: mwRouteSegmentEndStyleType, BeginExtent: float, EndStyle: mwRouteSegmentEndStyleType, EndExtent: float) -> CRouteObject:
@@ -29750,6 +36066,26 @@ class CRouteRecord:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Route
 class CRoute:
@@ -29759,7 +36095,6 @@ class CRoute:
 
 	def __get_inner(self):
 		return self.__IRoute
-
 
 
 	def Delete(self) -> bool:
@@ -29962,6 +36297,26 @@ class CRoute:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Routes
 class CRoutes:
@@ -29971,7 +36326,6 @@ class CRoutes:
 
 	def __get_inner(self):
 		return self.__IRoutes
-
 
 
 	def CreateRouteRecord(self) -> CRouteRecord:
@@ -30050,6 +36404,26 @@ class CRoutes:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # RouteObject
 class CRouteObject:
@@ -30059,7 +36433,6 @@ class CRouteObject:
 
 	def __get_inner(self):
 		return self.__IRouteObject
-
 
 
 
@@ -30126,6 +36499,26 @@ class CRouteObject:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # RouteObjects
 class CRouteObjects:
@@ -30135,7 +36528,6 @@ class CRouteObjects:
 
 	def __get_inner(self):
 		return self.__IRouteObjects
-
 
 
 
@@ -30189,6 +36581,26 @@ class CRouteObjects:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # RouteSegment
 class CRouteSegment:
@@ -30198,7 +36610,6 @@ class CRouteSegment:
 
 	def __get_inner(self):
 		return self.__IRouteSegment
-
 
 
 
@@ -30331,6 +36742,26 @@ class CRouteSegment:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # RouteSegments
 class CRouteSegments:
@@ -30340,7 +36771,6 @@ class CRouteSegments:
 
 	def __get_inner(self):
 		return self.__IRouteSegments
-
 
 
 
@@ -30394,6 +36824,26 @@ class CRouteSegments:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # RouteVia
 class CRouteVia:
@@ -30403,7 +36853,6 @@ class CRouteVia:
 
 	def __get_inner(self):
 		return self.__IRouteVia
-
 
 
 	def Delete(self) -> bool:
@@ -30559,6 +37008,26 @@ class CRouteVia:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # RouteVias
 class CRouteVias:
@@ -30568,7 +37037,6 @@ class CRouteVias:
 
 	def __get_inner(self):
 		return self.__IRouteVias
-
 
 
 	def Add(self, xOrigin: float, yOrigin: float, xExtent: float, yExtent: float, xOffset: float, yOffset: float, LineType1: int, LineType2: int, Direction: mwRouteViaDirectionType) -> CRouteVia:
@@ -30642,6 +37110,26 @@ class CRouteVias:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # RouteGuide
 class CRouteGuide:
@@ -30651,7 +37139,6 @@ class CRouteGuide:
 
 	def __get_inner(self):
 		return self.__IRouteGuide
-
 
 
 
@@ -30712,6 +37199,26 @@ class CRouteGuide:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # RouteGuides
 class CRouteGuides:
@@ -30721,7 +37228,6 @@ class CRouteGuides:
 
 	def __get_inner(self):
 		return self.__IRouteGuides
-
 
 
 
@@ -30775,6 +37281,26 @@ class CRouteGuides:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # RouteViaLineConnection
 class CRouteViaLineConnection:
@@ -30784,7 +37310,6 @@ class CRouteViaLineConnection:
 
 	def __get_inner(self):
 		return self.__IRouteViaLineConnection
-
 
 
 
@@ -30815,6 +37340,26 @@ class CRouteViaLineConnection:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # RouteViaLineConnections
 class CRouteViaLineConnections:
@@ -30824,7 +37369,6 @@ class CRouteViaLineConnections:
 
 	def __get_inner(self):
 		return self.__IRouteViaLineConnections
-
 
 
 
@@ -30878,6 +37422,26 @@ class CRouteViaLineConnections:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # RouteViaPinConnection
 class CRouteViaPinConnection:
@@ -30887,7 +37451,6 @@ class CRouteViaPinConnection:
 
 	def __get_inner(self):
 		return self.__IRouteViaPinConnection
-
 
 
 
@@ -30924,6 +37487,26 @@ class CRouteViaPinConnection:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # RouteViaPinConnections
 class CRouteViaPinConnections:
@@ -30933,7 +37516,6 @@ class CRouteViaPinConnections:
 
 	def __get_inner(self):
 		return self.__IRouteViaPinConnections
-
 
 
 
@@ -30987,6 +37569,26 @@ class CRouteViaPinConnections:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Extent
 class CExtent:
@@ -30996,7 +37598,6 @@ class CExtent:
 
 	def __get_inner(self):
 		return self.__IExtent
-
 
 
 
@@ -31027,6 +37628,26 @@ class CExtent:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Extents
 class CExtents:
@@ -31036,7 +37657,6 @@ class CExtents:
 
 	def __get_inner(self):
 		return self.__IExtents
-
 
 
 
@@ -31090,6 +37710,26 @@ class CExtents:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Pin
 class CPin:
@@ -31099,7 +37739,6 @@ class CPin:
 
 	def __get_inner(self):
 		return self.__IPin
-
 
 
 
@@ -31172,6 +37811,26 @@ class CPin:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Pins
 class CPins:
@@ -31181,7 +37840,6 @@ class CPins:
 
 	def __get_inner(self):
 		return self.__IPins
-
 
 
 
@@ -31235,6 +37893,26 @@ class CPins:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayoutModeSet
 class CLayoutModeSet:
@@ -31244,7 +37922,6 @@ class CLayoutModeSet:
 
 	def __get_inner(self):
 		return self.__ILayoutModeSet
-
 
 
 
@@ -31269,6 +37946,26 @@ class CLayoutModeSet:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayoutModeSets
 class CLayoutModeSets:
@@ -31278,7 +37975,6 @@ class CLayoutModeSets:
 
 	def __get_inner(self):
 		return self.__ILayoutModeSets
-
 
 
 	def Add(self, pName: str) -> CLayoutModeSet:
@@ -31362,6 +38058,26 @@ class CLayoutModeSets:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ParameterDefaultValue
 class CParameterDefaultValue:
@@ -31371,7 +38087,6 @@ class CParameterDefaultValue:
 
 	def __get_inner(self):
 		return self.__IParameterDefaultValue
-
 
 
 
@@ -31414,6 +38129,26 @@ class CParameterDefaultValue:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ParameterDefaultValues
 class CParameterDefaultValues:
@@ -31423,7 +38158,6 @@ class CParameterDefaultValues:
 
 	def __get_inner(self):
 		return self.__IParameterDefaultValues
-
 
 
 
@@ -31477,6 +38211,26 @@ class CParameterDefaultValues:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ConstraintLayer
 class CConstraintLayer:
@@ -31486,7 +38240,6 @@ class CConstraintLayer:
 
 	def __get_inner(self):
 		return self.__IConstraintLayer
-
 
 
 
@@ -31505,6 +38258,26 @@ class CConstraintLayer:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ConstraintLayers
 class CConstraintLayers:
@@ -31514,7 +38287,6 @@ class CConstraintLayers:
 
 	def __get_inner(self):
 		return self.__IConstraintLayers
-
 
 
 
@@ -31568,6 +38340,26 @@ class CConstraintLayers:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ConstraintTable
 class CConstraintTable:
@@ -31577,7 +38369,6 @@ class CConstraintTable:
 
 	def __get_inner(self):
 		return self.__IConstraintTable
-
 
 
 	def SetAll(self, Value: float) -> bool:
@@ -31616,6 +38407,26 @@ class CConstraintTable:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ConstraintTables
 class CConstraintTables:
@@ -31625,7 +38436,6 @@ class CConstraintTables:
 
 	def __get_inner(self):
 		return self.__IConstraintTables
-
 
 
 
@@ -31679,6 +38489,26 @@ class CConstraintTables:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ConstraintSet
 class CConstraintSet:
@@ -31688,7 +38518,6 @@ class CConstraintSet:
 
 	def __get_inner(self):
 		return self.__IConstraintSet
-
 
 
 	def SetNumPhysicalLayers(self, numLayers: int, DefaultValue: float) -> bool:
@@ -31736,6 +38565,26 @@ class CConstraintSet:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ConstraintSets
 class CConstraintSets:
@@ -31745,7 +38594,6 @@ class CConstraintSets:
 
 	def __get_inner(self):
 		return self.__IConstraintSets
-
 
 
 	def Add(self, Type: mwConstraintSetType, Name: str, nLayers: int, defValue: float) -> CConstraintSet:
@@ -31820,6 +38668,26 @@ class CConstraintSets:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayoutProcessDefinition
 class CLayoutProcessDefinition:
@@ -31829,7 +38697,6 @@ class CLayoutProcessDefinition:
 
 	def __get_inner(self):
 		return self.__ILayoutProcessDefinition
-
 
 
 	def Export(self, Filename: str) -> bool:
@@ -32164,6 +39031,26 @@ class CLayoutProcessDefinition:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayoutProcessDefinitions
 class CLayoutProcessDefinitions:
@@ -32173,7 +39060,6 @@ class CLayoutProcessDefinitions:
 
 	def __get_inner(self):
 		return self.__ILayoutProcessDefinitions
-
 
 
 	def Import(self, Filename: str, ReplaceDefault: bool) -> CLayoutProcessDefinition:
@@ -32279,6 +39165,26 @@ class CLayoutProcessDefinitions:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessLayerInfo
 class CProcessLayerInfo:
@@ -32288,7 +39194,6 @@ class CProcessLayerInfo:
 
 	def __get_inner(self):
 		return self.__IProcessLayerInfo
-
 
 
 
@@ -32349,6 +39254,26 @@ class CProcessLayerInfo:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessLayerInfos
 class CProcessLayerInfos:
@@ -32358,7 +39283,6 @@ class CProcessLayerInfos:
 
 	def __get_inner(self):
 		return self.__IProcessLayerInfos
-
 
 
 	def Add(self, Name: str, Offset: float = 0, MinimumWidth: float = 0, Flags: int = 0) -> CProcessLayerInfo:
@@ -32432,6 +39356,26 @@ class CProcessLayerInfos:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessTypeInfo
 class CProcessTypeInfo:
@@ -32441,7 +39385,6 @@ class CProcessTypeInfo:
 
 	def __get_inner(self):
 		return self.__IProcessTypeInfo
-
 
 
 
@@ -32472,6 +39415,26 @@ class CProcessTypeInfo:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessTypeInfos
 class CProcessTypeInfos:
@@ -32481,7 +39444,6 @@ class CProcessTypeInfos:
 
 	def __get_inner(self):
 		return self.__IProcessTypeInfos
-
 
 
 	def Add(self, Name: str) -> CProcessTypeInfo:
@@ -32555,6 +39517,26 @@ class CProcessTypeInfos:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessPdkLineTypeInfo
 class CProcessPdkLineTypeInfo:
@@ -32564,7 +39546,6 @@ class CProcessPdkLineTypeInfo:
 
 	def __get_inner(self):
 		return self.__IProcessPdkLineTypeInfo
-
 
 
 
@@ -32589,6 +39570,26 @@ class CProcessPdkLineTypeInfo:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessPdkLineTypeInfos
 class CProcessPdkLineTypeInfos:
@@ -32598,7 +39599,6 @@ class CProcessPdkLineTypeInfos:
 
 	def __get_inner(self):
 		return self.__IProcessPdkLineTypeInfos
-
 
 
 	def Add(self, Name: str) -> CProcessPdkLineTypeInfo:
@@ -32672,6 +39672,26 @@ class CProcessPdkLineTypeInfos:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessBridgeInfo
 class CProcessBridgeInfo:
@@ -32681,7 +39701,6 @@ class CProcessBridgeInfo:
 
 	def __get_inner(self):
 		return self.__IProcessBridgeInfo
-
 
 
 
@@ -32718,6 +39737,26 @@ class CProcessBridgeInfo:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessBridgeInfos
 class CProcessBridgeInfos:
@@ -32727,7 +39766,6 @@ class CProcessBridgeInfos:
 
 	def __get_inner(self):
 		return self.__IProcessBridgeInfos
-
 
 
 	def Add(self, Name: str, ShouldRemove: bool = -1, RemoveOffset: float = 0, ShouldRemoveEdge: bool = -1, EdgeRemoveOffset: float = 0) -> CProcessBridgeInfo:
@@ -32801,6 +39839,26 @@ class CProcessBridgeInfos:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # FontInfo
 class CFontInfo:
@@ -32810,7 +39868,6 @@ class CFontInfo:
 
 	def __get_inner(self):
 		return self.__IFontInfo
-
 
 
 
@@ -32865,6 +39922,26 @@ class CFontInfo:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # FontInfos
 class CFontInfos:
@@ -32874,7 +39951,6 @@ class CFontInfos:
 
 	def __get_inner(self):
 		return self.__IFontInfos
-
 
 
 
@@ -32928,6 +40004,26 @@ class CFontInfos:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessProperty
 class CProcessProperty:
@@ -32937,7 +40033,6 @@ class CProcessProperty:
 
 	def __get_inner(self):
 		return self.__IProcessProperty
-
 
 
 
@@ -32956,6 +40051,26 @@ class CProcessProperty:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessProperties
 class CProcessProperties:
@@ -32965,7 +40080,6 @@ class CProcessProperties:
 
 	def __get_inner(self):
 		return self.__IProcessProperties
-
 
 
 	def Add(self, Name: str, Value: float = 0) -> CProcessProperty:
@@ -33039,6 +40153,26 @@ class CProcessProperties:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessViaType
 class CProcessViaType:
@@ -33048,7 +40182,6 @@ class CProcessViaType:
 
 	def __get_inner(self):
 		return self.__IProcessViaType
-
 
 
 
@@ -33096,6 +40229,26 @@ class CProcessViaType:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessViaTypes
 class CProcessViaTypes:
@@ -33105,7 +40258,6 @@ class CProcessViaTypes:
 
 	def __get_inner(self):
 		return self.__IProcessViaTypes
-
 
 
 	def Add(self, Name: str) -> CProcessViaType:
@@ -33189,6 +40341,26 @@ class CProcessViaTypes:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # BusNetName
 class CBusNetName:
@@ -33198,7 +40370,6 @@ class CBusNetName:
 
 	def __get_inner(self):
 		return self.__IBusNetName
-
 
 
 	def Move(self, dx: int, dy: int, CCWRotation: float = 0, Flip: bool = 0, FlipHorizontal: bool = 0, xOrigin: float = 0, yOrigin: float = 0) -> bool:
@@ -33299,6 +40470,26 @@ class CBusNetName:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # BusNetNames
 class CBusNetNames:
@@ -33308,7 +40499,6 @@ class CBusNetNames:
 
 	def __get_inner(self):
 		return self.__IBusNetNames
-
 
 
 
@@ -33362,6 +40552,26 @@ class CBusNetNames:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # BundleBit
 class CBundleBit:
@@ -33371,7 +40581,6 @@ class CBundleBit:
 
 	def __get_inner(self):
 		return self.__IBundleBit
-
 
 
 
@@ -33396,6 +40605,26 @@ class CBundleBit:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # BundleBits
 class CBundleBits:
@@ -33405,7 +40634,6 @@ class CBundleBits:
 
 	def __get_inner(self):
 		return self.__IBundleBits
-
 
 
 
@@ -33459,6 +40687,26 @@ class CBundleBits:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # BundleBus
 class CBundleBus:
@@ -33468,7 +40716,6 @@ class CBundleBus:
 
 	def __get_inner(self):
 		return self.__IBundleBus
-
 
 
 	def GetBitIndex(self, bit: int) -> int:
@@ -33516,6 +40763,26 @@ class CBundleBus:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # BundleBuses
 class CBundleBuses:
@@ -33525,7 +40792,6 @@ class CBundleBuses:
 
 	def __get_inner(self):
 		return self.__IBundleBuses
-
 
 
 
@@ -33579,6 +40845,26 @@ class CBundleBuses:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # BundleInfo
 class CBundleInfo:
@@ -33588,7 +40874,6 @@ class CBundleInfo:
 
 	def __get_inner(self):
 		return self.__IBundleInfo
-
 
 
 
@@ -33613,6 +40898,26 @@ class CBundleInfo:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # BundleInfos
 class CBundleInfos:
@@ -33622,7 +40927,6 @@ class CBundleInfos:
 
 	def __get_inner(self):
 		return self.__IBundleInfos
-
 
 
 
@@ -33676,6 +40980,26 @@ class CBundleInfos:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EditHandle
 class CEditHandle:
@@ -33685,7 +41009,6 @@ class CEditHandle:
 
 	def __get_inner(self):
 		return self.__IEditHandle
-
 
 
 	def Move(self, dx: float, dy: float) -> None:
@@ -33703,6 +41026,26 @@ class CEditHandle:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EditHandles
 class CEditHandles:
@@ -33712,7 +41055,6 @@ class CEditHandles:
 
 	def __get_inner(self):
 		return self.__IEditHandles
-
 
 
 
@@ -33766,6 +41108,26 @@ class CEditHandles:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SelectFilterItem
 class CSelectFilterItem:
@@ -33775,7 +41137,6 @@ class CSelectFilterItem:
 
 	def __get_inner(self):
 		return self.__ISelectFilterItem
-
 
 
 
@@ -33800,6 +41161,26 @@ class CSelectFilterItem:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SelectFilterItems
 class CSelectFilterItems:
@@ -33809,7 +41190,6 @@ class CSelectFilterItems:
 
 	def __get_inner(self):
 		return self.__ISelectFilterItems
-
 
 
 
@@ -33863,6 +41243,26 @@ class CSelectFilterItems:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SelectFilter
 class CSelectFilter:
@@ -33872,7 +41272,6 @@ class CSelectFilter:
 
 	def __get_inner(self):
 		return self.__ISelectFilter
-
 
 
 
@@ -33891,6 +41290,26 @@ class CSelectFilter:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # CSelectFilters
 class CCSelectFilters:
@@ -33900,7 +41319,6 @@ class CCSelectFilters:
 
 	def __get_inner(self):
 		return self.__ISelectFilters
-
 
 
 
@@ -33954,6 +41372,26 @@ class CCSelectFilters:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # MathUtil
 class CMathUtil:
@@ -33963,7 +41401,6 @@ class CMathUtil:
 
 	def __get_inner(self):
 		return self.__IMathUtil
-
 
 
 	def RadiansToDegrees(self, Radians: float) -> float:
@@ -34213,6 +41650,26 @@ class CMathUtil:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # VertexTransform
 class CVertexTransform:
@@ -34222,7 +41679,6 @@ class CVertexTransform:
 
 	def __get_inner(self):
 		return self.__IVertexTransform
-
 
 
 	def SetTransform(self, cx: float, cy: float, Lx: float, Ly: float, angleCCW: float, Flip: bool, scaleFactor: float = 1, clearStack: bool = -1) -> bool:
@@ -34266,6 +41722,26 @@ class CVertexTransform:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ApiGeomUtil
 class CApiGeomUtil:
@@ -34275,7 +41751,6 @@ class CApiGeomUtil:
 
 	def __get_inner(self):
 		return self.__IGeomUtil
-
 
 
 	def PointRotate(self, x: float, y: float, aboutX: float, aboutY: float, rotCCW: float) -> CVertex:
@@ -34477,6 +41952,26 @@ class CApiGeomUtil:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # StackupUtil
 class CStackupUtil:
@@ -34486,7 +41981,6 @@ class CStackupUtil:
 
 	def __get_inner(self):
 		return self.__IStackupUtil
-
 
 
 	def SetStackup(self, Stackup: CElement) -> None:
@@ -34608,6 +42102,26 @@ class CStackupUtil:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ZipArchiveItem
 class CZipArchiveItem:
@@ -34617,7 +42131,6 @@ class CZipArchiveItem:
 
 	def __get_inner(self):
 		return self.__IZipArchiveItem
-
 
 
 	def Extract(self, OutputDirectory: str) -> bool:
@@ -34677,6 +42190,26 @@ class CZipArchiveItem:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ZipArchiveItems
 class CZipArchiveItems:
@@ -34686,7 +42219,6 @@ class CZipArchiveItems:
 
 	def __get_inner(self):
 		return self.__IZipArchiveItems
-
 
 
 	def ExtractItem(self, Index, OutputDirectory: str) -> bool:
@@ -34756,6 +42288,26 @@ class CZipArchiveItems:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ZipArchiveWriter
 class CZipArchiveWriter:
@@ -34765,7 +42317,6 @@ class CZipArchiveWriter:
 
 	def __get_inner(self):
 		return self.__IZipArchiveWriter
-
 
 
 	def AddFile(self, Filename: str) -> bool:
@@ -34798,6 +42349,26 @@ class CZipArchiveWriter:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # BrowseForFolderDialog
 class CBrowseForFolderDialog:
@@ -34807,7 +42378,6 @@ class CBrowseForFolderDialog:
 
 	def __get_inner(self):
 		return self.__IBrowseForFolderDialog
-
 
 
 	def Show(self) -> bool:
@@ -34975,6 +42545,26 @@ class CBrowseForFolderDialog:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # FileFilterEntry
 class CFileFilterEntry:
@@ -34984,7 +42574,6 @@ class CFileFilterEntry:
 
 	def __get_inner(self):
 		return self.__IFileFilterEntry
-
 
 
 
@@ -35015,6 +42604,26 @@ class CFileFilterEntry:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # FileFilterEntries
 class CFileFilterEntries:
@@ -35024,7 +42633,6 @@ class CFileFilterEntries:
 
 	def __get_inner(self):
 		return self.__IFileFilterEntries
-
 
 
 	def Add(self, Name: str, Filter: str) -> CFileFilterEntry:
@@ -35098,6 +42706,26 @@ class CFileFilterEntries:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # FilePathEntry
 class CFilePathEntry:
@@ -35107,7 +42735,6 @@ class CFilePathEntry:
 
 	def __get_inner(self):
 		return self.__IFilePathEntry
-
 
 
 
@@ -35144,6 +42771,26 @@ class CFilePathEntry:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # FilePathEntries
 class CFilePathEntries:
@@ -35153,7 +42800,6 @@ class CFilePathEntries:
 
 	def __get_inner(self):
 		return self.__IFilePathEntries
-
 
 
 	def Add(self, FilePath: str) -> CFilePathEntry:
@@ -35222,6 +42868,26 @@ class CFilePathEntries:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # FilePathDialog
 class CFilePathDialog:
@@ -35231,7 +42897,6 @@ class CFilePathDialog:
 
 	def __get_inner(self):
 		return self.__IFilePathDialog
-
 
 
 	def Show(self) -> bool:
@@ -35507,6 +43172,26 @@ class CFilePathDialog:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # FileUtil
 class CFileUtil:
@@ -35516,7 +43201,6 @@ class CFileUtil:
 
 	def __get_inner(self):
 		return self.__IFileUtil
-
 
 
 	def GetFileInfo(self, Filename: str) -> CFileInfo:
@@ -35569,6 +43253,26 @@ class CFileUtil:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # FileAttribute
 class CFileAttribute:
@@ -35578,7 +43282,6 @@ class CFileAttribute:
 
 	def __get_inner(self):
 		return self.__IFileAttribute
-
 
 
 
@@ -35597,6 +43300,26 @@ class CFileAttribute:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # FileAttributes
 class CFileAttributes:
@@ -35606,7 +43329,6 @@ class CFileAttributes:
 
 	def __get_inner(self):
 		return self.__IFileAttributes
-
 
 
 
@@ -35660,6 +43382,26 @@ class CFileAttributes:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ScriptRoutine
 class CScriptRoutine:
@@ -35669,7 +43411,6 @@ class CScriptRoutine:
 
 	def __get_inner(self):
 		return self.__IScriptRoutine
-
 
 
 	def Run(self):
@@ -35704,6 +43445,26 @@ class CScriptRoutine:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ScriptRoutines
 class CScriptRoutines:
@@ -35713,7 +43474,6 @@ class CScriptRoutines:
 
 	def __get_inner(self):
 		return self.__IScriptRoutines
-
 
 
 
@@ -35767,6 +43527,26 @@ class CScriptRoutines:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ScriptModule
 class CScriptModule:
@@ -35776,7 +43556,6 @@ class CScriptModule:
 
 	def __get_inner(self):
 		return self.__IScriptModule
-
 
 
 	def Export(self, FilePath: str) -> bool:
@@ -35812,6 +43591,26 @@ class CScriptModule:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ScriptModules
 class CScriptModules:
@@ -35821,7 +43620,6 @@ class CScriptModules:
 
 	def __get_inner(self):
 		return self.__IScriptModules
-
 
 
 	def Import(self, FilePath: str) -> CScriptModule:
@@ -35896,6 +43694,26 @@ class CScriptModules:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SimulationResult
 class CSimulationResult:
@@ -35905,7 +43723,6 @@ class CSimulationResult:
 
 	def __get_inner(self):
 		return self.__ISimulationResult
-
 
 
 
@@ -35930,6 +43747,26 @@ class CSimulationResult:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SimulationResults
 class CSimulationResults:
@@ -35939,7 +43776,6 @@ class CSimulationResults:
 
 	def __get_inner(self):
 		return self.__ISimulationResults
-
 
 
 	def Save(self, Filename: str, SaveMinSet: bool = 0, SaveDynamicData: bool = 0, SaveExtendedData: bool = 0) -> bool:
@@ -36003,6 +43839,26 @@ class CSimulationResults:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SimulationFilter
 class CSimulationFilter:
@@ -36012,7 +43868,6 @@ class CSimulationFilter:
 
 	def __get_inner(self):
 		return self.__ISimulationFilter
-
 
 
 	def DocNameAdd(self, docName: str) -> bool:
@@ -36171,6 +44026,26 @@ class CSimulationFilter:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SimulationFilters
 class CSimulationFilters:
@@ -36180,7 +44055,6 @@ class CSimulationFilters:
 
 	def __get_inner(self):
 		return self.__ISimulationFilters
-
 
 
 	def Add(self, Name: str) -> CSimulationFilter:
@@ -36254,6 +44128,26 @@ class CSimulationFilters:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SwitchList
 class CSwitchList:
@@ -36263,7 +44157,6 @@ class CSwitchList:
 
 	def __get_inner(self):
 		return self.__ISwitchList
-
 
 
 
@@ -36294,6 +44187,26 @@ class CSwitchList:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SwitchLists
 class CSwitchLists:
@@ -36303,7 +44216,6 @@ class CSwitchLists:
 
 	def __get_inner(self):
 		return self.__ISwitchLists
-
 
 
 	def Add(self, Name: str) -> CSwitchList:
@@ -36377,6 +44289,26 @@ class CSwitchLists:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ConnectionRule
 class CConnectionRule:
@@ -36386,7 +44318,6 @@ class CConnectionRule:
 
 	def __get_inner(self):
 		return self.__IConnectionRule
-
 
 
 
@@ -36417,6 +44348,26 @@ class CConnectionRule:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ConnectionRules
 class CConnectionRules:
@@ -36426,7 +44377,6 @@ class CConnectionRules:
 
 	def __get_inner(self):
 		return self.__IConnectionRules
-
 
 
 	def Add(self, Rule: str, bEnable: bool = -1) -> CConnectionRule:
@@ -36490,6 +44440,26 @@ class CConnectionRules:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # CrossoverRuleEntry
 class CCrossoverRuleEntry:
@@ -36499,7 +44469,6 @@ class CCrossoverRuleEntry:
 
 	def __get_inner(self):
 		return self.__ICrossoverRuleEntry
-
 
 
 
@@ -36548,6 +44517,26 @@ class CCrossoverRuleEntry:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # CrossoverRuleEntries
 class CCrossoverRuleEntries:
@@ -36557,7 +44546,6 @@ class CCrossoverRuleEntries:
 
 	def __get_inner(self):
 		return self.__ICrossoverRuleEntries
-
 
 
 	def Add(self, FromLineTypeName: str, ToLineTypeName: str, LineOffset: float) -> CCrossoverRuleEntry:
@@ -36626,6 +44614,26 @@ class CCrossoverRuleEntries:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # CrossoverRule
 class CCrossoverRule:
@@ -36635,7 +44643,6 @@ class CCrossoverRule:
 
 	def __get_inner(self):
 		return self.__ICrossoverRule
-
 
 
 	def IsFlagSet(self, flag: mwCrossoverRuleFlags) -> bool:
@@ -36676,6 +44683,26 @@ class CCrossoverRule:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # CrossoverRules
 class CCrossoverRules:
@@ -36685,7 +44712,6 @@ class CCrossoverRules:
 
 	def __get_inner(self):
 		return self.__ICrossoverRules
-
 
 
 	def CreateNew(self) -> CCrossoverRule:
@@ -36754,6 +44780,26 @@ class CCrossoverRules:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessViaFillEntry
 class CProcessViaFillEntry:
@@ -36763,7 +44809,6 @@ class CProcessViaFillEntry:
 
 	def __get_inner(self):
 		return self.__IProcessViaFillEntry
-
 
 
 
@@ -36902,6 +44947,26 @@ class CProcessViaFillEntry:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessViaFillEntries
 class CProcessViaFillEntries:
@@ -36911,7 +44976,6 @@ class CProcessViaFillEntries:
 
 	def __get_inner(self):
 		return self.__IProcessViaFillEntries
-
 
 
 	def Add(self, entryName: str, libName: str, CellName: str, SpacingX: float, SpacingY: float, Clearance: float, SpacingType: mwViaSpacingType = 0, OffsetX: float = 0, OffsetY: float = 0, bStaggerMode: mwViaFillStaggerMode = 0) -> CProcessViaFillEntry:
@@ -36980,6 +45044,26 @@ class CProcessViaFillEntries:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessViaFenceEntry
 class CProcessViaFenceEntry:
@@ -36989,7 +45073,6 @@ class CProcessViaFenceEntry:
 
 	def __get_inner(self):
 		return self.__IProcessViaFenceEntry
-
 
 
 
@@ -37128,6 +45211,26 @@ class CProcessViaFenceEntry:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessViaFenceEntries
 class CProcessViaFenceEntries:
@@ -37137,7 +45240,6 @@ class CProcessViaFenceEntries:
 
 	def __get_inner(self):
 		return self.__IProcessViaFenceEntries
-
 
 
 	def Add(self, entryName: str, libName: str, CellName: str, Spacing: float, SpacingType: mwViaSpacingType = 0, OffsetX: float = 0, OffsetY: float = 0, MergePerimeters: bool = -1, PerimeterOversize: float = 0, OpenPathEnds: bool = -1, PathAspectRatio: float = 5) -> CProcessViaFenceEntry:
@@ -37211,6 +45313,26 @@ class CProcessViaFenceEntries:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessViaLineType
 class CProcessViaLineType:
@@ -37220,7 +45342,6 @@ class CProcessViaLineType:
 
 	def __get_inner(self):
 		return self.__IProcessViaLineType
-
 
 
 
@@ -37245,6 +45366,26 @@ class CProcessViaLineType:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessViaLineTypePair
 class CProcessViaLineTypePair:
@@ -37254,7 +45395,6 @@ class CProcessViaLineTypePair:
 
 	def __get_inner(self):
 		return self.__IProcessViaLineTypePair
-
 
 
 
@@ -37273,6 +45413,26 @@ class CProcessViaLineTypePair:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcessViaLineTypePairs
 class CProcessViaLineTypePairs:
@@ -37282,7 +45442,6 @@ class CProcessViaLineTypePairs:
 
 	def __get_inner(self):
 		return self.__IProcessViaLineTypePairs
-
 
 
 	def Add(self, First, Second) -> CProcessViaLineTypePair:
@@ -37356,6 +45515,26 @@ class CProcessViaLineTypePairs:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # CellMapping
 class CCellMapping:
@@ -37365,7 +45544,6 @@ class CCellMapping:
 
 	def __get_inner(self):
 		return self.__ICellMapping
-
 
 
 
@@ -37384,6 +45562,26 @@ class CCellMapping:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # CellMappings
 class CCellMappings:
@@ -37393,7 +45591,6 @@ class CCellMappings:
 
 	def __get_inner(self):
 		return self.__ICellMappings
-
 
 
 
@@ -37447,6 +45644,26 @@ class CCellMappings:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EMPortTermination
 class CEMPortTermination:
@@ -37456,7 +45673,6 @@ class CEMPortTermination:
 
 	def __get_inner(self):
 		return self.__IEMPortTermination
-
 
 
 
@@ -37505,6 +45721,26 @@ class CEMPortTermination:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EMPortTerminations
 class CEMPortTerminations:
@@ -37514,7 +45750,6 @@ class CEMPortTerminations:
 
 	def __get_inner(self):
 		return self.__IEMPortTerminations
-
 
 
 
@@ -37568,6 +45803,26 @@ class CEMPortTerminations:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EMPort
 class CEMPort:
@@ -37577,7 +45832,6 @@ class CEMPort:
 
 	def __get_inner(self):
 		return self.__IEMPort
-
 
 
 	def IsFlagSet(self, flag: mwEMPortFlags) -> bool:
@@ -37786,6 +46040,26 @@ class CEMPort:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EMPorts
 class CEMPorts:
@@ -37795,7 +46069,6 @@ class CEMPorts:
 
 	def __get_inner(self):
 		return self.__IEMPorts
-
 
 
 	def Add(self, Type: mwEMShapePortType, p1x: float, p1y: float, p2x: float, p2y: float) -> CEMPort:
@@ -37864,6 +46137,26 @@ class CEMPorts:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # CellInfo
 class CCellInfo:
@@ -37873,7 +46166,6 @@ class CCellInfo:
 
 	def __get_inner(self):
 		return self.__ICellInfo
-
 
 
 
@@ -37904,6 +46196,26 @@ class CCellInfo:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SweepLabel
 class CSweepLabel:
@@ -37913,7 +46225,6 @@ class CSweepLabel:
 
 	def __get_inner(self):
 		return self.__ISweepLabel
-
 
 
 
@@ -37938,6 +46249,26 @@ class CSweepLabel:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SweepLabels
 class CSweepLabels:
@@ -37947,7 +46278,6 @@ class CSweepLabels:
 
 	def __get_inner(self):
 		return self.__ISweepLabels
-
 
 
 
@@ -38001,6 +46331,26 @@ class CSweepLabels:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # LayoutInfo
 class CLayoutInfo:
@@ -38010,7 +46360,6 @@ class CLayoutInfo:
 
 	def __get_inner(self):
 		return self.__ILayoutInfo
-
 
 
 
@@ -38074,6 +46423,26 @@ class CLayoutInfo:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ComponentTest
 class CComponentTest:
@@ -38083,7 +46452,6 @@ class CComponentTest:
 
 	def __get_inner(self):
 		return self.__IComponentTest
-
 
 
 	def RunTest(self, Arguments, pRet) -> bool:
@@ -38118,6 +46486,26 @@ class CComponentTest:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ComponentTests
 class CComponentTests:
@@ -38127,7 +46515,6 @@ class CComponentTests:
 
 	def __get_inner(self):
 		return self.__IComponentTests
-
 
 
 
@@ -38181,6 +46568,26 @@ class CComponentTests:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # StatusItem
 class CStatusItem:
@@ -38190,7 +46597,6 @@ class CStatusItem:
 
 	def __get_inner(self):
 		return self.__IStatusItem
-
 
 
 	def Delete(self) -> None:
@@ -38249,6 +46655,26 @@ class CStatusItem:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # StatusItems
 class CStatusItems:
@@ -38258,7 +46684,6 @@ class CStatusItems:
 
 	def __get_inner(self):
 		return self.__IStatusItems
-
 
 
 	def Add(self, Category: mwStatusItemCategory, Text: str, ErrorCode: int = 0) -> CStatusItem:
@@ -38317,6 +46742,26 @@ class CStatusItems:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # StatusGroup
 class CStatusGroup:
@@ -38326,7 +46771,6 @@ class CStatusGroup:
 
 	def __get_inner(self):
 		return self.__IStatusGroup
-
 
 
 	def RemoveAllItems(self) -> None:
@@ -38361,6 +46805,26 @@ class CStatusGroup:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # StatusGroups
 class CStatusGroups:
@@ -38370,7 +46834,6 @@ class CStatusGroups:
 
 	def __get_inner(self):
 		return self.__IStatusGroups
-
 
 
 	def Add(self, Name: str, Owner) -> CStatusGroup:
@@ -38434,6 +46897,26 @@ class CStatusGroups:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # StatusWindow
 class CStatusWindow:
@@ -38443,7 +46926,6 @@ class CStatusWindow:
 
 	def __get_inner(self):
 		return self.__IStatusWindow
-
 
 
 
@@ -38462,6 +46944,26 @@ class CStatusWindow:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Status
 class CStatus:
@@ -38471,7 +46973,6 @@ class CStatus:
 
 	def __get_inner(self):
 		return self.__IStatus
-
 
 
 	def RemoveAllItems(self) -> None:
@@ -38511,6 +47012,26 @@ class CStatus:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # CursorInfo
 class CCursorInfo:
@@ -38520,7 +47041,6 @@ class CCursorInfo:
 
 	def __get_inner(self):
 		return self.__ICursorInfo
-
 
 
 
@@ -38551,6 +47071,26 @@ class CCursorInfo:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # View
 class CView:
@@ -38560,7 +47100,6 @@ class CView:
 
 	def __get_inner(self):
 		return self.__IView
-
 
 
 	def ViewAll(self) -> None:
@@ -38620,6 +47159,26 @@ class CView:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Views
 class CViews:
@@ -38629,7 +47188,6 @@ class CViews:
 
 	def __get_inner(self):
 		return self.__IViews
-
 
 
 
@@ -38683,6 +47241,26 @@ class CViews:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ThreeDView
 class CThreeDView:
@@ -38692,7 +47270,6 @@ class CThreeDView:
 
 	def __get_inner(self):
 		return self.__IThreeDView
-
 
 
 	def ViewAll(self) -> None:
@@ -38948,6 +47525,26 @@ class CThreeDView:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ThreeDViews
 class CThreeDViews:
@@ -38957,7 +47554,6 @@ class CThreeDViews:
 
 	def __get_inner(self):
 		return self.__IThreeDViews
-
 
 
 
@@ -39011,6 +47607,26 @@ class CThreeDViews:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EmbeddedDesign
 class CEmbeddedDesign:
@@ -39020,7 +47636,6 @@ class CEmbeddedDesign:
 
 	def __get_inner(self):
 		return self.__IEmbeddedDesign
-
 
 
 
@@ -39111,6 +47726,26 @@ class CEmbeddedDesign:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EmbeddedDesigns
 class CEmbeddedDesigns:
@@ -39120,7 +47755,6 @@ class CEmbeddedDesigns:
 
 	def __get_inner(self):
 		return self.__IEmbeddedDesigns
-
 
 
 	def Add(self, docName: str, Type: mwEmbeddedDocType, x: float, y: float, Width: float, Height: float) -> CEmbeddedDesign:
@@ -39189,6 +47823,26 @@ class CEmbeddedDesigns:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EMail
 class CEMail:
@@ -39198,7 +47852,6 @@ class CEMail:
 
 	def __get_inner(self):
 		return self.__IEMail
-
 
 
 
@@ -39271,6 +47924,26 @@ class CEMail:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # FileInfo
 class CFileInfo:
@@ -39280,7 +47953,6 @@ class CFileInfo:
 
 	def __get_inner(self):
 		return self.__IFileInfo
-
 
 
 	def Delete(self) -> bool:
@@ -39363,6 +48035,26 @@ class CFileInfo:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # FileInfos
 class CFileInfos:
@@ -39372,7 +48064,6 @@ class CFileInfos:
 
 	def __get_inner(self):
 		return self.__IFileInfos
-
 
 
 	def Add(self, FilePath: str) -> CFileInfo:
@@ -39441,6 +48132,26 @@ class CFileInfos:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # FolderInfo
 class CFolderInfo:
@@ -39450,7 +48161,6 @@ class CFolderInfo:
 
 	def __get_inner(self):
 		return self.__IFolderInfo
-
 
 
 
@@ -39499,6 +48209,26 @@ class CFolderInfo:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # FolderInfos
 class CFolderInfos:
@@ -39508,7 +48238,6 @@ class CFolderInfos:
 
 	def __get_inner(self):
 		return self.__IFolderInfos
-
 
 
 
@@ -39562,6 +48291,26 @@ class CFolderInfos:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ImportProject
 class CImportProject:
@@ -39571,7 +48320,6 @@ class CImportProject:
 
 	def __get_inner(self):
 		return self.__IImportProject
-
 
 
 	def Import(self) -> None:
@@ -39610,6 +48358,26 @@ class CImportProject:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProjectTreeView
 class CProjectTreeView:
@@ -39619,7 +48387,6 @@ class CProjectTreeView:
 
 	def __get_inner(self):
 		return self.__IProjectTreeView
-
 
 
 	def Show(self) -> None:
@@ -39666,6 +48433,26 @@ class CProjectTreeView:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # TreeNode
 class CTreeNode:
@@ -39675,7 +48462,6 @@ class CTreeNode:
 
 	def __get_inner(self):
 		return self.__ITreeNode
-
 
 
 	def Expand(self, Recurse: bool) -> None:
@@ -39767,6 +48553,26 @@ class CTreeNode:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # TreeNodes
 class CTreeNodes:
@@ -39776,7 +48582,6 @@ class CTreeNodes:
 
 	def __get_inner(self):
 		return self.__ITreeNodes
-
 
 
 
@@ -39830,6 +48635,26 @@ class CTreeNodes:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProjectItem
 class CProjectItem:
@@ -39839,7 +48664,6 @@ class CProjectItem:
 
 	def __get_inner(self):
 		return self.__IProjectItem
-
 
 
 
@@ -39864,6 +48688,26 @@ class CProjectItem:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProjectItems
 class CProjectItems:
@@ -39873,7 +48717,6 @@ class CProjectItems:
 
 	def __get_inner(self):
 		return self.__IProjectItems
-
 
 
 	def Add(self, pDisp) -> CProjectItem:
@@ -39942,6 +48785,26 @@ class CProjectItems:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # UserFolder
 class CUserFolder:
@@ -39951,7 +48814,6 @@ class CUserFolder:
 
 	def __get_inner(self):
 		return self.__IUserFolder
-
 
 
 	def RemoveAll(self) -> bool:
@@ -40005,6 +48867,26 @@ class CUserFolder:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # UserFolders
 class CUserFolders:
@@ -40014,7 +48896,6 @@ class CUserFolders:
 
 	def __get_inner(self):
 		return self.__IUserFolders
-
 
 
 	def Add(self, Name: str) -> CUserFolder:
@@ -40088,6 +48969,26 @@ class CUserFolders:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # WizardDoc
 class CWizardDoc:
@@ -40097,7 +48998,6 @@ class CWizardDoc:
 
 	def __get_inner(self):
 		return self.__IWizardDoc
-
 
 
 	def Remove(self) -> None:
@@ -40138,6 +49038,26 @@ class CWizardDoc:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # WizardDocs
 class CWizardDocs:
@@ -40147,7 +49067,6 @@ class CWizardDocs:
 
 	def __get_inner(self):
 		return self.__IWizardDocs
-
 
 
 	def Remove(self, Index) -> bool:
@@ -40211,6 +49130,26 @@ class CWizardDocs:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Wizard
 class CWizard:
@@ -40220,7 +49159,6 @@ class CWizard:
 
 	def __get_inner(self):
 		return self.__IWizard
-
 
 
 	def Run(self):
@@ -40254,6 +49192,26 @@ class CWizard:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Wizards
 class CWizards:
@@ -40263,7 +49221,6 @@ class CWizards:
 
 	def __get_inner(self):
 		return self.__IWizards
-
 
 
 
@@ -40317,6 +49274,26 @@ class CWizards:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # VersionHistoryItem
 class CVersionHistoryItem:
@@ -40326,7 +49303,6 @@ class CVersionHistoryItem:
 
 	def __get_inner(self):
 		return self.__IVersionHistoryItem
-
 
 
 	def Date(self) -> str:
@@ -40356,6 +49332,26 @@ class CVersionHistoryItem:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # VersionHistory
 class CVersionHistory:
@@ -40365,7 +49361,6 @@ class CVersionHistory:
 
 	def __get_inner(self):
 		return self.__IVersionHistory
-
 
 
 
@@ -40414,6 +49409,26 @@ class CVersionHistory:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # VersionedItem
 class CVersionedItem:
@@ -40423,7 +49438,6 @@ class CVersionedItem:
 
 	def __get_inner(self):
 		return self.__IVersionedItem
-
 
 
 	def Update(self) -> None:
@@ -40566,6 +49580,26 @@ class CVersionedItem:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # VersionedItems
 class CVersionedItems:
@@ -40575,7 +49609,6 @@ class CVersionedItems:
 
 	def __get_inner(self):
 		return self.__IVersionedItems
-
 
 
 	def Add(self, pDisp) -> CVersionedItem:
@@ -40644,6 +49677,26 @@ class CVersionedItems:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # VersionControl
 class CVersionControl:
@@ -40653,7 +49706,6 @@ class CVersionControl:
 
 	def __get_inner(self):
 		return self.__IVersionControl
-
 
 
 	def Update(self) -> bool:
@@ -40716,6 +49768,26 @@ class CVersionControl:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # VersionControls
 class CVersionControls:
@@ -40725,7 +49797,6 @@ class CVersionControls:
 
 	def __get_inner(self):
 		return self.__IVersionControls
-
 
 
 	def AddClioSoft(self, Server: str, Project: str) -> CVersionControl:
@@ -40822,6 +49893,26 @@ class CVersionControls:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Annotation
 class CAnnotation:
@@ -40831,7 +49922,6 @@ class CAnnotation:
 
 	def __get_inner(self):
 		return self.__IAnnotation
-
 
 
 	def SimulateAnnotation(self) -> bool:
@@ -40867,6 +49957,26 @@ class CAnnotation:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # Annotations
 class CAnnotations:
@@ -40876,7 +49986,6 @@ class CAnnotations:
 
 	def __get_inner(self):
 		return self.__IAnnotations
-
 
 
 	def Add(self, Name: str) -> CAnnotation:
@@ -40950,6 +50059,26 @@ class CAnnotations:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # RegressionTester
 class CRegressionTester:
@@ -40959,7 +50088,6 @@ class CRegressionTester:
 
 	def __get_inner(self):
 		return self.__IRegressionTester
-
 
 
 	def RunRegressionTestList(self, Path: str, append: bool) -> CRegressionResult:
@@ -41016,6 +50144,26 @@ class CRegressionTester:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # RegressionResult
 class CRegressionResult:
@@ -41025,7 +50173,6 @@ class CRegressionResult:
 
 	def __get_inner(self):
 		return self.__IRegressionResult
-
 
 
 
@@ -41044,6 +50191,26 @@ class CRegressionResult:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # JobEntry
 class CJobEntry:
@@ -41053,7 +50220,6 @@ class CJobEntry:
 
 	def __get_inner(self):
 		return self.__IJobEntry
-
 
 
 	def Pause(self) -> bool:
@@ -41153,6 +50319,26 @@ class CJobEntry:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # JobEntries
 class CJobEntries:
@@ -41162,7 +50348,6 @@ class CJobEntries:
 
 	def __get_inner(self):
 		return self.__IJobEntries
-
 
 
 
@@ -41226,6 +50411,26 @@ class CJobEntries:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # JobQueue
 class CJobQueue:
@@ -41235,7 +50440,6 @@ class CJobQueue:
 
 	def __get_inner(self):
 		return self.__IJobQueue
-
 
 
 
@@ -41302,6 +50506,26 @@ class CJobQueue:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # JobQueues
 class CJobQueues:
@@ -41311,7 +50535,6 @@ class CJobQueues:
 
 	def __get_inner(self):
 		return self.__IJobQueues
-
 
 
 
@@ -41365,6 +50588,26 @@ class CJobQueues:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # JobSchedulerQuery
 class CJobSchedulerQuery:
@@ -41377,7 +50620,6 @@ class CJobSchedulerQuery:
 
 
 
-
 	@property
 	def ComputeNodes(self):
 		"""Returns an array of strings for the list of compute nodes."""
@@ -41386,6 +50628,26 @@ class CJobSchedulerQuery:
 
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
+
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
 
 
 # JobMonitor
@@ -41399,7 +50661,6 @@ class CJobMonitor:
 
 
 
-
 	@property
 	def Queues(self) -> CJobQueues:
 		"""Returns a reference to a collection of JobQueue objects."""
@@ -41408,6 +50669,26 @@ class CJobMonitor:
 
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
+
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
 
 
 # PageSetup
@@ -41418,7 +50699,6 @@ class CPageSetup:
 
 	def __get_inner(self):
 		return self.__IPageSetup
-
 
 
 
@@ -41545,6 +50825,26 @@ class CPageSetup:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # MemoryInfo
 class CMemoryInfo:
@@ -41554,7 +50854,6 @@ class CMemoryInfo:
 
 	def __get_inner(self):
 		return self.__IMemoryInfo
-
 
 
 
@@ -41651,6 +50950,26 @@ class CMemoryInfo:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SystemInfo
 class CSystemInfo:
@@ -41660,7 +50979,6 @@ class CSystemInfo:
 
 	def __get_inner(self):
 		return self.__ISystemInfo
-
 
 
 
@@ -41721,6 +51039,26 @@ class CSystemInfo:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SystemFolder
 class CSystemFolder:
@@ -41730,7 +51068,6 @@ class CSystemFolder:
 
 	def __get_inner(self):
 		return self.__ISystemFolder
-
 
 
 
@@ -41755,6 +51092,26 @@ class CSystemFolder:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SystemFolders
 class CSystemFolders:
@@ -41764,7 +51121,6 @@ class CSystemFolders:
 
 	def __get_inner(self):
 		return self.__ISystemFolders
-
 
 
 
@@ -41818,6 +51174,26 @@ class CSystemFolders:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EnvironmentVariable
 class CEnvironmentVariable:
@@ -41827,7 +51203,6 @@ class CEnvironmentVariable:
 
 	def __get_inner(self):
 		return self.__IEnvironmentVariable
-
 
 
 
@@ -41846,6 +51221,26 @@ class CEnvironmentVariable:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Name)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # EnvironmentVariables
 class CEnvironmentVariables:
@@ -41855,7 +51250,6 @@ class CEnvironmentVariables:
 
 	def __get_inner(self):
 		return self.__IEnvironmentVariables
-
 
 
 
@@ -41909,6 +51303,26 @@ class CEnvironmentVariables:
 	def __str__(self):
 		return '{}({})'.format(type(self).__name__, self.Count)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # RoutePropertyInfo
 class CRoutePropertyInfo:
@@ -41918,7 +51332,6 @@ class CRoutePropertyInfo:
 
 	def __get_inner(self):
 		return self.__IRoutePropertyInfo
-
 
 
 
@@ -42009,6 +51422,26 @@ class CRoutePropertyInfo:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # A3diWiz
 class CA3diWiz:
@@ -42018,7 +51451,6 @@ class CA3diWiz:
 
 	def __get_inner(self):
 		return self.__IA3diWiz
-
 
 
 	def Open(self, bstr3DiFile: str) -> None:
@@ -42040,6 +51472,26 @@ class CA3diWiz:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # IFFWiz
 class CIFFWiz:
@@ -42049,7 +51501,6 @@ class CIFFWiz:
 
 	def __get_inner(self):
 		return self.__IIFFWiz
-
 
 
 	def Open(self, bstrIFFFile: str) -> None:
@@ -42071,6 +51522,26 @@ class CIFFWiz:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # PHDModelWiz
 class CPHDModelWiz:
@@ -42080,7 +51551,6 @@ class CPHDModelWiz:
 
 	def __get_inner(self):
 		return self.__IPHDModelWiz
-
 
 
 	def Generate(self, bstrDataFile: str) -> None:
@@ -42112,6 +51582,26 @@ class CPHDModelWiz:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # AmpModGen
 class CAmpModGen:
@@ -42121,7 +51611,6 @@ class CAmpModGen:
 
 	def __get_inner(self):
 		return self.__IAmpModGen
-
 
 
 	def Generate(self, bstrDataFile: str) -> None:
@@ -42143,6 +51632,26 @@ class CAmpModGen:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # SpectreImportWiz
 class CSpectreImportWiz:
@@ -42152,7 +51661,6 @@ class CSpectreImportWiz:
 
 	def __get_inner(self):
 		return self.__ISpectreImportWiz
-
 
 
 	def Import(self, bstrInputFile: str) -> None:
@@ -42174,6 +51682,26 @@ class CSpectreImportWiz:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # StabilityAnalysisWiz
 class CStabilityAnalysisWiz:
@@ -42183,7 +51711,6 @@ class CStabilityAnalysisWiz:
 
 	def __get_inner(self):
 		return self.__IStabilityAnalysisWiz
-
 
 
 	def Analyze(self) -> None:
@@ -42205,6 +51732,26 @@ class CStabilityAnalysisWiz:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # ProcDefEditor
 class CProcDefEditor:
@@ -42214,7 +51761,6 @@ class CProcDefEditor:
 
 	def __get_inner(self):
 		return self.__IProcDefEditor
-
 
 
 	def Open(self, bstrProcDefEditorOptionsFile: str) -> None:
@@ -42276,6 +51822,26 @@ class CProcDefEditor:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # OAWiz
 class COAWiz:
@@ -42285,7 +51851,6 @@ class COAWiz:
 
 	def __get_inner(self):
 		return self.__IOAWiz
-
 
 
 	def Import(self, bstrOADir: str) -> None:
@@ -42356,6 +51921,26 @@ class COAWiz:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # NetSynthWiz
 class CNetSynthWiz:
@@ -42365,7 +51950,6 @@ class CNetSynthWiz:
 
 	def __get_inner(self):
 		return self.__INetSynthWiz
-
 
 
 	def Synthesize(self) -> None:
@@ -42502,6 +52086,26 @@ class CNetSynthWiz:
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
 
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
+
 
 # NetSynthWiz_ParamConstraint
 class CNetSynthWiz_ParamConstraint:
@@ -42511,7 +52115,6 @@ class CNetSynthWiz_ParamConstraint:
 
 	def __get_inner(self):
 		return self.__INetSynthWiz_ParamConstraints
-
 
 
 
@@ -42601,6 +52204,26 @@ class CNetSynthWiz_ParamConstraint:
 
 	def __str__(self):
 		return '{}'.format(type(self).__name__)
+
+	@property
+	def __dict__(self) -> Dict[str: Any]:
+		r = {}
+		for a in dir(self.__class__):
+			if a.startswith('_'):
+				continue
+			# splitting if allows us to skip value get sometimes
+			try:
+				value=getattr(self, a)
+				if callable(value):
+					continue
+				elif isinstance(value, int) or isinstance(value, float):
+					r[a] = value
+				else:
+					r[a] = str(value)
+			except Exception as e:
+				print(f'Could not get value for attribute "{a}"')
+				raise(e)
+		return r
 
 
 

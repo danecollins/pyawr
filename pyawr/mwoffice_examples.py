@@ -98,3 +98,6 @@ print("Indexed by negative: {}".format(schem.Name))
 
 for sch in schems[0:1]:
     print("indexed by range: {}".format(schem.Name))
+
+print("Testing __dict__ output:")
+print(schem.__dict__)
